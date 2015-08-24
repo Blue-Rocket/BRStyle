@@ -1,0 +1,7 @@
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#endif
+
+#if __has_include("RKCoreData.h")
+    #import <CoreData/CoreData.h>
+#endif

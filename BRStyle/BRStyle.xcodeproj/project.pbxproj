@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00B53FA6742C71400A37071D /* libPods-BRStyle.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23359DD70EE4F0C6C9CF6DB5 /* libPods-BRStyle.a */; };
 		C93ABE5B1B8BC65100202CA9 /* libBRStyle.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C93ABE4F1B8BC65100202CA9 /* libBRStyle.a */; };
 		C93ABE811B8BCA1C00202CA9 /* BRUIStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABE791B8BCA1C00202CA9 /* BRUIStyle.m */; };
 		C93ABE821B8BCA1C00202CA9 /* BRUIStyleObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABE7B1B8BCA1C00202CA9 /* BRUIStyleObserver.m */; };
@@ -37,6 +38,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		23359DD70EE4F0C6C9CF6DB5 /* libPods-BRStyle.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BRStyle.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C93ABE4F1B8BC65100202CA9 /* libBRStyle.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libBRStyle.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C93ABE5A1B8BC65100202CA9 /* BRStyleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BRStyleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C93ABE601B8BC65100202CA9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -49,6 +51,8 @@
 		C93ABE7E1B8BCA1C00202CA9 /* UIView+BRUIStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+BRUIStyle.m"; sourceTree = "<group>"; };
 		C93ABE7F1B8BCA1C00202CA9 /* UIViewController+BRUIStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+BRUIStyle.h"; sourceTree = "<group>"; };
 		C93ABE801B8BCA1C00202CA9 /* UIViewController+BRUIStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+BRUIStyle.m"; sourceTree = "<group>"; };
+		CF096CDD98419257F1054C2D /* Pods-BRStyle.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BRStyle.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BRStyle/Pods-BRStyle.debug.xcconfig"; sourceTree = "<group>"; };
+		F87CB3C970C60CEAECF43A34 /* Pods-BRStyle.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BRStyle.release.xcconfig"; path = "Pods/Target Support Files/Pods-BRStyle/Pods-BRStyle.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				00B53FA6742C71400A37071D /* libPods-BRStyle.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,12 +75,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		284153AEA811BBDBD9C9B308 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				CF096CDD98419257F1054C2D /* Pods-BRStyle.debug.xcconfig */,
+				F87CB3C970C60CEAECF43A34 /* Pods-BRStyle.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		9F8FC08B083319EB8F9A80AA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				23359DD70EE4F0C6C9CF6DB5 /* libPods-BRStyle.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		C93ABE461B8BC65100202CA9 = {
 			isa = PBXGroup;
 			children = (
 				C93ABE771B8BCA1C00202CA9 /* Core */,
 				C93ABE5E1B8BC65100202CA9 /* BRStyleTests */,
 				C93ABE501B8BC65100202CA9 /* Products */,
+				284153AEA811BBDBD9C9B308 /* Pods */,
+				9F8FC08B083319EB8F9A80AA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -128,9 +152,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C93ABE631B8BC65100202CA9 /* Build configuration list for PBXNativeTarget "BRStyle" */;
 			buildPhases = (
+				3C4AFDC41D3BCAB972EF06A4 /* Check Pods Manifest.lock */,
 				C93ABE4B1B8BC65100202CA9 /* Sources */,
 				C93ABE4C1B8BC65100202CA9 /* Frameworks */,
 				C93ABE4D1B8BC65100202CA9 /* CopyFiles */,
+				3AF0384B1550B13D5D3882E6 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -203,6 +229,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3AF0384B1550B13D5D3882E6 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BRStyle/Pods-BRStyle-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3C4AFDC41D3BCAB972EF06A4 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C93ABE4B1B8BC65100202CA9 /* Sources */ = {
@@ -314,8 +373,8 @@
 		};
 		C93ABE641B8BC65100202CA9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CF096CDD98419257F1054C2D /* Pods-BRStyle.debug.xcconfig */;
 			buildSettings = {
-				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -323,8 +382,8 @@
 		};
 		C93ABE651B8BC65100202CA9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F87CB3C970C60CEAECF43A34 /* Pods-BRStyle.release.xcconfig */;
 			buildSettings = {
-				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -381,6 +440,7 @@
 				C93ABE651B8BC65100202CA9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C93ABE661B8BC65100202CA9 /* Build configuration list for PBXNativeTarget "BRStyleTests" */ = {
 			isa = XCConfigurationList;
@@ -389,6 +449,7 @@
 				C93ABE681B8BC65100202CA9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
