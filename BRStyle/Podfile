@@ -4,6 +4,7 @@ platform :ios, '7.1'
 inhibit_all_warnings!
 
 target :BRStyle do
+	pod 'MAObjCRuntime', 			  '~> 0.0.1'
 	pod 'RestKit/ObjectMapping',	  '~> 0.24'
 	
 	target :BRStyleTests do

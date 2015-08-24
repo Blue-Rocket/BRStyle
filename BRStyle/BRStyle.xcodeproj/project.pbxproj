@@ -13,6 +13,7 @@
 		C93ABE821B8BCA1C00202CA9 /* BRUIStyleObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABE7B1B8BCA1C00202CA9 /* BRUIStyleObserver.m */; };
 		C93ABE831B8BCA1C00202CA9 /* UIView+BRUIStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABE7E1B8BCA1C00202CA9 /* UIView+BRUIStyle.m */; };
 		C93ABE841B8BCA1C00202CA9 /* UIViewController+BRUIStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABE801B8BCA1C00202CA9 /* UIViewController+BRUIStyle.m */; };
+		C93ABE881B8BCCA900202CA9 /* BRUIStyleMappingRestKit.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABE871B8BCCA900202CA9 /* BRUIStyleMappingRestKit.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,8 @@
 		C93ABE7E1B8BCA1C00202CA9 /* UIView+BRUIStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+BRUIStyle.m"; sourceTree = "<group>"; };
 		C93ABE7F1B8BCA1C00202CA9 /* UIViewController+BRUIStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+BRUIStyle.h"; sourceTree = "<group>"; };
 		C93ABE801B8BCA1C00202CA9 /* UIViewController+BRUIStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+BRUIStyle.m"; sourceTree = "<group>"; };
+		C93ABE861B8BCCA900202CA9 /* BRUIStyleMappingRestKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRUIStyleMappingRestKit.h; sourceTree = "<group>"; };
+		C93ABE871B8BCCA900202CA9 /* BRUIStyleMappingRestKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRUIStyleMappingRestKit.m; sourceTree = "<group>"; };
 		CF096CDD98419257F1054C2D /* Pods-BRStyle.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BRStyle.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BRStyle/Pods-BRStyle.debug.xcconfig"; sourceTree = "<group>"; };
 		F87CB3C970C60CEAECF43A34 /* Pods-BRStyle.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BRStyle.release.xcconfig"; path = "Pods/Target Support Files/Pods-BRStyle/Pods-BRStyle.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -96,6 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				C93ABE771B8BCA1C00202CA9 /* Core */,
+				C93ABE851B8BCCA900202CA9 /* RestKit */,
 				C93ABE5E1B8BC65100202CA9 /* BRStyleTests */,
 				C93ABE501B8BC65100202CA9 /* Products */,
 				284153AEA811BBDBD9C9B308 /* Pods */,
@@ -143,6 +147,16 @@
 			);
 			name = Core;
 			path = Code/Core;
+			sourceTree = "<group>";
+		};
+		C93ABE851B8BCCA900202CA9 /* RestKit */ = {
+			isa = PBXGroup;
+			children = (
+				C93ABE861B8BCCA900202CA9 /* BRUIStyleMappingRestKit.h */,
+				C93ABE871B8BCCA900202CA9 /* BRUIStyleMappingRestKit.m */,
+			);
+			name = RestKit;
+			path = Code/RestKit;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -272,6 +286,7 @@
 				C93ABE811B8BCA1C00202CA9 /* BRUIStyle.m in Sources */,
 				C93ABE841B8BCA1C00202CA9 /* UIViewController+BRUIStyle.m in Sources */,
 				C93ABE821B8BCA1C00202CA9 /* BRUIStyleObserver.m in Sources */,
+				C93ABE881B8BCCA900202CA9 /* BRUIStyleMappingRestKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
