@@ -2,6 +2,7 @@ PODS:
   - ISO8601DateFormatterValueTransformer (0.6.1):
     - RKValueTransformers (~> 1.1.0)
   - MAObjCRuntime (0.0.1)
+  - OCHamcrest (4.1.1)
   - RestKit/ObjectMapping (0.25.0):
     - ISO8601DateFormatterValueTransformer (~> 0.6.1)
     - RestKit/Support
@@ -13,11 +14,13 @@ PODS:
 
 DEPENDENCIES:
   - MAObjCRuntime (~> 0.0.1)
+  - OCHamcrest (~> 4.1)
   - RestKit/ObjectMapping (~> 0.24)
 
 SPEC CHECKSUMS:
   ISO8601DateFormatterValueTransformer: 52da467d6ec899d6aedda8e48280ac92e8ee97e6
   MAObjCRuntime: a6a1d95acbfa3784d66cb35bd42904e47943b488
+  OCHamcrest: 6f03ffa81d12feab872638490a44ab0a6d3aca10
   RestKit: a4fcaf3d4bb2c204679856a46d596160bf208095
   RKValueTransformers: 66ac5e4f077fdbe3496e792d89eeff4c3eb67701
   TransitionKit: 3a14b6acc7cf2d1dd3e454e24dbad1cfab9a1ef1
