@@ -1,0 +1,19 @@
+# xcode noise
+*.mode1v3
+*.pbxuser
+*.perspective 
+*.perspectivev3
+*.pyc 
+*~.nib/
+*.xcuserstate
+*.xccheckout
+xcuserdata
+
+# old skool
+.svn
+ 
+# osx noise
+.DS_Store
+
+# Local project settings
+LocalEnvironment.plist
