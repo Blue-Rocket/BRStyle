@@ -6,7 +6,7 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Style Sampler-->
+        <!--BRStyle-->
         <scene sceneID="LMj-eh-nYF">
             <objects>
                 <tableViewController id="3aW-rS-scQ" customClass="GlobalStyleController" sceneMemberID="viewController">
@@ -55,7 +55,12 @@
                             <outlet property="delegate" destination="3aW-rS-scQ" id="cxb-nr-PsN"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Style Sampler" id="qbk-n3-AWF">
+                    <navigationItem key="navigationItem" title="BRStyle" id="qbk-n3-AWF">
+                        <barButtonItem key="leftBarButtonItem" title="Showcase" id="GXU-BE-Va8">
+                            <connections>
+                                <segue destination="UMm-8y-M4E" kind="show" identifier="ShowShowcase" id="Wra-Cx-vqk"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Export" id="zCF-gU-VuC">
                             <connections>
                                 <segue destination="A51-qR-SNO" kind="show" identifier="ExportStyle" id="01q-P1-Zav"/>
@@ -66,6 +71,65 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n91-KO-Q7C" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1092" y="425"/>
+        </scene>
+        <!--Showcase-->
+        <scene sceneID="bDD-Nk-0sI">
+            <objects>
+                <tableViewController id="UMm-8y-M4E" customClass="ShowcaseViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" id="mpY-hl-jKY">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <sections>
+                            <tableViewSection id="oX0-m4-qxn">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="hYE-fA-KkG">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hYE-fA-KkG" id="ItS-ma-PU5">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Button" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="so8-cy-H6D">
+                                                    <rect key="frame" x="8" y="19" width="530" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="abc-42-gQg">
+                                                    <rect key="frame" x="546" y="15" width="46" height="30"/>
+                                                    <state key="normal" title="Button">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="centerY" secondItem="abc-42-gQg" secondAttribute="centerY" constant="-0.5" id="3AG-2j-JF3"/>
+                                                <constraint firstItem="abc-42-gQg" firstAttribute="leading" secondItem="so8-cy-H6D" secondAttribute="trailing" constant="8" symbolic="YES" id="BM5-hx-gHU"/>
+                                                <constraint firstItem="abc-42-gQg" firstAttribute="trailing" secondItem="ItS-ma-PU5" secondAttribute="trailingMargin" id="CJx-X5-C4k"/>
+                                                <constraint firstItem="so8-cy-H6D" firstAttribute="leading" secondItem="ItS-ma-PU5" secondAttribute="leadingMargin" id="Eet-yR-4gj"/>
+                                                <constraint firstAttribute="centerY" secondItem="so8-cy-H6D" secondAttribute="centerY" id="Em3-Kh-Z9Y"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="UMm-8y-M4E" id="sTb-Ts-Mik"/>
+                            <outlet property="delegate" destination="UMm-8y-M4E" id="2Ce-B9-eFB"/>
+                        </connections>
+                    </tableView>
+                    <toolbarItems>
+                        <barButtonItem title="Bar Item" id="1Cd-cO-Dty"/>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="Showcase" id="JA6-mc-Erb"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="bottomBarItem" destination="1Cd-cO-Dty" id="JzC-hL-tu7"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="o3q-tV-TBk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1922" y="461"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="OkP-wM-NNp">
@@ -133,20 +197,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K8z-16-N72" customClass="HRColorPickerView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K8z-16-N72" customClass="HRColorPickerView">
                                 <rect key="frame" x="16" y="64" width="568" height="520"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <action selector="colorChanged:" destination="bEu-W8-pRU" eventType="valueChanged" id="jl4-22-1K2"/>
                                 </connections>
                             </view>
-                            <slider opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="wEr-L4-0ld">
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="wEr-L4-0ld">
                                 <rect key="frame" x="98" y="68" width="478" height="31"/>
                                 <connections>
                                     <action selector="alphaChanged:" destination="bEu-W8-pRU" eventType="valueChanged" id="x8L-iH-Oew"/>
                                 </connections>
                             </slider>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qa2-TP-TqC" customClass="ColorSwatchAlphaView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qa2-TP-TqC" customClass="ColorSwatchAlphaView">
                                 <rect key="frame" x="230" y="184" width="140" height="107"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ebj-qi-UBg" customClass="ColorSwatchView">
