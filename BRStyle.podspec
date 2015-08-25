@@ -26,6 +26,7 @@ Pod::Spec.new do |s|
     sp.source_files = 'BRStyle/Code/BRStyle.h'
     sp.dependency 'BRStyle/Core'
     sp.dependency 'BRStyle/RestKit'
+	sp.dependency 'BRStyle/UIBarButtonItem'
   end
   
   s.subspec 'Core' do |sp|
@@ -34,9 +35,15 @@ Pod::Spec.new do |s|
   
   s.subspec 'RestKit' do |sp|
     sp.source_files = 'BRStyle/Code/RestKit.h', 'BRStyle/Code/RestKit'
+	sp.dependency 'BRStyle/Core'
     sp.dependency 'RestKit/ObjectMapping', '~> 0.24'
     sp.dependency 'MAObjCRuntime',         '~> 0.0.1'
     sp.ios.frameworks = 'MobileCoreServices'
+  end
+
+  s.subspec 'UIBarButtonItem' do |sp|
+    sp.source_files = 'BRStyle/Code/UIBarButtonItem'
+    sp.dependency 'BRStyle/Core'
   end
 
 end

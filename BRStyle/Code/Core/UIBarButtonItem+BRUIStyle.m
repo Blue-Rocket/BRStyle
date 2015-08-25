@@ -3,7 +3,7 @@
 //  BRStyle
 //
 //  Created by Matt on 25/08/15.
-//  Copyright (c) 2015 Blue Rocket, Inc. All rights reserved.
+//  Copyright (c) 2015 Blue Rocket, Inc. Distributable under the terms of the Apache License, Version 2.0.
 //
 
 #import "UIBarButtonItem+BRUIStyle.h"
@@ -16,14 +16,11 @@ static IMP original_initWithTitleStyleTargetAction;//(id, SEL, NSString *, UIBar
 
 id bruistyle_initWithTitleStyleTargetAction(id self, SEL _cmd, NSString *title, UIBarButtonItemStyle style, id target, SEL action) {
 	self = ((id(*)(id,SEL,NSString *, UIBarButtonItemStyle, id, SEL))original_initWithTitleStyleTargetAction)(self, _cmd, title, style, target, action);
-	if ( ![self conformsToProtocol:@protocol(BRUIStylish)] ) {
+	if ( ![self conformsToProtocol:@protocol(BRUIStylishHost)] ) {
 		return self;
 	}
-	// check for BRUIStylishHost support
-	if ( [self respondsToSelector:@selector(uiStyleDidChange:)] ) {
-		[self uiStyleDidChange:[self uiStyle]];
-		[BRUIStyleObserver addStyleObservation:self];
-	}
+	[self uiStyleDidChange:[self uiStyle]];
+	[BRUIStyleObserver addStyleObservation:self];
 	return self;
 }
 

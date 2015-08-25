@@ -3,7 +3,7 @@
 //  BRStyle
 //
 //  Created by Matt on 25/08/15.
-//  Copyright (c) 2015 Blue Rocket, Inc. All rights reserved.
+//  Copyright (c) 2015 Blue Rocket, Inc. Distributable under the terms of the Apache License, Version 2.0.
 //
 
 #import "NSObject+BRUIStyle.h"
@@ -17,13 +17,11 @@ static IMP original_awakeFromNib;//(id, SEL);
 
 static void bruistyle_awakeFromNib(id self, SEL _cmd) {
 	((void(*)(id,SEL))original_awakeFromNib)(self, _cmd);
-	if ( ![self conformsToProtocol:@protocol(BRUIStylish)] ) {
+	if ( ![self conformsToProtocol:@protocol(BRUIStylishHost)] ) {
 		return;
 	}
-	if ( [self respondsToSelector:@selector(uiStyleDidChange:)] ) {
-		[self uiStyleDidChange:[self uiStyle]];
-		[BRUIStyleObserver addStyleObservation:self];
-	}
+	[self uiStyleDidChange:[self uiStyle]];
+	[BRUIStyleObserver addStyleObservation:self];
 }
 
 @implementation NSObject (BRUIStyle)

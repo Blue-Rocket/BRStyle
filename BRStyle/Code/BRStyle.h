@@ -8,3 +8,4 @@
 
 #import <BRStyle/Core.h>
 #import <BRStyle/RestKit.h>
+#import <BRStyle/UIBarButtonItem+BRUIStylishHost.h>

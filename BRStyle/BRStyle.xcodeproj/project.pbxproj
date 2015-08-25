@@ -22,6 +22,7 @@
 		C93ABE9B1B8BD41200202CA9 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C93ABE991B8BD3DB00202CA9 /* MobileCoreServices.framework */; };
 		C93ABEF11B8BFE0A00202CA9 /* UIBarButtonItem+BRUIStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABEF01B8BFE0A00202CA9 /* UIBarButtonItem+BRUIStyle.m */; };
 		C93ABEF41B8C067000202CA9 /* NSObject+BRUIStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABEF31B8C067000202CA9 /* NSObject+BRUIStyle.m */; };
+		C93ABEFC1B8C0F9100202CA9 /* UIBarButtonItem+BRUIStylishHost.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABEFB1B8C0F9100202CA9 /* UIBarButtonItem+BRUIStylishHost.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +80,8 @@
 		C93ABEF01B8BFE0A00202CA9 /* UIBarButtonItem+BRUIStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+BRUIStyle.m"; sourceTree = "<group>"; };
 		C93ABEF21B8C067000202CA9 /* NSObject+BRUIStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+BRUIStyle.h"; sourceTree = "<group>"; };
 		C93ABEF31B8C067000202CA9 /* NSObject+BRUIStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+BRUIStyle.m"; sourceTree = "<group>"; };
+		C93ABEFA1B8C0F9100202CA9 /* UIBarButtonItem+BRUIStylishHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+BRUIStylishHost.h"; sourceTree = "<group>"; };
+		C93ABEFB1B8C0F9100202CA9 /* UIBarButtonItem+BRUIStylishHost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+BRUIStylishHost.m"; sourceTree = "<group>"; };
 		CF096CDD98419257F1054C2D /* Pods-BRStyle.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BRStyle.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BRStyle/Pods-BRStyle.debug.xcconfig"; sourceTree = "<group>"; };
 		CF8520217BB38401BF8B86A7 /* libPods-BRStyle-BRStyleTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BRStyle-BRStyleTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F87CB3C970C60CEAECF43A34 /* Pods-BRStyle.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BRStyle.release.xcconfig"; path = "Pods/Target Support Files/Pods-BRStyle/Pods-BRStyle.release.xcconfig"; sourceTree = "<group>"; };
@@ -133,6 +136,7 @@
 				C93ABE8D1B8BD1AF00202CA9 /* Packaging */,
 				C93ABE771B8BCA1C00202CA9 /* Core */,
 				C93ABE851B8BCCA900202CA9 /* RestKit */,
+				C93ABEF91B8C0F9100202CA9 /* UIBarButtonItem */,
 				C93ABE5E1B8BC65100202CA9 /* BRStyleTests */,
 				C93ABE501B8BC65100202CA9 /* Products */,
 				284153AEA811BBDBD9C9B308 /* Pods */,
@@ -219,6 +223,16 @@
 				C93ABE901B8BD27000202CA9 /* uistyle.json */,
 			);
 			path = RestKit;
+			sourceTree = "<group>";
+		};
+		C93ABEF91B8C0F9100202CA9 /* UIBarButtonItem */ = {
+			isa = PBXGroup;
+			children = (
+				C93ABEFA1B8C0F9100202CA9 /* UIBarButtonItem+BRUIStylishHost.h */,
+				C93ABEFB1B8C0F9100202CA9 /* UIBarButtonItem+BRUIStylishHost.m */,
+			);
+			name = UIBarButtonItem;
+			path = Code/UIBarButtonItem;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -384,6 +398,7 @@
 				C93ABE821B8BCA1C00202CA9 /* BRUIStyleObserver.m in Sources */,
 				C93ABE881B8BCCA900202CA9 /* BRUIStyleMappingRestKit.m in Sources */,
 				C93ABEF41B8C067000202CA9 /* NSObject+BRUIStyle.m in Sources */,
+				C93ABEFC1B8C0F9100202CA9 /* UIBarButtonItem+BRUIStylishHost.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

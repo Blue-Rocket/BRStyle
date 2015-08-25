@@ -16,14 +16,11 @@ static IMP original_viewDidLoad;//(id, SEL);
 
 void bruistyle_viewDidLoad(id self, SEL _cmd) {
 	((void(*)(id,SEL))original_viewDidLoad)(self, _cmd);
-	if ( ![self conformsToProtocol:@protocol(BRUIStylish)] ) {
+	if ( ![self conformsToProtocol:@protocol(BRUIStylishHost)] ) {
 		return;
 	}
-	// check for BRUIStylishHost support
-	if ( [self respondsToSelector:@selector(uiStyleDidChange:)] ) {
-		[self uiStyleDidChange:[self uiStyle]];
-		[BRUIStyleObserver addStyleObservation:self];
-	}
+	[self uiStyleDidChange:[self uiStyle]];
+	[BRUIStyleObserver addStyleObservation:self];
 }
 
 @implementation UIViewController (BRUIStyle)
