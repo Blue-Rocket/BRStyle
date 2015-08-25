@@ -8,9 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol BRUIStylishHost;
+
 @interface BRUIStyleObserver : NSObject
 
 @property (nonatomic, assign) __unsafe_unretained id host;
 @property (nonatomic, strong) id updateObserver;
+
+/**
+ Add a style observer to an object.
+ 
+ @param host The object to notify of style changes.
+ */
++ (void)addStyleObservation:(id<BRUIStylishHost>)host;
 
 @end
