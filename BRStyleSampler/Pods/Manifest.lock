@@ -1,0 +1,52 @@
+PODS:
+  - BRCocoaLumberjack (2.0.1):
+    - CocoaLumberjack (~> 2.0)
+  - BRStyle/All (0.9.0):
+    - BRStyle/Core
+    - BRStyle/RestKit
+  - BRStyle/Core (0.9.0)
+  - BRStyle/RestKit (0.9.0):
+    - MAObjCRuntime (~> 0.0.1)
+    - RestKit/ObjectMapping (~> 0.24)
+  - CocoaLumberjack (2.0.1):
+    - CocoaLumberjack/Default (= 2.0.1)
+    - CocoaLumberjack/Extensions (= 2.0.1)
+  - CocoaLumberjack/Core (2.0.1)
+  - CocoaLumberjack/Default (2.0.1):
+    - CocoaLumberjack/Core
+  - CocoaLumberjack/Extensions (2.0.1):
+    - CocoaLumberjack/Default
+  - Color-Picker-for-iOS (2.0.2)
+  - ISO8601DateFormatterValueTransformer (0.6.1):
+    - RKValueTransformers (~> 1.1.0)
+  - MAObjCRuntime (0.0.1)
+  - RestKit/ObjectMapping (0.25.0):
+    - ISO8601DateFormatterValueTransformer (~> 0.6.1)
+    - RestKit/Support
+    - RKValueTransformers (~> 1.1.0)
+  - RestKit/Support (0.25.0):
+    - TransitionKit (~> 2.1.0)
+  - RKValueTransformers (1.1.2)
+  - TransitionKit (2.1.1)
+
+DEPENDENCIES:
+  - BRCocoaLumberjack (~> 2.0)
+  - BRStyle/All (from `../`)
+  - Color-Picker-for-iOS (~> 2.0)
+
+EXTERNAL SOURCES:
+  BRStyle:
+    :path: ../
+
+SPEC CHECKSUMS:
+  BRCocoaLumberjack: 529d9525681ea2514d3d607011267848bc337bbe
+  BRStyle: b149a73b7877ae7dfc59444f2c7227ca51f41f26
+  CocoaLumberjack: 019d1361244274a6138c788c6cb80baabc13fb8f
+  Color-Picker-for-iOS: 4980589b3e3cfe7198f227dd50be9adb02d8bc0b
+  ISO8601DateFormatterValueTransformer: 52da467d6ec899d6aedda8e48280ac92e8ee97e6
+  MAObjCRuntime: a6a1d95acbfa3784d66cb35bd42904e47943b488
+  RestKit: a4fcaf3d4bb2c204679856a46d596160bf208095
+  RKValueTransformers: 66ac5e4f077fdbe3496e792d89eeff4c3eb67701
+  TransitionKit: 3a14b6acc7cf2d1dd3e454e24dbad1cfab9a1ef1
+
+COCOAPODS: 0.38.2

@@ -1,0 +1,536 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C93ABEAB1B8BD62A00202CA9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABEAA1B8BD62A00202CA9 /* main.m */; };
+		C93ABEAE1B8BD62A00202CA9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABEAD1B8BD62A00202CA9 /* AppDelegate.m */; };
+		C93ABEB41B8BD62A00202CA9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C93ABEB21B8BD62A00202CA9 /* Main.storyboard */; };
+		C93ABEB61B8BD62A00202CA9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C93ABEB51B8BD62A00202CA9 /* Images.xcassets */; };
+		C93ABEB91B8BD62A00202CA9 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C93ABEB71B8BD62A00202CA9 /* LaunchScreen.xib */; };
+		C93ABEC51B8BD62A00202CA9 /* BRStyleSamplerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABEC41B8BD62A00202CA9 /* BRStyleSamplerTests.m */; };
+		C93ABEDA1B8BD80E00202CA9 /* GlobalStyleController.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABECE1B8BD80E00202CA9 /* GlobalStyleController.m */; };
+		C93ABEDB1B8BD80E00202CA9 /* StyleExportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABED01B8BD80E00202CA9 /* StyleExportViewController.m */; };
+		C93ABEDC1B8BD80E00202CA9 /* ColorPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABED21B8BD80E00202CA9 /* ColorPickerViewController.m */; };
+		C93ABEDD1B8BD80E00202CA9 /* ColorSwatchAlphaView.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABED41B8BD80E00202CA9 /* ColorSwatchAlphaView.m */; };
+		C93ABEDE1B8BD80E00202CA9 /* ColorSwatchView.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABED61B8BD80E00202CA9 /* ColorSwatchView.m */; };
+		C93ABEDF1B8BD80E00202CA9 /* StyleColorTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABED91B8BD80E00202CA9 /* StyleColorTableViewCell.m */; };
+		C93ABEE21B8BDD0400202CA9 /* RestKitDataMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABEE11B8BDD0400202CA9 /* RestKitDataMapper.m */; };
+		C93ABEE51B8BE4BE00202CA9 /* UINavigationBar+BRStyleSampler.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABEE41B8BE4BE00202CA9 /* UINavigationBar+BRStyleSampler.m */; };
+		D830847F2E31B7AA9DB3D8D3 /* libPods-BRStyleSampler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 92458D518F3BCD16CAA01C79 /* libPods-BRStyleSampler.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C93ABEBF1B8BD62A00202CA9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C93ABE9D1B8BD62A00202CA9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C93ABEA41B8BD62A00202CA9;
+			remoteInfo = BRStyleSampler;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		3FC5CD8C9ED077268FC85372 /* Pods-BRStyleSampler.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BRStyleSampler.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BRStyleSampler/Pods-BRStyleSampler.debug.xcconfig"; sourceTree = "<group>"; };
+		92458D518F3BCD16CAA01C79 /* libPods-BRStyleSampler.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BRStyleSampler.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C93ABEA51B8BD62A00202CA9 /* BRStyleSampler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BRStyleSampler.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C93ABEA91B8BD62A00202CA9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C93ABEAA1B8BD62A00202CA9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		C93ABEAC1B8BD62A00202CA9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		C93ABEAD1B8BD62A00202CA9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		C93ABEB31B8BD62A00202CA9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C93ABEB51B8BD62A00202CA9 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		C93ABEB81B8BD62A00202CA9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		C93ABEBE1B8BD62A00202CA9 /* BRStyleSamplerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BRStyleSamplerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C93ABEC31B8BD62A00202CA9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C93ABEC41B8BD62A00202CA9 /* BRStyleSamplerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BRStyleSamplerTests.m; sourceTree = "<group>"; };
+		C93ABECE1B8BD80E00202CA9 /* GlobalStyleController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalStyleController.m; sourceTree = "<group>"; };
+		C93ABECF1B8BD80E00202CA9 /* StyleExportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StyleExportViewController.h; sourceTree = "<group>"; };
+		C93ABED01B8BD80E00202CA9 /* StyleExportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StyleExportViewController.m; sourceTree = "<group>"; };
+		C93ABED11B8BD80E00202CA9 /* ColorPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorPickerViewController.h; sourceTree = "<group>"; };
+		C93ABED21B8BD80E00202CA9 /* ColorPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorPickerViewController.m; sourceTree = "<group>"; };
+		C93ABED31B8BD80E00202CA9 /* ColorSwatchAlphaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorSwatchAlphaView.h; sourceTree = "<group>"; };
+		C93ABED41B8BD80E00202CA9 /* ColorSwatchAlphaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorSwatchAlphaView.m; sourceTree = "<group>"; };
+		C93ABED51B8BD80E00202CA9 /* ColorSwatchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorSwatchView.h; sourceTree = "<group>"; };
+		C93ABED61B8BD80E00202CA9 /* ColorSwatchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorSwatchView.m; sourceTree = "<group>"; };
+		C93ABED71B8BD80E00202CA9 /* GlobalStyleController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalStyleController.h; sourceTree = "<group>"; };
+		C93ABED81B8BD80E00202CA9 /* StyleColorTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StyleColorTableViewCell.h; sourceTree = "<group>"; };
+		C93ABED91B8BD80E00202CA9 /* StyleColorTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StyleColorTableViewCell.m; sourceTree = "<group>"; };
+		C93ABEE01B8BDD0400202CA9 /* RestKitDataMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RestKitDataMapper.h; sourceTree = "<group>"; };
+		C93ABEE11B8BDD0400202CA9 /* RestKitDataMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RestKitDataMapper.m; sourceTree = "<group>"; };
+		C93ABEE31B8BE4BE00202CA9 /* UINavigationBar+BRStyleSampler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+BRStyleSampler.h"; sourceTree = "<group>"; };
+		C93ABEE41B8BE4BE00202CA9 /* UINavigationBar+BRStyleSampler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+BRStyleSampler.m"; sourceTree = "<group>"; };
+		EE74602C37DBC9FEB6A3F42E /* Pods-BRStyleSampler.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BRStyleSampler.release.xcconfig"; path = "Pods/Target Support Files/Pods-BRStyleSampler/Pods-BRStyleSampler.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C93ABEA21B8BD62A00202CA9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D830847F2E31B7AA9DB3D8D3 /* libPods-BRStyleSampler.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C93ABEBB1B8BD62A00202CA9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		908BD5CDDC7D56CEC2728BF1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				92458D518F3BCD16CAA01C79 /* libPods-BRStyleSampler.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C93ABE9C1B8BD62A00202CA9 = {
+			isa = PBXGroup;
+			children = (
+				C93ABEA71B8BD62A00202CA9 /* BRStyleSampler */,
+				C93ABEC11B8BD62A00202CA9 /* BRStyleSamplerTests */,
+				C93ABEA61B8BD62A00202CA9 /* Products */,
+				F584F8A60B178B359D8A42AC /* Pods */,
+				908BD5CDDC7D56CEC2728BF1 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		C93ABEA61B8BD62A00202CA9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C93ABEA51B8BD62A00202CA9 /* BRStyleSampler.app */,
+				C93ABEBE1B8BD62A00202CA9 /* BRStyleSamplerTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C93ABEA71B8BD62A00202CA9 /* BRStyleSampler */ = {
+			isa = PBXGroup;
+			children = (
+				C93ABEAC1B8BD62A00202CA9 /* AppDelegate.h */,
+				C93ABEAD1B8BD62A00202CA9 /* AppDelegate.m */,
+				C93ABED11B8BD80E00202CA9 /* ColorPickerViewController.h */,
+				C93ABED21B8BD80E00202CA9 /* ColorPickerViewController.m */,
+				C93ABED31B8BD80E00202CA9 /* ColorSwatchAlphaView.h */,
+				C93ABED41B8BD80E00202CA9 /* ColorSwatchAlphaView.m */,
+				C93ABED51B8BD80E00202CA9 /* ColorSwatchView.h */,
+				C93ABED61B8BD80E00202CA9 /* ColorSwatchView.m */,
+				C93ABED71B8BD80E00202CA9 /* GlobalStyleController.h */,
+				C93ABECE1B8BD80E00202CA9 /* GlobalStyleController.m */,
+				C93ABEE01B8BDD0400202CA9 /* RestKitDataMapper.h */,
+				C93ABEE11B8BDD0400202CA9 /* RestKitDataMapper.m */,
+				C93ABED81B8BD80E00202CA9 /* StyleColorTableViewCell.h */,
+				C93ABED91B8BD80E00202CA9 /* StyleColorTableViewCell.m */,
+				C93ABECF1B8BD80E00202CA9 /* StyleExportViewController.h */,
+				C93ABED01B8BD80E00202CA9 /* StyleExportViewController.m */,
+				C93ABEE31B8BE4BE00202CA9 /* UINavigationBar+BRStyleSampler.h */,
+				C93ABEE41B8BE4BE00202CA9 /* UINavigationBar+BRStyleSampler.m */,
+				C93ABEB21B8BD62A00202CA9 /* Main.storyboard */,
+				C93ABEB51B8BD62A00202CA9 /* Images.xcassets */,
+				C93ABEB71B8BD62A00202CA9 /* LaunchScreen.xib */,
+				C93ABEA81B8BD62A00202CA9 /* Supporting Files */,
+			);
+			path = BRStyleSampler;
+			sourceTree = "<group>";
+		};
+		C93ABEA81B8BD62A00202CA9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C93ABEA91B8BD62A00202CA9 /* Info.plist */,
+				C93ABEAA1B8BD62A00202CA9 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C93ABEC11B8BD62A00202CA9 /* BRStyleSamplerTests */ = {
+			isa = PBXGroup;
+			children = (
+				C93ABEC41B8BD62A00202CA9 /* BRStyleSamplerTests.m */,
+				C93ABEC21B8BD62A00202CA9 /* Supporting Files */,
+			);
+			path = BRStyleSamplerTests;
+			sourceTree = "<group>";
+		};
+		C93ABEC21B8BD62A00202CA9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C93ABEC31B8BD62A00202CA9 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F584F8A60B178B359D8A42AC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3FC5CD8C9ED077268FC85372 /* Pods-BRStyleSampler.debug.xcconfig */,
+				EE74602C37DBC9FEB6A3F42E /* Pods-BRStyleSampler.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C93ABEA41B8BD62A00202CA9 /* BRStyleSampler */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C93ABEC81B8BD62A00202CA9 /* Build configuration list for PBXNativeTarget "BRStyleSampler" */;
+			buildPhases = (
+				6C4BA223732B3EB03120C23B /* Check Pods Manifest.lock */,
+				C93ABEA11B8BD62A00202CA9 /* Sources */,
+				C93ABEA21B8BD62A00202CA9 /* Frameworks */,
+				C93ABEA31B8BD62A00202CA9 /* Resources */,
+				7D917B4543D772880D5A03AA /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BRStyleSampler;
+			productName = BRStyleSampler;
+			productReference = C93ABEA51B8BD62A00202CA9 /* BRStyleSampler.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C93ABEBD1B8BD62A00202CA9 /* BRStyleSamplerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C93ABECB1B8BD62A00202CA9 /* Build configuration list for PBXNativeTarget "BRStyleSamplerTests" */;
+			buildPhases = (
+				C93ABEBA1B8BD62A00202CA9 /* Sources */,
+				C93ABEBB1B8BD62A00202CA9 /* Frameworks */,
+				C93ABEBC1B8BD62A00202CA9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C93ABEC01B8BD62A00202CA9 /* PBXTargetDependency */,
+			);
+			name = BRStyleSamplerTests;
+			productName = BRStyleSamplerTests;
+			productReference = C93ABEBE1B8BD62A00202CA9 /* BRStyleSamplerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C93ABE9D1B8BD62A00202CA9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0640;
+				ORGANIZATIONNAME = "Blue Rocket, Inc.";
+				TargetAttributes = {
+					C93ABEA41B8BD62A00202CA9 = {
+						CreatedOnToolsVersion = 6.4;
+					};
+					C93ABEBD1B8BD62A00202CA9 = {
+						CreatedOnToolsVersion = 6.4;
+						TestTargetID = C93ABEA41B8BD62A00202CA9;
+					};
+				};
+			};
+			buildConfigurationList = C93ABEA01B8BD62A00202CA9 /* Build configuration list for PBXProject "BRStyleSampler" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C93ABE9C1B8BD62A00202CA9;
+			productRefGroup = C93ABEA61B8BD62A00202CA9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C93ABEA41B8BD62A00202CA9 /* BRStyleSampler */,
+				C93ABEBD1B8BD62A00202CA9 /* BRStyleSamplerTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C93ABEA31B8BD62A00202CA9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C93ABEB41B8BD62A00202CA9 /* Main.storyboard in Resources */,
+				C93ABEB91B8BD62A00202CA9 /* LaunchScreen.xib in Resources */,
+				C93ABEB61B8BD62A00202CA9 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C93ABEBC1B8BD62A00202CA9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6C4BA223732B3EB03120C23B /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		7D917B4543D772880D5A03AA /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BRStyleSampler/Pods-BRStyleSampler-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C93ABEA11B8BD62A00202CA9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C93ABEE51B8BE4BE00202CA9 /* UINavigationBar+BRStyleSampler.m in Sources */,
+				C93ABEDE1B8BD80E00202CA9 /* ColorSwatchView.m in Sources */,
+				C93ABEDA1B8BD80E00202CA9 /* GlobalStyleController.m in Sources */,
+				C93ABEDD1B8BD80E00202CA9 /* ColorSwatchAlphaView.m in Sources */,
+				C93ABEE21B8BDD0400202CA9 /* RestKitDataMapper.m in Sources */,
+				C93ABEAE1B8BD62A00202CA9 /* AppDelegate.m in Sources */,
+				C93ABEDB1B8BD80E00202CA9 /* StyleExportViewController.m in Sources */,
+				C93ABEDC1B8BD80E00202CA9 /* ColorPickerViewController.m in Sources */,
+				C93ABEAB1B8BD62A00202CA9 /* main.m in Sources */,
+				C93ABEDF1B8BD80E00202CA9 /* StyleColorTableViewCell.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C93ABEBA1B8BD62A00202CA9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C93ABEC51B8BD62A00202CA9 /* BRStyleSamplerTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C93ABEC01B8BD62A00202CA9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C93ABEA41B8BD62A00202CA9 /* BRStyleSampler */;
+			targetProxy = C93ABEBF1B8BD62A00202CA9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		C93ABEB21B8BD62A00202CA9 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C93ABEB31B8BD62A00202CA9 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		C93ABEB71B8BD62A00202CA9 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C93ABEB81B8BD62A00202CA9 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C93ABEC61B8BD62A00202CA9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		C93ABEC71B8BD62A00202CA9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C93ABEC91B8BD62A00202CA9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3FC5CD8C9ED077268FC85372 /* Pods-BRStyleSampler.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = BRStyleSampler/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		C93ABECA1B8BD62A00202CA9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EE74602C37DBC9FEB6A3F42E /* Pods-BRStyleSampler.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = BRStyleSampler/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		C93ABECC1B8BD62A00202CA9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = BRStyleSamplerTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BRStyleSampler.app/BRStyleSampler";
+			};
+			name = Debug;
+		};
+		C93ABECD1B8BD62A00202CA9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = BRStyleSamplerTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BRStyleSampler.app/BRStyleSampler";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C93ABEA01B8BD62A00202CA9 /* Build configuration list for PBXProject "BRStyleSampler" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C93ABEC61B8BD62A00202CA9 /* Debug */,
+				C93ABEC71B8BD62A00202CA9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C93ABEC81B8BD62A00202CA9 /* Build configuration list for PBXNativeTarget "BRStyleSampler" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C93ABEC91B8BD62A00202CA9 /* Debug */,
+				C93ABECA1B8BD62A00202CA9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C93ABECB1B8BD62A00202CA9 /* Build configuration list for PBXNativeTarget "BRStyleSamplerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C93ABECC1B8BD62A00202CA9 /* Debug */,
+				C93ABECD1B8BD62A00202CA9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C93ABE9D1B8BD62A00202CA9 /* Project object */;
+}

@@ -1,0 +1,10 @@
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '7.1'
+
+inhibit_all_warnings!
+
+target :BRStyleSampler do
+	pod 'BRCocoaLumberjack',        '~> 2.0', :inhibit_warnings => true
+	pod 'BRStyle/All',              :path => '../'
+	pod 'Color-Picker-for-iOS', 	'~> 2.0'
+end
