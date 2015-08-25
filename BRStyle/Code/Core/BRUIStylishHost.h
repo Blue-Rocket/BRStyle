@@ -6,14 +6,12 @@
 //  Copyright (c) 2015 Blue Rocket. Distributable under the terms of the Apache License, Version 2.0.
 //
 
-#import <Foundation/Foundation.h>
-
-@class BRUIStyle;
+#import "BRUIStyle.h"
 
 /**
  API for objects that host a @c BRUIStyle instance and are interested in changes at runtime.
  */
-@protocol BRUIStylishHost <NSObject>
+@protocol BRUIStylishHost <BRUIStylish>
 
 @optional
 

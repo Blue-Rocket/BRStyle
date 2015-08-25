@@ -1,54 +1,46 @@
 //
-//  UIViewController+BRUIStyle.m
+//  UIBarButtonItem+BRUIStyle.m
 //  BRStyle
 //
-//  Created by Matt on 27/07/15.
-//  Copyright (c) 2015 Blue Rocket. Distributable under the terms of the Apache License, Version 2.0.
+//  Created by Matt on 25/08/15.
+//  Copyright (c) 2015 Blue Rocket, Inc. All rights reserved.
 //
 
-#import "UIViewController+BRUIStyle.h"
+#import "UIBarButtonItem+BRUIStyle.h"
 
 #import <objc/runtime.h>
 #import "BRUIStylishHost.h"
 #import "BRUIStyleObserver.h"
 
-static IMP original_viewDidLoad;//(id, SEL);
+static IMP original_initWithTitleStyleTargetAction;//(id, SEL, NSString *, UIBarButtonItemStyle, id, SEL);
 
-void bruistyle_viewDidLoad(id self, SEL _cmd) {
-	((void(*)(id,SEL))original_viewDidLoad)(self, _cmd);
+id bruistyle_initWithTitleStyleTargetAction(id self, SEL _cmd, NSString *title, UIBarButtonItemStyle style, id target, SEL action) {
+	self = ((id(*)(id,SEL,NSString *, UIBarButtonItemStyle, id, SEL))original_initWithTitleStyleTargetAction)(self, _cmd, title, style, target, action);
 	if ( ![self conformsToProtocol:@protocol(BRUIStylish)] ) {
-		return;
+		return self;
 	}
 	// check for BRUIStylishHost support
 	if ( [self respondsToSelector:@selector(uiStyleDidChange:)] ) {
 		[self uiStyleDidChange:[self uiStyle]];
 		[BRUIStyleObserver addStyleObservation:self];
 	}
+	return self;
 }
 
-@implementation UIViewController (BRUIStyle)
+@implementation UIBarButtonItem (BRUIStyle)
 
 + (void)load {
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		Class class = [self class];
-		SEL originalSelector = @selector(viewDidLoad);
+		Class class = [self class];		
+		SEL originalSelector = @selector(initWithTitle:style:target:action:);
 		Method originalMethod = class_getInstanceMethod(class, originalSelector);
-		original_viewDidLoad = method_setImplementation(originalMethod, (IMP)bruistyle_viewDidLoad);
+		original_initWithTitleStyleTargetAction = method_setImplementation(originalMethod, (IMP)original_initWithTitleStyleTargetAction);
 	});
 }
 
 - (BRUIStyle *)uiStyle {
 	BRUIStyle *style = objc_getAssociatedObject(self, @selector(uiStyle));
-	
-	// if this view doesn't define a custom style, search the responder chain for the closest defined style
-	UIResponder *responder = self;
-	while ( !style && [responder nextResponder] ) {
-		responder = [responder nextResponder];
-		if ( [responder respondsToSelector:@selector(uiStyle)] ) {
-			style = [(id)responder uiStyle];
-		}
-	}
 	if ( !style ) {
 		style = [BRUIStyle defaultStyle];
 	}

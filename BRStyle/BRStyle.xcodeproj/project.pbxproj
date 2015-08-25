@@ -20,6 +20,8 @@
 		C93ABE951B8BD2D700202CA9 /* BRRestKitTestingMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABE941B8BD2D700202CA9 /* BRRestKitTestingMapper.m */; };
 		C93ABE981B8BD33100202CA9 /* BRRestKitTestingSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABE971B8BD33100202CA9 /* BRRestKitTestingSupport.m */; };
 		C93ABE9B1B8BD41200202CA9 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C93ABE991B8BD3DB00202CA9 /* MobileCoreServices.framework */; };
+		C93ABEF11B8BFE0A00202CA9 /* UIBarButtonItem+BRUIStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABEF01B8BFE0A00202CA9 /* UIBarButtonItem+BRUIStyle.m */; };
+		C93ABEF41B8C067000202CA9 /* NSObject+BRUIStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABEF31B8C067000202CA9 /* NSObject+BRUIStyle.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +75,10 @@
 		C93ABE961B8BD33100202CA9 /* BRRestKitTestingSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRRestKitTestingSupport.h; sourceTree = "<group>"; };
 		C93ABE971B8BD33100202CA9 /* BRRestKitTestingSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRRestKitTestingSupport.m; sourceTree = "<group>"; };
 		C93ABE991B8BD3DB00202CA9 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		C93ABEEF1B8BFE0A00202CA9 /* UIBarButtonItem+BRUIStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+BRUIStyle.h"; sourceTree = "<group>"; };
+		C93ABEF01B8BFE0A00202CA9 /* UIBarButtonItem+BRUIStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+BRUIStyle.m"; sourceTree = "<group>"; };
+		C93ABEF21B8C067000202CA9 /* NSObject+BRUIStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+BRUIStyle.h"; sourceTree = "<group>"; };
+		C93ABEF31B8C067000202CA9 /* NSObject+BRUIStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+BRUIStyle.m"; sourceTree = "<group>"; };
 		CF096CDD98419257F1054C2D /* Pods-BRStyle.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BRStyle.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BRStyle/Pods-BRStyle.debug.xcconfig"; sourceTree = "<group>"; };
 		CF8520217BB38401BF8B86A7 /* libPods-BRStyle-BRStyleTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BRStyle-BRStyleTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F87CB3C970C60CEAECF43A34 /* Pods-BRStyle.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BRStyle.release.xcconfig"; path = "Pods/Target Support Files/Pods-BRStyle/Pods-BRStyle.release.xcconfig"; sourceTree = "<group>"; };
@@ -168,6 +174,10 @@
 				C93ABE7A1B8BCA1C00202CA9 /* BRUIStyleObserver.h */,
 				C93ABE7B1B8BCA1C00202CA9 /* BRUIStyleObserver.m */,
 				C93ABE7C1B8BCA1C00202CA9 /* BRUIStylishHost.h */,
+				C93ABEF21B8C067000202CA9 /* NSObject+BRUIStyle.h */,
+				C93ABEF31B8C067000202CA9 /* NSObject+BRUIStyle.m */,
+				C93ABEEF1B8BFE0A00202CA9 /* UIBarButtonItem+BRUIStyle.h */,
+				C93ABEF01B8BFE0A00202CA9 /* UIBarButtonItem+BRUIStyle.m */,
 				C93ABE7D1B8BCA1C00202CA9 /* UIView+BRUIStyle.h */,
 				C93ABE7E1B8BCA1C00202CA9 /* UIView+BRUIStyle.m */,
 				C93ABE7F1B8BCA1C00202CA9 /* UIViewController+BRUIStyle.h */,
@@ -369,9 +379,11 @@
 			files = (
 				C93ABE831B8BCA1C00202CA9 /* UIView+BRUIStyle.m in Sources */,
 				C93ABE811B8BCA1C00202CA9 /* BRUIStyle.m in Sources */,
+				C93ABEF11B8BFE0A00202CA9 /* UIBarButtonItem+BRUIStyle.m in Sources */,
 				C93ABE841B8BCA1C00202CA9 /* UIViewController+BRUIStyle.m in Sources */,
 				C93ABE821B8BCA1C00202CA9 /* BRUIStyleObserver.m in Sources */,
 				C93ABE881B8BCCA900202CA9 /* BRUIStyleMappingRestKit.m in Sources */,
+				C93ABEF41B8C067000202CA9 /* NSObject+BRUIStyle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
