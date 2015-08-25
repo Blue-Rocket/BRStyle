@@ -35,6 +35,9 @@
         "BRStyle/UIBarButtonItem": [
 
         ],
+        "BRStyle/UIButton": [
+
+        ],
         "BRStyle/UINavigationBar": [
 
         ],
@@ -74,6 +77,15 @@
     {
       "name": "UIBarButtonItem",
       "source_files": "BRStyle/Code/UIBarButtonItem",
+      "dependencies": {
+        "BRStyle/Core": [
+
+        ]
+      }
+    },
+    {
+      "name": "UIButton",
+      "source_files": "BRStyle/Code/UIButton",
       "dependencies": {
         "BRStyle/Core": [
 

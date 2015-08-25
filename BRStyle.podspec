@@ -27,6 +27,7 @@ Pod::Spec.new do |s|
     sp.dependency 'BRStyle/Core'
     sp.dependency 'BRStyle/RestKit'
 	sp.dependency 'BRStyle/UIBarButtonItem'
+	sp.dependency 'BRStyle/UIButton'
 	sp.dependency 'BRStyle/UINavigationBar'
 	sp.dependency 'BRStyle/UIToolbar'
   end
@@ -45,6 +46,11 @@ Pod::Spec.new do |s|
 
   s.subspec 'UIBarButtonItem' do |sp|
     sp.source_files = 'BRStyle/Code/UIBarButtonItem'
+    sp.dependency 'BRStyle/Core'
+  end
+
+  s.subspec 'UIButton' do |sp|
+    sp.source_files = 'BRStyle/Code/UIButton'
     sp.dependency 'BRStyle/Core'
   end
 

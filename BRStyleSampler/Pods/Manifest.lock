@@ -5,6 +5,7 @@ PODS:
     - BRStyle/Core
     - BRStyle/RestKit
     - BRStyle/UIBarButtonItem
+    - BRStyle/UIButton
     - BRStyle/UINavigationBar
     - BRStyle/UIToolbar
   - BRStyle/Core (0.9.1)
@@ -13,6 +14,8 @@ PODS:
     - MAObjCRuntime (~> 0.0.1)
     - RestKit/ObjectMapping (~> 0.24)
   - BRStyle/UIBarButtonItem (0.9.1):
+    - BRStyle/Core
+  - BRStyle/UIButton (0.9.1):
     - BRStyle/Core
   - BRStyle/UINavigationBar (0.9.1):
     - BRStyle/Core
@@ -50,7 +53,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   BRCocoaLumberjack: 529d9525681ea2514d3d607011267848bc337bbe
-  BRStyle: 809d5f3c577b5329c9c974d5c6e08e43215688b5
+  BRStyle: 3d00154c7c57b5e9e4215739e5e1b50c26ce7cc6
   CocoaLumberjack: 019d1361244274a6138c788c6cb80baabc13fb8f
   Color-Picker-for-iOS: 4980589b3e3cfe7198f227dd50be9adb02d8bc0b
   ISO8601DateFormatterValueTransformer: 52da467d6ec899d6aedda8e48280ac92e8ee97e6
