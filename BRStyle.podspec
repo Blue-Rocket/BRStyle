@@ -33,7 +33,7 @@ Pod::Spec.new do |s|
   end
   
   s.subspec 'RestKit' do |sp|
-    sp.source_files = 'BRStyle/Code/RestKit.h', 'BRFCore/Code/RestKit'
+    sp.source_files = 'BRStyle/Code/RestKit.h', 'BRStyle/Code/RestKit'
     sp.dependency 'RestKit/ObjectMapping', '~> 0.24'
     sp.dependency 'MAObjCRuntime',         '~> 0.0.1'
     sp.ios.frameworks = 'MobileCoreServices'
