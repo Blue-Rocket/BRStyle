@@ -20,6 +20,10 @@ void brmenustyle_willMoveToWindow(id self, SEL _cmd, UIWindow * window) {
 	if ( ![self conformsToProtocol:@protocol(BRUIStylish)] ) {
 		return;
 	}
+	// check for BRUIStylishHost support
+	if ( [self respondsToSelector:@selector(uiStyleDidChange:)] ) {
+		[self uiStyleDidChange:[self uiStyle]];
+	}
 	BRUIStyleObserver *obs = objc_getAssociatedObject(self, BRUIStyleObserverKey);
 	if ( !obs ) {
 		obs = [BRUIStyleObserver new];
