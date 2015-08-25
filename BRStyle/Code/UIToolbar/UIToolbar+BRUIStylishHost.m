@@ -1,16 +1,16 @@
 //
-//  UIToolbar+BRStyleSampler.m
-//  BRStyleSampler
+//  UIToolbar+BRUIStylishHost.m
+//  BRStyle
 //
 //  Created by Matt on 25/08/15.
 //  Copyright (c) 2015 Blue Rocket, Inc. All rights reserved.
 //
 
-#import "UIToolbar+BRStyleSampler.h"
+#import "UIToolbar+BRUIStylishHost.h"
 
-#import <BRStyle/UIView+BRUIStyle.h>
+#import "UIView+BRUIStyle.h"
 
-@implementation UIToolbar (BRStyleSampler)
+@implementation UIToolbar (BRUIStylishHost)
 
 @dynamic uiStyle;
 

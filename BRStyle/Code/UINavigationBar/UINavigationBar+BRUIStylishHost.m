@@ -1,16 +1,16 @@
 //
-//  UINavigationBar+BRStyleSampler.m
-//  BRStyleSampler
+//  UINavigationBar+BRUIStylishHost.m
+//  BRStyle
 //
 //  Created by Matt on 25/08/15.
 //  Copyright (c) 2015 Blue Rocket, Inc. All rights reserved.
 //
 
-#import "UINavigationBar+BRStyleSampler.h"
+#import "UINavigationBar+BRUIStylishHost.h"
 
-#import <BRStyle/UIView+BRUIStyle.h>
+#import "UIView+BRUIStyle.h"
 
-@implementation UINavigationBar (BRStyleSampler)
+@implementation UINavigationBar (BRUIStylishHost)
 
 @dynamic uiStyle;
 

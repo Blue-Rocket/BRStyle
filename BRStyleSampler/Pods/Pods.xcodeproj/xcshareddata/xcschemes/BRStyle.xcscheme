@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0338334819251DE4E2A7B669"
+               BlueprintIdentifier = "083E3F5BA9F9AA810A01AF2E"
                BuildableName = "libBRStyle.a"
                BlueprintName = "BRStyle"
                ReferencedContainer = "container:Pods.xcodeproj">
