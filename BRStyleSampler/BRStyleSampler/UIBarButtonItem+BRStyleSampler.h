@@ -1,5 +1,5 @@
 //
-//  UIBarItem+BRStyleSampler.h
+//  UIBarButtonItem+BRStyleSampler.h
 //  BRStyleSampler
 //
 //  Created by Matt on 25/08/15.
@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIBarItem (BRStyleSampler)
+#import <BRStyle/BRUIStyle.h>
+#import <BRStyle/BRUIStylishHost.h>
+
+/**
+ Extension of UIBarItem to apply BRUIStyle attributes.
+ */
+@interface UIBarButtonItem (BRStyleSampler) <BRUIStylish, BRUIStylishHost>
 
 @end

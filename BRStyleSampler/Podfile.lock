@@ -1,11 +1,11 @@
 PODS:
   - BRCocoaLumberjack (2.0.1):
     - CocoaLumberjack (~> 2.0)
-  - BRStyle/All (0.9.0):
+  - BRStyle/All (0.9.1):
     - BRStyle/Core
     - BRStyle/RestKit
-  - BRStyle/Core (0.9.0)
-  - BRStyle/RestKit (0.9.0):
+  - BRStyle/Core (0.9.1)
+  - BRStyle/RestKit (0.9.1):
     - MAObjCRuntime (~> 0.0.1)
     - RestKit/ObjectMapping (~> 0.24)
   - CocoaLumberjack (2.0.1):
@@ -40,7 +40,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   BRCocoaLumberjack: 529d9525681ea2514d3d607011267848bc337bbe
-  BRStyle: b149a73b7877ae7dfc59444f2c7227ca51f41f26
+  BRStyle: ae28e68a966e7c9a8563d2aa0c4159e28a357047
   CocoaLumberjack: 019d1361244274a6138c788c6cb80baabc13fb8f
   Color-Picker-for-iOS: 4980589b3e3cfe7198f227dd50be9adb02d8bc0b
   ISO8601DateFormatterValueTransformer: 52da467d6ec899d6aedda8e48280ac92e8ee97e6

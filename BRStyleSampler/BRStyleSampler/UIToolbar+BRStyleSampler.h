@@ -12,7 +12,7 @@
 #import <BRStyle/BRUIStylishHost.h>
 
 /**
- Extension of UINavigationBar to apply BRUIStyle attributes.
+ Extension of UIToolbar to apply BRUIStyle attributes.
  */
 @interface UIToolbar (BRStyleSampler) <BRUIStylish, BRUIStylishHost>
 
