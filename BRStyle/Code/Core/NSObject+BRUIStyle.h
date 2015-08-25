@@ -8,6 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+ Extension to NSObject to hook into NIB loading of stylish objects.
+ 
+ Any object that conforms to @c BRUIStylishHost will have their style automatically
+ updated when loaded from a NIB, as well as when global style changes are made.
+ */
 @interface NSObject (BRUIStyle)
 
 @end
