@@ -19,8 +19,10 @@ id bruistyle_initWithTitleStyleTargetAction(id self, SEL _cmd, NSString *title, 
 	if ( ![self conformsToProtocol:@protocol(BRUIStylishHost)] ) {
 		return self;
 	}
-	[self uiStyleDidChange:[self uiStyle]];
-	[BRUIStyleObserver addStyleObservation:self];
+	if ( [self respondsToSelector:@selector(uiStyleDidChange:)] ) {
+		[self uiStyleDidChange:[self uiStyle]];
+		[BRUIStyleObserver addStyleObservation:self];
+	}
 	return self;
 }
 
