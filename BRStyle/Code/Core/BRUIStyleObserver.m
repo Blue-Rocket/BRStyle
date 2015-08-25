@@ -31,7 +31,7 @@ static void *BRUIStyleObserverKey = &BRUIStyleObserverKey;
 	}
 	if ( !obs.updateObserver ) {
 		__weak id weakSelf = host;
-		obs.updateObserver = [[NSNotificationCenter defaultCenter] addObserverForName:BRNotificationUIStyleDidChange object:nil queue:nil usingBlock:^(NSNotification *note) {
+		obs.updateObserver = [[NSNotificationCenter defaultCenter] addObserverForName:BRStyleNotificationUIStyleDidChange object:nil queue:nil usingBlock:^(NSNotification *note) {
 			BRUIStyle *myStyle = [weakSelf uiStyle];
 			if ( myStyle.defaultStyle ) {
 				[(id<BRUIStylishHost>)weakSelf uiStyleDidChange:myStyle];

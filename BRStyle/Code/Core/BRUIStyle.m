@@ -8,7 +8,7 @@
 
 #import "BRUIStyle.h"
 
-NSString * const BRNotificationUIStyleDidChange = @"BRUIStyleDidChange";
+NSString * const BRStyleNotificationUIStyleDidChange = @"BRUIStyleDidChange";
 
 static BRUIStyle *DefaultStyle;
 
@@ -157,7 +157,7 @@ static BRUIStyle *DefaultStyle;
 	}
 	BRUIStyle *newStyle = [style copy];
 	DefaultStyle = newStyle;
-	[[NSNotificationCenter defaultCenter] postNotificationName:BRNotificationUIStyleDidChange object:newStyle];
+	[[NSNotificationCenter defaultCenter] postNotificationName:BRStyleNotificationUIStyleDidChange object:newStyle];
 }
 
 + (UIColor *)colorWithRGBHexInteger:(UInt32)integer {

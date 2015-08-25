@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
  A notification sent when the default BRUIStyle instance changes. The sender will be the 
  new BRUIStyle instance.
  */
-extern NSString * const BRNotificationUIStyleDidChange;
+extern NSString * const BRStyleNotificationUIStyleDidChange;
 
 /**
  Encapsulation of style attributes used for drawing BR UI components.
