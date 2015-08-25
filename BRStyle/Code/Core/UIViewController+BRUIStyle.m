@@ -19,6 +19,10 @@ void brmenustyle_viewDidLoad(id self, SEL _cmd) {
 	if ( ![self conformsToProtocol:@protocol(BRUIStylish)] ) {
 		return;
 	}
+	// check for BRUIStylishHost support
+	if ( [self respondsToSelector:@selector(uiStyleDidChange:)] ) {
+		[self uiStyleDidChange:[self uiStyle]];
+	}
 	BRUIStyleObserver *obs = objc_getAssociatedObject(self, BRUIStyleObserverKey);
 	if ( !obs ) {
 		obs = [BRUIStyleObserver new];
