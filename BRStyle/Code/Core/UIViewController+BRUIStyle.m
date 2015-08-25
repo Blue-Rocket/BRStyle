@@ -19,8 +19,10 @@ void bruistyle_viewDidLoad(id self, SEL _cmd) {
 	if ( ![self conformsToProtocol:@protocol(BRUIStylishHost)] ) {
 		return;
 	}
-	[self uiStyleDidChange:[self uiStyle]];
-	[BRUIStyleObserver addStyleObservation:self];
+	if ( [self respondsToSelector:@selector(uiStyleDidChange:)] ) {
+		[self uiStyleDidChange:[self uiStyle]];
+		[BRUIStyleObserver addStyleObservation:self];
+	}
 }
 
 @implementation UIViewController (BRUIStyle)

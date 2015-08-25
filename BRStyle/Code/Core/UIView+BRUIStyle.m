@@ -19,8 +19,10 @@ void bruistyle_willMoveToWindow(id self, SEL _cmd, UIWindow * window) {
 	if ( ![self conformsToProtocol:@protocol(BRUIStylishHost)] ) {
 		return;
 	}
-	[self uiStyleDidChange:[self uiStyle]];
-	[BRUIStyleObserver addStyleObservation:self];
+	if ( [self respondsToSelector:@selector(uiStyleDidChange:)] ) {
+		[self uiStyleDidChange:[self uiStyle]];
+		[BRUIStyleObserver addStyleObservation:self];
+	}
 }
 
 @implementation UIView (BRUIStyle)
