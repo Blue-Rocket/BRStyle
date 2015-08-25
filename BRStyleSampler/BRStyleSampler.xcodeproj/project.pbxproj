@@ -23,7 +23,6 @@
 		C93ABEE51B8BE4BE00202CA9 /* UINavigationBar+BRStyleSampler.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABEE41B8BE4BE00202CA9 /* UINavigationBar+BRStyleSampler.m */; };
 		C93ABEE81B8BF78F00202CA9 /* ShowcaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABEE71B8BF78F00202CA9 /* ShowcaseViewController.m */; };
 		C93ABEEB1B8BF9D700202CA9 /* UIToolbar+BRStyleSampler.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABEEA1B8BF9D700202CA9 /* UIToolbar+BRStyleSampler.m */; };
-		C93ABEEE1B8BFC9200202CA9 /* UIBarButtonItem+BRStyleSampler.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABEED1B8BFC9200202CA9 /* UIBarButtonItem+BRStyleSampler.m */; };
 		D830847F2E31B7AA9DB3D8D3 /* libPods-BRStyleSampler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 92458D518F3BCD16CAA01C79 /* libPods-BRStyleSampler.a */; };
 /* End PBXBuildFile section */
 
@@ -71,8 +70,6 @@
 		C93ABEE71B8BF78F00202CA9 /* ShowcaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowcaseViewController.m; sourceTree = "<group>"; };
 		C93ABEE91B8BF9D700202CA9 /* UIToolbar+BRStyleSampler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIToolbar+BRStyleSampler.h"; sourceTree = "<group>"; };
 		C93ABEEA1B8BF9D700202CA9 /* UIToolbar+BRStyleSampler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIToolbar+BRStyleSampler.m"; sourceTree = "<group>"; };
-		C93ABEEC1B8BFC9200202CA9 /* UIBarButtonItem+BRStyleSampler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+BRStyleSampler.h"; sourceTree = "<group>"; };
-		C93ABEED1B8BFC9200202CA9 /* UIBarButtonItem+BRStyleSampler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+BRStyleSampler.m"; sourceTree = "<group>"; };
 		EE74602C37DBC9FEB6A3F42E /* Pods-BRStyleSampler.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BRStyleSampler.release.xcconfig"; path = "Pods/Target Support Files/Pods-BRStyleSampler/Pods-BRStyleSampler.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -144,8 +141,6 @@
 				C93ABED91B8BD80E00202CA9 /* StyleColorTableViewCell.m */,
 				C93ABECF1B8BD80E00202CA9 /* StyleExportViewController.h */,
 				C93ABED01B8BD80E00202CA9 /* StyleExportViewController.m */,
-				C93ABEEC1B8BFC9200202CA9 /* UIBarButtonItem+BRStyleSampler.h */,
-				C93ABEED1B8BFC9200202CA9 /* UIBarButtonItem+BRStyleSampler.m */,
 				C93ABEE31B8BE4BE00202CA9 /* UINavigationBar+BRStyleSampler.h */,
 				C93ABEE41B8BE4BE00202CA9 /* UINavigationBar+BRStyleSampler.m */,
 				C93ABEE91B8BF9D700202CA9 /* UIToolbar+BRStyleSampler.h */,
@@ -338,7 +333,6 @@
 				C93ABEAE1B8BD62A00202CA9 /* AppDelegate.m in Sources */,
 				C93ABEDB1B8BD80E00202CA9 /* StyleExportViewController.m in Sources */,
 				C93ABEDC1B8BD80E00202CA9 /* ColorPickerViewController.m in Sources */,
-				C93ABEEE1B8BFC9200202CA9 /* UIBarButtonItem+BRStyleSampler.m in Sources */,
 				C93ABEAB1B8BD62A00202CA9 /* main.m in Sources */,
 				C93ABEDF1B8BD80E00202CA9 /* StyleColorTableViewCell.m in Sources */,
 			);
