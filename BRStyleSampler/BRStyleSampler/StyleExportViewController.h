@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import <BRStyle/BRUIStyle.h>
+#import <BRStyle/BRUIStylish.h>
 
 @interface StyleExportViewController : UIViewController <BRUIStylish>
 

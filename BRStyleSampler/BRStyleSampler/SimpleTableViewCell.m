@@ -15,10 +15,10 @@
 @dynamic uiStyle;
 
 - (void)uiStyleDidChange:(BRUIStyle *)style {
-	self.titleLabel.font = style.listFont;
-	self.titleLabel.textColor = style.textColor;
-	self.captionLabel.font = style.listCaptionFont;
-	self.captionLabel.textColor = style.captionColor;
+	self.titleLabel.font = style.fonts.listFont;
+	self.titleLabel.textColor = style.colors.textColor;
+	self.captionLabel.font = style.fonts.listCaptionFont;
+	self.captionLabel.textColor = style.colors.captionColor;
 }
 
 @end

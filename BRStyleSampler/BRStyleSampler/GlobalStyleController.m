@@ -8,8 +8,6 @@
 
 #import "GlobalStyleController.h"
 
-#import <MAObjCRuntime/MARTNSObject.h>
-#import <MAObjCRuntime/RTProperty.h>
 #import "ColorPickerViewController.h"
 #import "ColorSwatchView.h"
 #import "StyleColorTableViewCell.h"
@@ -33,23 +31,8 @@ static NSString * const kExportStyleSegue = @"ExportStyle";
 	uiStyle = [[BRUIStyle defaultStyle] mutableCopy];
 }
 
-- (NSArray *)colorStylePropertyNames {
-	static NSArray *names;
-	if ( !names ) {
-		NSMutableArray *colors = [NSMutableArray new];
-		for ( RTProperty *prop in [[BRUIStyle class] rt_properties] ) {
-			if ( [prop.name hasSuffix:@"Color"] ) {
-				[colors addObject:[prop.name substringToIndex:(prop.name.length - 5)]];
-			}
-		}
-		[colors sortUsingSelector:@selector(caseInsensitiveCompare:)];
-		names = [colors copy];
-	}
-	return names;
-}
-
 - (UIColor *)colorForName:(NSString *)colorName inStyle:(BRUIStyle *)style {
-	return [style valueForKeyPath:[colorName stringByAppendingString:@"Color"]];
+	return [style valueForKeyPath:[@"colors." stringByAppendingString:colorName]];
 }
 
 - (void)setColor:(UIColor *)color forName:(NSString *)colorName inStyle:(BRMutableUIStyle *)style {
@@ -84,13 +67,27 @@ static NSString * const kExportStyleSegue = @"ExportStyle";
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
 	switch ( section ) {
 		case 0:
-			return @"Color";
+			return @"App colors";
 	}
 	return @"";
 }
 
+- (NSArray *)appColorPropertyNames {
+	static NSArray *result;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		NSArray *colorKeys = [[uiStyle.colors dictionaryRepresentation] allKeys];
+		result = [[colorKeys filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self ENDSWITH %@", @"Color"]] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+	});
+	return result;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[self colorStylePropertyNames] count];
+	switch ( section ) {
+		case 0:
+			return [self appColorPropertyNames].count;
+	}
+	return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -98,10 +95,10 @@ static NSString * const kExportStyleSegue = @"ExportStyle";
  
 	if ( indexPath.section == 0 ) {
 		// color section
-		NSString *colorName = [self colorStylePropertyNames][indexPath.row];
+		NSString *colorName = [self appColorPropertyNames][indexPath.row];
 		StyleColorTableViewCell *colorCell = [tableView dequeueReusableCellWithIdentifier:kColorCellIdentifier forIndexPath:indexPath];
 		colorCell.titleLabel.text = [self displayNameForStyleName:colorName];
-		colorCell.colorSwatch.color = [self colorForName:colorName inStyle:[BRUIStyle defaultStyle]];
+		colorCell.colorSwatch.color = [self colorForName:colorName inStyle:uiStyle];
 		cell = colorCell;
 	}
 	
@@ -115,7 +112,7 @@ static NSString * const kExportStyleSegue = @"ExportStyle";
 - (void)colorPickerDidPickColor:(ColorPickerViewController *)picker {
 	if ( selectedStyleName ) {
 		[self setColor:picker.color forName:selectedStyleName inStyle:uiStyle];
-		NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[[self colorStylePropertyNames] indexOfObject:selectedStyleName] inSection:0];
+		NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[[self appColorPropertyNames] indexOfObject:selectedStyleName] inSection:0];
 		StyleColorTableViewCell *cell = (StyleColorTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
 		cell.colorSwatch.color = picker.color;
 	}
@@ -132,7 +129,7 @@ static NSString * const kExportStyleSegue = @"ExportStyle";
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 	if ( [segue.identifier isEqualToString:kEditColorSegue] ) {
 		NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-		NSString *colorName = [self colorStylePropertyNames][indexPath.row];
+		NSString *colorName = [self appColorPropertyNames][indexPath.row];
 		selectedStyleName = colorName;
 		ColorPickerViewController *dest = segue.destinationViewController;
 		StyleColorTableViewCell *cell = (StyleColorTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];

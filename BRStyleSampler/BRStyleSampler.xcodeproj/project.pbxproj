@@ -19,7 +19,6 @@
 		C93ABEDD1B8BD80E00202CA9 /* ColorSwatchAlphaView.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABED41B8BD80E00202CA9 /* ColorSwatchAlphaView.m */; };
 		C93ABEDE1B8BD80E00202CA9 /* ColorSwatchView.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABED61B8BD80E00202CA9 /* ColorSwatchView.m */; };
 		C93ABEDF1B8BD80E00202CA9 /* StyleColorTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABED91B8BD80E00202CA9 /* StyleColorTableViewCell.m */; };
-		C93ABEE21B8BDD0400202CA9 /* RestKitDataMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABEE11B8BDD0400202CA9 /* RestKitDataMapper.m */; };
 		C93ABEE81B8BF78F00202CA9 /* ShowcaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABEE71B8BF78F00202CA9 /* ShowcaseViewController.m */; };
 		C93ABF101B8C1F3600202CA9 /* SimpleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABF0F1B8C1F3600202CA9 /* SimpleTableViewCell.m */; };
 		D830847F2E31B7AA9DB3D8D3 /* libPods-BRStyleSampler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 92458D518F3BCD16CAA01C79 /* libPods-BRStyleSampler.a */; };
@@ -61,8 +60,6 @@
 		C93ABED71B8BD80E00202CA9 /* GlobalStyleController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalStyleController.h; sourceTree = "<group>"; };
 		C93ABED81B8BD80E00202CA9 /* StyleColorTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StyleColorTableViewCell.h; sourceTree = "<group>"; };
 		C93ABED91B8BD80E00202CA9 /* StyleColorTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StyleColorTableViewCell.m; sourceTree = "<group>"; };
-		C93ABEE01B8BDD0400202CA9 /* RestKitDataMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RestKitDataMapper.h; sourceTree = "<group>"; };
-		C93ABEE11B8BDD0400202CA9 /* RestKitDataMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RestKitDataMapper.m; sourceTree = "<group>"; };
 		C93ABEE61B8BF78F00202CA9 /* ShowcaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowcaseViewController.h; sourceTree = "<group>"; };
 		C93ABEE71B8BF78F00202CA9 /* ShowcaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowcaseViewController.m; sourceTree = "<group>"; };
 		C93ABF0E1B8C1F3600202CA9 /* SimpleTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleTableViewCell.h; sourceTree = "<group>"; };
@@ -130,8 +127,6 @@
 				C93ABED61B8BD80E00202CA9 /* ColorSwatchView.m */,
 				C93ABED71B8BD80E00202CA9 /* GlobalStyleController.h */,
 				C93ABECE1B8BD80E00202CA9 /* GlobalStyleController.m */,
-				C93ABEE01B8BDD0400202CA9 /* RestKitDataMapper.h */,
-				C93ABEE11B8BDD0400202CA9 /* RestKitDataMapper.m */,
 				C93ABF0E1B8C1F3600202CA9 /* SimpleTableViewCell.h */,
 				C93ABF0F1B8C1F3600202CA9 /* SimpleTableViewCell.m */,
 				C93ABEE61B8BF78F00202CA9 /* ShowcaseViewController.h */,
@@ -323,7 +318,6 @@
 				C93ABEDE1B8BD80E00202CA9 /* ColorSwatchView.m in Sources */,
 				C93ABEDA1B8BD80E00202CA9 /* GlobalStyleController.m in Sources */,
 				C93ABEDD1B8BD80E00202CA9 /* ColorSwatchAlphaView.m in Sources */,
-				C93ABEE21B8BDD0400202CA9 /* RestKitDataMapper.m in Sources */,
 				C93ABEAE1B8BD62A00202CA9 /* AppDelegate.m in Sources */,
 				C93ABEDB1B8BD80E00202CA9 /* StyleExportViewController.m in Sources */,
 				C93ABEDC1B8BD80E00202CA9 /* ColorPickerViewController.m in Sources */,
