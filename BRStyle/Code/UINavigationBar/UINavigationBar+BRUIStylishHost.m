@@ -15,11 +15,11 @@
 @dynamic uiStyle;
 
 - (void)uiStyleDidChange:(BRUIStyle *)style {
-	self.tintColor = style.inverseAppPrimaryColor;
-	self.barTintColor = style.appPrimaryColor;
+	self.tintColor = style.colors.inverseControlSettings.normalColorSettings.actionColor;
+	self.barTintColor = style.colors.navigationColor;
 	[self setTitleTextAttributes:@{
-								  NSForegroundColorAttributeName: style.inverseTextColor,
-								  NSFontAttributeName: style.titleFont,
+								  NSForegroundColorAttributeName: style.colors.inverseControlSettings.normalColorSettings.actionColor,
+								  NSFontAttributeName: style.fonts.navigationFont,
 								  }];
 }
 

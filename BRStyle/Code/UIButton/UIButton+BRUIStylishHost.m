@@ -16,9 +16,12 @@
 
 - (void)uiStyleDidChange:(BRUIStyle *)style {
 	const BOOL inverse = ([self nearestAncestorViewOfType:[UINavigationBar class]] != nil || [self nearestAncestorViewOfType:[UIToolbar class]] != nil);
-	self.titleLabel.font = style.uiFont;
-	[self setTitleColor:(inverse ? style.inverseControlTextColor : style.controlTextColor) forState:UIControlStateNormal];
-	[self setTitleColor:(inverse ? style.inverseControlSelectedColor : style.controlSelectedColor) forState:UIControlStateSelected];
+	self.titleLabel.font = style.fonts.actionFont;
+	BRUIStyleControlStateColorSettings *controlSettings = (inverse ? style.colors.inverseControlSettings : style.colors.controlSettings);
+	[self setTitleColor:controlSettings.normalColorSettings.actionColor forState:UIControlStateNormal];
+	[self setTitleColor:controlSettings.highlightedColorSettings.actionColor forState:UIControlStateHighlighted];
+	[self setTitleColor:controlSettings.selectedColorSettings.actionColor forState:UIControlStateSelected];
+	[self setTitleColor:controlSettings.disabledColorSettings.actionColor forState:UIControlStateDisabled];
 }
 
 @end
