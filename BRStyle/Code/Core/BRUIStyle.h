@@ -76,6 +76,15 @@ extern NSString * const BRStyleNotificationUIStyleDidChange;
 + (void)setDefaultStyle:(BRUIStyle *)style;
 
 /**
+ Decode a style intance from a dictionary representation.
+ 
+ The dictionary shoud be in the form returned by the @c dictionaryRepresentation method.
+ @param dictionary The dictionary to decode.
+ @return A new style instance.
+ */
++ (instancetype)styleWithDictionary:(NSDictionary *)dictionary;
+
+/**
  Test if this style represents the default style.
  */
 @property (nonatomic, readonly, getter=isDefaultStyle) BOOL defaultStyle;
@@ -85,6 +94,17 @@ extern NSString * const BRStyleNotificationUIStyleDidChange;
 
 /** The color style settings. */
 @property (nonatomic, readonly) BRUIStyleColorSettings *colors;
+
+/**
+ Get a dictionary representation of the receiver.
+ 
+ The resulting dictionary will contain only simple data types, suitable for serializing
+ into JSON or other encodings.
+ 
+ @return A dictionary representation.
+ @see styleWithDictionary:
+ */
+- (NSDictionary *)dictionaryRepresentation;
 
 @end
 

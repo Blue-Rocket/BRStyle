@@ -81,11 +81,11 @@ static BRUIStyle *DefaultStyle;
 
 #pragma mark - Memory management
 
-- (id)init {
+- (instancetype)init {
 	return [self initWithUIStyle:nil];
 }
 
-- (id)initWithUIStyle:(BRUIStyle *)other {
+- (instancetype)initWithUIStyle:(BRUIStyle *)other {
 	if ( (self = [super init]) ) {
 		if ( other == nil ) {
 			fonts = [BRUIStyleFontSettings new];
@@ -96,6 +96,25 @@ static BRUIStyle *DefaultStyle;
 		}
 	}
 	return self;
+}
+
+#pragma mark - Dictionary representation
+
++ (instancetype)styleWithDictionary:(NSDictionary *)dictionary {
+	return [[self alloc] initWithDictionaryRepresentation:dictionary];
+}
+
+- (instancetype)initWithDictionaryRepresentation:(NSDictionary *)dictionary {
+	if ( (self = [super init]) ) {
+		fonts = [[BRUIStyleFontSettings alloc] initWithDictionaryRepresentation:dictionary[@"fonts"]];
+		colors = [[BRUIStyleColorSettings alloc] initWithDictionaryRepresentation:dictionary[@"colors"]];
+	}
+	return self;
+}
+
+- (NSDictionary *)dictionaryRepresentation {
+	return @{@"fonts" : (fonts ? [fonts dictionaryRepresentation] : [NSNull null]),
+			 @"colors" : (colors ? [colors dictionaryRepresentation] : [NSNull null])};
 }
 
 #pragma mark - NSCopying
@@ -153,6 +172,14 @@ static BRUIStyle *DefaultStyle;
 
 @dynamic fonts;
 @dynamic colors;
+
+- (instancetype)initWithDictionaryRepresentation:(NSDictionary *)dictionary {
+	if ( (self = [super initWithDictionaryRepresentation:dictionary]) ) {
+		fonts = [fonts mutableCopy];
+		colors = [colors mutableCopy];
+	}
+	return self;
+}
 
 - (void)setFonts:(BRMutableUIStyleFontSettings * __nonnull)theFonts {
 	fonts = theFonts;

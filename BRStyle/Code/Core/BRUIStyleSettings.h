@@ -15,6 +15,28 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface BRUIStyleSettings : NSObject <NSCopying, NSSecureCoding>
 
+/**
+ Decode a settings intance from a dictionary representation.
+ 
+ The dictionary shoud be in the form returned by the @c dictionaryRepresentation method.
+ Note that default values will be provided, and @c dictionary values override those defaults.
+ 
+ @param dictionary The dictionary to decode.
+ @return A new settings instance.
+ */
+- (instancetype)initWithDictionaryRepresentation:(NSDictionary *)dictionary;
+
+/**
+ Get a dictionary representation of the receiver.
+ 
+ The resulting dictionary will contain only simple data types, suitable for serializing
+ into JSON or other encodings.
+ 
+ @return A dictionary representation.
+ @see styleWithDictionary:
+ */
+- (NSDictionary *)dictionaryRepresentation;
+
 @end
 
 /**

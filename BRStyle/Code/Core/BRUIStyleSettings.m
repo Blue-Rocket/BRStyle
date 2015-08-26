@@ -75,6 +75,72 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 	return settings;
 }
 
+#pragma mark - Dictionary representation
+
+- (instancetype)initWithDictionaryRepresentation:(NSDictionary *)dictionary {
+	NSMutableDictionary *decoded = [[[self class] defaultSettings] mutableCopy];
+	[[[self class] supportedSettingNames] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+		NSString *key = obj;
+		id value = dictionary[key];
+		id result = nil;
+		BOOL nullValue = [value isKindOfClass:[NSNull class]];
+		if ( [key hasSuffix:@"Color"] && nullValue != YES ) {
+			// colors assumed to be #rgba format
+			unsigned long long colorInteger = 0;
+			NSScanner *scanner = [[NSScanner alloc] initWithString:value];
+			[scanner scanString:@"#" intoString:NULL];
+			[scanner scanHexLongLong:&colorInteger];
+			result = [BRUIStyle colorWithRGBAHexInteger:(UInt32)colorInteger];
+		} else if ( [value isKindOfClass:[NSDictionary class]] ) {
+			if ( [key hasSuffix:@"Font"] ) {
+				result = [UIFont fontWithName:value[@"name"] size:[value[@"size"] floatValue]];
+			} else if ( [key hasSuffix:@"ColorSettings"] ) {
+				NSMutableDictionary *ccDefaults = [[NSMutableDictionary alloc] initWithCapacity:8];
+				BRUIStyleControlColorSettings *ccSettings = decoded[key];
+				if ( ccSettings ) {
+					[ccDefaults addEntriesFromDictionary:[ccSettings dictionaryRepresentation]];
+				}
+				[ccDefaults addEntriesFromDictionary:value];
+				result = [[BRUIStyleControlColorSettings alloc] initWithDictionaryRepresentation:ccDefaults];
+			} else if ( [key hasSuffix:@"ontrolSettings"] ) {
+				NSMutableDictionary *csDefaults = [[NSMutableDictionary alloc] initWithCapacity:8];
+				BRUIStyleControlStateColorSettings *csSettings = decoded[key];
+				if ( csSettings ) {
+					[csDefaults addEntriesFromDictionary:[csSettings dictionaryRepresentation]];
+				}
+				[csDefaults addEntriesFromDictionary:value];
+				result = [[BRUIStyleControlStateColorSettings alloc] initWithDictionaryRepresentation:csDefaults];
+			}
+		}
+		if ( result ) {
+			decoded[key] = result;
+		} else if ( nullValue ) {
+			[decoded removeObjectForKey:key];
+		}
+	}];
+	return [self initWithSettings:decoded];
+}
+
+- (NSDictionary *)dictionaryRepresentation {
+	NSMutableDictionary *encoded = [[NSMutableDictionary alloc] initWithCapacity:16];
+	[[[self class] supportedSettingNames] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+		NSString *key = obj;
+		id value = settings[key];
+		id result = nil;
+		if ( [value isKindOfClass:[UIColor class]] ) {
+			char hexStr[20];
+			sprintf(hexStr,"#%08x", [BRUIStyle rgbaHexIntegerForColor:value]);
+			result = [[NSString alloc] initWithUTF8String:hexStr];
+		} else if ( [value isKindOfClass:[UIFont class]] ) {
+			result = @{ @"name" : [value fontName], @"size" : @([value pointSize])};
+		} else if ( [value respondsToSelector:@selector(dictionaryRepresentation)] ) {
+			result = [value dictionaryRepresentation];
+		}
+		encoded[key] = (result ? result : [NSNull null]);
+	}];
+	return encoded;
+}
+
 #pragma mark - NSCopying
 
 - (id)copyWithZone:(NSZone *)zone {
@@ -344,12 +410,12 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 	// disabled settings
 	BRMutableUIStyleControlColorSettings *disabledControlColorSettings = [controlColorSettings mutableCopy];
 	disabledControlColorSettings.actionColor = [BRUIStyle colorWithRGBHexInteger:0xCACACA];
-	defaults[NSStringFromSelector(@selector(selectedColorSettings))] = (mutable ? disabledControlColorSettings : [disabledControlColorSettings copy]);
+	defaults[NSStringFromSelector(@selector(disabledColorSettings))] = (mutable ? disabledControlColorSettings : [disabledControlColorSettings copy]);
 
 	// dangerous settings
 	BRMutableUIStyleControlColorSettings *dangerousControlColorSettings = [controlColorSettings mutableCopy];
 	dangerousControlColorSettings.actionColor = [BRUIStyle colorWithRGBHexInteger:0xEB2D38];
-	defaults[NSStringFromSelector(@selector(selectedColorSettings))] = (mutable ? dangerousControlColorSettings : [dangerousControlColorSettings copy]);
+	defaults[NSStringFromSelector(@selector(dangerousColorSettings))] = (mutable ? dangerousControlColorSettings : [dangerousControlColorSettings copy]);
 	
 	return [defaults copy];
 }
@@ -546,5 +612,11 @@ void dynamicSettingSetterIMP(id self, SEL _cmd, id value) {
 	// assume setter only called on Mutable variations
 	NSMutableDictionary *settings = (NSMutableDictionary *)((BRUIStyleSettings *)self).settings;
 	NSString *settingName = SettingNameForSelector(YES, _cmd, NULL);
-	settings[settingName] = value;
+	[self willChangeValueForKey:settingName];
+	if ( value == nil ) {
+		[settings removeObjectForKey:settingName];
+	} else {
+		settings[settingName] = value;
+	}
+	[self didChangeValueForKey:settingName];
 }
