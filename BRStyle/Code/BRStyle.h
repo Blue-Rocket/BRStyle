@@ -7,7 +7,6 @@
 //
 
 #import <BRStyle/Core.h>
-#import <BRStyle/RestKit.h>
 #import <BRStyle/UIBarButtonItem+BRUIStylishHost.h>
 #import <BRStyle/UIButton+BRUIStylishHost.h>
 #import <BRStyle/UINavigationBar+BRUIStylishHost.h>
