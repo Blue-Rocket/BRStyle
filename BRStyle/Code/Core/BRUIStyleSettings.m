@@ -268,13 +268,13 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 	
 	defaults[NSStringFromSelector(@selector(formFont))] =  [UIFont fontWithName:@"GillSans-Light" size:17];
 	defaults[NSStringFromSelector(@selector(navigationFont))] =  [UIFont fontWithName:@"GillSans" size:21];
-	defaults[NSStringFromSelector(@selector(alertHeadlineFont))] =  [UIFont fontWithName:@"GillSans" size:24];
-	defaults[NSStringFromSelector(@selector(alertFont))] =  [UIFont fontWithName:@"GillSans-Light" size:16];
+	defaults[NSStringFromSelector(@selector(alertHeadlineFont))] =  [UIFont fontWithName:@"GillSans" size:15];
+	defaults[NSStringFromSelector(@selector(alertFont))] =  [UIFont fontWithName:@"GillSans-Light" size:13];
 	
 	defaults[NSStringFromSelector(@selector(heroFont))] =  [UIFont fontWithName:@"GillSans-Bold" size:21];
 	defaults[NSStringFromSelector(@selector(headlineFont))] =  [UIFont fontWithName:@"GillSans-Bold" size:17];
 	defaults[NSStringFromSelector(@selector(secondaryHeadlineFont))] =  [UIFont fontWithName:@"GillSans-Light" size:15];
-	defaults[NSStringFromSelector(@selector(textFont))] =  [UIFont fontWithName:@"GillSans-Light" size:15];
+	defaults[NSStringFromSelector(@selector(textFont))] =  [UIFont fontWithName:@"GillSans-Light" size:13];
 	defaults[NSStringFromSelector(@selector(captionFont))] =  [UIFont fontWithName:@"GillSans" size:15];
 	
 	defaults[NSStringFromSelector(@selector(listFont))] =  [UIFont fontWithName:@"GillSans" size:17];
