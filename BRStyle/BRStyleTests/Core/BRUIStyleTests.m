@@ -124,13 +124,4 @@
 	assertThat(colors.backgroundColor, nilValue());
 }
 
-- (void)foo {
-	BRMutableUIStyle *mutableStyle = [BRMutableUIStyle new];
-	BRMutableUIStyleColorSettings *colors = [BRMutableUIStyleColorSettings new];
-	colors.primaryColor = [UIColor blueColor];
-	BRMutableUIStyleFontSettings *fonts = [BRMutableUIStyleFontSettings new];
-	fonts.actionFont = [UIFont systemFontOfSize:15];
-	[BRUIStyle setDefaultStyle:mutableStyle];
-}
-
 @end
