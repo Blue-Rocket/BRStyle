@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
   
   s.requires_arc       = true
 
-  s.default_subspecs = 'Core'
+  s.default_subspecs = 'All'
   
   s.subspec 'All' do |sp|
     sp.source_files = 'BRStyle/Code/BRStyle.h'
