@@ -284,15 +284,26 @@ NS_ASSUME_NONNULL_BEGIN
 /** The color to apply to caption text. */
 @property (nonatomic, readwrite) UIColor *captionColor;
 
+/** The color to apply to form field text. */
+@property (nonatomic, readwrite) UIColor *formColor;
+
+/** The color to apply to placeholder text. */
+@property (nonatomic, readwrite) UIColor *placeholderColor;
+
+/** The color to apply to alert titles. */
+@property (nonatomic, readwrite) UIColor *alertHeadlineColor;
+
+/** The color to apply to alert messages. */
+@property (nonatomic, readwrite) UIColor *alertColor;
+
 ///-------------------------------
 /// @name UI color styles
 ///-------------------------------
 
-@property (nonatomic, readwrite) UIColor *formColor;
-@property (nonatomic, readwrite) UIColor *placeholderColor;
+/** The color to apply to navigation elements, such as @c UINavigationBar or @c UIToolbar objects. */
 @property (nonatomic, readwrite) UIColor *navigationColor;
-@property (nonatomic, readwrite) UIColor *alertHeadlineColor;
-@property (nonatomic, readwrite) UIColor *alertColor;
+
+/** The color to apply to alert backgrounds. */
 @property (nonatomic, readwrite) UIColor *alertBackgroundColor;
 
 ///-------------------------------
