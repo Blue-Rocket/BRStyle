@@ -65,11 +65,16 @@ BRUIStyle *style = [BRUIStyle styleWithJSONResource:@"style.json" inBundle:nil];
 
 # Applying style properties
 
-For the impatient, by default **BRStyle** hooks into common system classes such as `UIButton` and `UINavigationBar` and applies the default global style to them for you. By merely including **BRStyle** in your project, you'll start to see the default style applied to things.
+For the impatient, by default **BRStyle** hooks into common system classes such
+as `UIButton` and `UINavigationBar` and applies the default global style to them
+for you. By merely including **BRStyle** in your project, you'll start to see
+the default style applied to things.
 
 ## Digging in and being a stylish host
 
-**BRStyle** defines a couple of special protocols, `BRStylish` and `BRStylishHost`, that are used to flag objects as being interested in being styled. The protocol looks like this:
+**BRStyle** defines a couple of special protocols, `BRStylish` and
+`BRStylishHost`, that are used to flag objects as being interested in being
+styled. The protocol looks like this:
 
 ```objc
 @protocol BRUIStylish <NSObject>
@@ -103,11 +108,19 @@ For the impatient, by default **BRStyle** hooks into common system classes such 
 @end
 ```
 
-Thus you can easily apply styles to view hierarchy objects from any view controller by simply referring to its `uiStyle` property. If your view controller then conforms to `BRUIStylishHost` then the `uiStyleDidChange:` method will be called on those controllers _when their views load_.
+Thus you can easily apply styles to view hierarchy objects from any view
+controller by simply referring to its `uiStyle` property. If your view
+controller then conforms to `BRUIStylishHost` then the `uiStyleDidChange:`
+method will be called on those controllers _when their views load_.
 
 ## Automagical styling
 
-**BRStyle** goes one step further from providing an easy way to access style properties from your app: it can automatically apply those properties to your classes. This support comes from some additional categories added to core system classes such as `UIButton`. Using buttons as an example, the `UIBarButtonItem+BRUIStylishHost` category makes every button a `BRUIStylishHost`:
+**BRStyle** goes one step further from providing an easy way to access style
+properties from your app: it can automatically apply those properties to your
+classes. This support comes from some additional categories added to core system
+classes such as `UIButton`. Using buttons as an example, the
+`UIBarButtonItem+BRUIStylishHost` category makes every button a
+`BRUIStylishHost`:
 
 ```objc
 // UIButton+BRUIStylishHost.h
@@ -138,4 +151,16 @@ In this way, core interface components will have their style configured via **BR
 
 ## Non-magical styling
 
-If you prefer to style your objects yourself, then you can use just the `BRStyle/Core` Cocopod subspec (or don't include any of the `+BRUIStylishHost` categories in your project). Then you can implement classes, or add extensions to existing ones, that conform to `BRUIStylishHost` and style them in the `uiStyleDidChange:` callback.
+If you prefer to style your objects yourself, then you can use just the
+`BRStyle/Core` Cocopod subspec (or don't include any of the `+BRUIStylishHost`
+categories in your project). Then you can implement classes, or add extensions
+to existing ones, that conform to `BRUIStylishHost` and style them in the
+`uiStyleDidChange:` callback.
+
+# Sample app
+
+The `BRStyleSampler` project included in the source repository includes a sample
+application that shows how the styling can be used, and includes simple editing
+functionality to modify the colors and see the changes applied. It can also
+generate JSON from your style, so you could use that as a starting point for
+your own app's style needs.
