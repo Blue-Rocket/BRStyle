@@ -7,4 +7,8 @@ target :BRStyleSampler do
 	pod 'BRCocoaLumberjack',        '~> 2.0', :inhibit_warnings => true
 	pod 'BRStyle/All',              :path => '../'
 	pod 'Color-Picker-for-iOS', 	'~> 2.0'
+	
+	target :BRStyleSamplerTests do
+		pod 'OCHamcrest',			'~> 4.1', :inhibit_warnings => true
+	end
 end
