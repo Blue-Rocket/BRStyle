@@ -11,7 +11,9 @@
 #import "BRUIStylishHost.h"
 
 /**
- Extension of UIToolbar to apply BRUIStyle attributes.
+ Turn all UIToolbar objects into stylish hosts, appling a tint color based on
+ @c inverseControlSettings.normalColorSettings.actionColor and a bar tint color 
+ based on @c navigationColor.
  */
 @interface UIToolbar (BRUIStylishHost) <BRUIStylishHost>
 
