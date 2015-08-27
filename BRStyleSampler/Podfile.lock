@@ -1,20 +1,20 @@
 PODS:
   - BRCocoaLumberjack (2.0.1):
     - CocoaLumberjack (~> 2.0)
-  - BRStyle/All (0.9.3):
+  - BRStyle/All (0.9.4):
     - BRStyle/Core
     - BRStyle/UIBarButtonItem
     - BRStyle/UIButton
     - BRStyle/UINavigationBar
     - BRStyle/UIToolbar
-  - BRStyle/Core (0.9.3)
-  - BRStyle/UIBarButtonItem (0.9.3):
+  - BRStyle/Core (0.9.4)
+  - BRStyle/UIBarButtonItem (0.9.4):
     - BRStyle/Core
-  - BRStyle/UIButton (0.9.3):
+  - BRStyle/UIButton (0.9.4):
     - BRStyle/Core
-  - BRStyle/UINavigationBar (0.9.3):
+  - BRStyle/UINavigationBar (0.9.4):
     - BRStyle/Core
-  - BRStyle/UIToolbar (0.9.3):
+  - BRStyle/UIToolbar (0.9.4):
     - BRStyle/Core
   - CocoaLumberjack (2.0.1):
     - CocoaLumberjack/Default (= 2.0.1)
@@ -25,11 +25,13 @@ PODS:
   - CocoaLumberjack/Extensions (2.0.1):
     - CocoaLumberjack/Default
   - Color-Picker-for-iOS (2.0.2)
+  - OCHamcrest (4.1.1)
 
 DEPENDENCIES:
   - BRCocoaLumberjack (~> 2.0)
   - BRStyle/All (from `../`)
   - Color-Picker-for-iOS (~> 2.0)
+  - OCHamcrest (~> 4.1)
 
 EXTERNAL SOURCES:
   BRStyle:
@@ -37,8 +39,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   BRCocoaLumberjack: 529d9525681ea2514d3d607011267848bc337bbe
-  BRStyle: c6d09ad45154974a84c5ee0c4c60557ea3e3de86
+  BRStyle: 15232609b5a21467d875818fd1c65ba0119e70d3
   CocoaLumberjack: 019d1361244274a6138c788c6cb80baabc13fb8f
   Color-Picker-for-iOS: 4980589b3e3cfe7198f227dd50be9adb02d8bc0b
+  OCHamcrest: 6f03ffa81d12feab872638490a44ab0a6d3aca10
 
 COCOAPODS: 0.38.2
