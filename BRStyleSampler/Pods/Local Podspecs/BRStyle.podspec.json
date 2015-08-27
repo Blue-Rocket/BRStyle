@@ -1,6 +1,6 @@
 {
   "name": "BRStyle",
-  "version": "0.9.1",
+  "version": "0.9.3",
   "summary": "Basic color and font style framework for UIKit.",
   "description": "BRStyle provides a basic style framework for application-wide\ncolors and fonts. It aims to make it easy to define a global\nstyle for your application, in a simple way.",
   "homepage": "https://github.com/Blue-Rocket/BRStyle",
@@ -17,7 +17,7 @@
   },
   "source": {
     "git": "https://github.com/Blue-Rocket/BRStyle.git",
-    "tag": "0.9.1"
+    "tag": "0.9.3"
   },
   "requires_arc": true,
   "default_subspecs": "Core",
@@ -27,9 +27,6 @@
       "source_files": "BRStyle/Code/BRStyle.h",
       "dependencies": {
         "BRStyle/Core": [
-
-        ],
-        "BRStyle/RestKit": [
 
         ],
         "BRStyle/UIBarButtonItem": [
@@ -52,27 +49,6 @@
         "BRStyle/Code/Core.h",
         "BRStyle/Code/Core"
       ]
-    },
-    {
-      "name": "RestKit",
-      "source_files": [
-        "BRStyle/Code/RestKit.h",
-        "BRStyle/Code/RestKit"
-      ],
-      "dependencies": {
-        "BRStyle/Core": [
-
-        ],
-        "RestKit/ObjectMapping": [
-          "~> 0.24"
-        ],
-        "MAObjCRuntime": [
-          "~> 0.0.1"
-        ]
-      },
-      "ios": {
-        "frameworks": "MobileCoreServices"
-      }
     },
     {
       "name": "UIBarButtonItem",

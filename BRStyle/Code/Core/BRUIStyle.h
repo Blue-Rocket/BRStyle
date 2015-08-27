@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Blue Rocket. Distributable under the terms of the Apache License, Version 2.0.
 //
 
-#import <UIKit/UIKit.h>
+#import "BRUIStyleSettings.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,48 +19,11 @@ extern NSString * const BRStyleNotificationUIStyleDidChange;
 /**
  Encapsulation of style attributes used for drawing BR UI components.
  */
-IB_DESIGNABLE
 @interface BRUIStyle : NSObject <NSCopying, NSMutableCopying, NSSecureCoding>
 
-///-------------------------------
-/// @name Utilities
-///-------------------------------
-
-/**
- Create a @c UIColor instance from a 32-bit RGB hex value.
- 
- @param integer The color as a 32-bit RGB hex value. Only the last 24 bits are used.
- @return The color object.
- */
-+ (UIColor *)colorWithRGBHexInteger:(UInt32)integer;
-
-/**
- Create a @c UIColor instance from a 32-bit RGBA hex value.
- 
- @param integer The color as a 32-bit RGBA hex value.
- @return The color object.
- */
-+ (UIColor *)colorWithRGBAHexInteger:(UInt32)integer;
-
-/**
- Create a 32-bit RGB hex value from a @c UIColor instance.
- 
- @param color The color to convert.
- @return integer The color as a 32-bit RGB hex value. Only the last 24 bits are used.
- */
-+ (UInt32)rgbHexIntegerForColor:(UIColor *)color;
-
-/**
- Create a 32-bit RGBA hex value from a @c UIColor instance.
- 
- @param color The color to convert.
- @return integer The color as a 32-bit RGBA hex value.
- */
-+ (UInt32)rgbaHexIntegerForColor:(UIColor *)color;
-
-///-------------------------------
+/// -------------------------------
 /// @name Default support
-///-------------------------------
+/// -------------------------------
 
 /**
  Get a global shared style instance.
@@ -81,159 +44,102 @@ IB_DESIGNABLE
  */
 @property (nonatomic, readonly, getter=isDefaultStyle) BOOL defaultStyle;
 
-///-------------------------------
-/// @name Structural color styles
-///-------------------------------
+/// -------------------------------
+/// @name Style properties
+/// -------------------------------
 
-@property (nonatomic, readonly) UIColor *appPrimaryColor;
-@property (nonatomic, readonly) UIColor *appBodyColor;
-@property (nonatomic, readonly) UIColor *appSeparatorColor;
+/** The font style settings. */
+@property (nonatomic, readonly) BRUIStyleFontSettings *fonts;
 
-@property (nonatomic, readonly) UIColor *inverseAppPrimaryColor;
+/** The color style settings. */
+@property (nonatomic, readonly) BRUIStyleColorSettings *colors;
 
-///-------------------------------
-/// @name Text color styles
-///-------------------------------
+/// -------------------------------
+/// @name Serialization
+/// -------------------------------
 
-@property (nonatomic, readonly) UIColor *textColor;
-@property (nonatomic, readonly) UIColor *textShadowColor;
-@property (nonatomic, readonly) UIColor *secondaryColor;
-@property (nonatomic, readonly) UIColor *captionColor;
+/**
+ Create a style instance from a JSON-encoded bundle resource.
+ 
+ @param resourceName The name of the JSON resource to load.
+ @param bundle The bundle to use, or @c nil for the main bundle.
+ @return The new style instance, or @c nil if the resource could not be loaded.
+ */
++ (nullable BRUIStyle *)styleWithJSONResource:(NSString *)resourceName inBundle:(nullable NSBundle *)bundle;
 
-@property (nonatomic, readonly) UIColor *inverseTextColor;
-@property (nonatomic, readonly) UIColor *inverseTextShadowColor;
-@property (nonatomic, readonly) UIColor *inverseSecondaryColor;
-@property (nonatomic, readonly) UIColor *inverseCaptionColor;
+/**
+ Decode a style intance from a dictionary representation.
+ 
+ The dictionary shoud be in the form returned by the @c dictionaryRepresentation method.
+ @param dictionary The dictionary to decode.
+ @return A new style instance.
+ */
++ (BRUIStyle *)styleWithDictionary:(NSDictionary *)dictionary;
 
-///-------------------------------
-/// @name Control color styles
-///-------------------------------
+/**
+ Get a dictionary representation of the receiver.
+ 
+ The resulting dictionary will contain only simple data types, suitable for serializing
+ into JSON or other encodings.
+ 
+ @return A dictionary representation.
+ @see styleWithDictionary:
+ */
+- (NSDictionary *)dictionaryRepresentation;
 
-@property (nonatomic, readonly) UIColor *controlTextColor;
-@property (nonatomic, readonly) UIColor *controlBorderColor;
-@property (nonatomic, readonly) UIColor *controlBorderGlossColor;
-@property (nonatomic, readonly) UIColor *controlHighlightedColor;
-@property (nonatomic, readonly) UIColor *controlHighlightedShadowColor;
-@property (nonatomic, readonly) UIColor *controlSelectedColor;
-@property (nonatomic, readonly) UIColor *controlDisabledColor;
-@property (nonatomic, readonly) UIColor *controlDangerColor;
+/// -------------------------------
+/// @name Utilities
+/// -------------------------------
 
-@property (nonatomic, readonly) UIColor *inverseControlTextColor;
-@property (nonatomic, readonly) UIColor *inverseControlBorderColor;
-@property (nonatomic, readonly) UIColor *inverseControlBorderGlossColor;
-@property (nonatomic, readonly) UIColor *inverseControlHighlightedColor;
-@property (nonatomic, readonly) UIColor *inverseControlHighlightedShadowColor;
-@property (nonatomic, readonly) UIColor *inverseControlSelectedColor;
-@property (nonatomic, readonly) UIColor *inverseControlDisabledColor;
+/**
+ Create a @c UIColor instance from a 32-bit RGB value.
+ 
+ This is a convenient way to get colors from code, when you can specify a color like full-red
+ in hex notation like @c 0xFF0000.
+ 
+ @param integer The color as a 32-bit RGB integer value. Only the last 24 bits are used.
+ @return The color object.
+ */
++ (UIColor *)colorWithRGBInteger:(UInt32)integer;
 
-///-------------------------------
-/// @name Font styles
-///-------------------------------
+/**
+ Create a @c UIColor instance from a 32-bit RGBA value.
+ 
+ This is a convenient way to get colors from code, when you can specify a color like full-red
+ 50% transparent in hex notation like @c 0xFF000080.
+ 
+ @param integer The color as a 32-bit RGBA integer value.
+ @return The color object.
+ */
++ (UIColor *)colorWithRGBAInteger:(UInt32)integer;
 
-@property (nonatomic, readonly) UIFont *uiFont;
-@property (nonatomic, readonly) UIFont *uiBoldFont;
+/**
+ Create a 32-bit RGB integer value from a @c UIColor instance.
+ 
+ @param color The color to convert.
+ @return integer The color as a 32-bit RGB integer value. Only the last 24 bits are used.
+ */
++ (UInt32)rgbIntegerForColor:(UIColor *)color;
 
-///-------------------------------
-/// @name Structural font styles
-///-------------------------------
-
-@property (nonatomic, readonly) UIFont *bodyFont;
-@property (nonatomic, readonly) UIFont *titleFont;
-@property (nonatomic, readonly) UIFont *heroFont;
-@property (nonatomic, readonly) UIFont *headlineFont;
-@property (nonatomic, readonly) UIFont *secondaryFont;
-@property (nonatomic, readonly) UIFont *captionFont;
-
-@property (nonatomic, readonly) UIFont *listFont;
-@property (nonatomic, readonly) UIFont *listSecondaryFont;
-@property (nonatomic, readonly) UIFont *listCaptionFont;
-
-@property (nonatomic, readonly) UIFont *alertBodyFont;
-@property (nonatomic, readonly) UIFont *alertHeadlineFont;
+/**
+ Create a 32-bit RGBA integer value from a @c UIColor instance.
+ 
+ @param color The color to convert.
+ @return integer The color as a 32-bit RGBA integer value.
+ */
++ (UInt32)rgbaHexIntegerForColor:(UIColor *)color;
 
 @end
+
+#pragma mark - Mutable support
 
 @interface BRMutableUIStyle : BRUIStyle
 
-///-------------------------------
-/// @name Structural color styles
-///-------------------------------
+/** The font style settings. */
+@property (nonatomic, readwrite) BRMutableUIStyleFontSettings *fonts;
 
-@property (nonatomic, readwrite) UIColor *appPrimaryColor;
-@property (nonatomic, readwrite) UIColor *appBodyColor;
-@property (nonatomic, readwrite) UIColor *appSeparatorColor;
-
-@property (nonatomic, readwrite) UIColor *inverseAppPrimaryColor;
-
-///-------------------------------
-/// @name Text color styles
-///-------------------------------
-
-@property (nonatomic, readwrite) UIColor *textColor;
-@property (nonatomic, readwrite) UIColor *textShadowColor;
-@property (nonatomic, readwrite) UIColor *secondaryColor;
-@property (nonatomic, readwrite) UIColor *captionColor;
-
-@property (nonatomic, readwrite) UIColor *inverseTextColor;
-@property (nonatomic, readwrite) UIColor *inverseTextShadowColor;
-@property (nonatomic, readwrite) UIColor *inverseSecondaryColor;
-@property (nonatomic, readwrite) UIColor *inverseCaptionColor;
-
-///-------------------------------
-/// @name Control color styles
-///-------------------------------
-
-@property (nonatomic, readwrite) UIColor *controlTextColor;
-@property (nonatomic, readwrite) UIColor *controlBorderColor;
-@property (nonatomic, readwrite) UIColor *controlBorderGlossColor;
-@property (nonatomic, readwrite) UIColor *controlHighlightedColor;
-@property (nonatomic, readwrite) UIColor *controlHighlightedShadowColor;
-@property (nonatomic, readwrite) UIColor *controlSelectedColor;
-@property (nonatomic, readwrite) UIColor *controlDisabledColor;
-@property (nonatomic, readwrite) UIColor *controlDangerColor;
-
-@property (nonatomic, readwrite) UIColor *inverseControlTextColor;
-@property (nonatomic, readwrite) UIColor *inverseControlBorderColor;
-@property (nonatomic, readwrite) UIColor *inverseControlBorderGlossColor;
-@property (nonatomic, readwrite) UIColor *inverseControlHighlightedColor;
-@property (nonatomic, readwrite) UIColor *inverseControlHighlightedShadowColor;
-@property (nonatomic, readwrite) UIColor *inverseControlSelectedColor;
-@property (nonatomic, readwrite) UIColor *inverseControlDisabledColor;
-
-///-------------------------------
-/// @name UI font styles
-///-------------------------------
-
-@property (nonatomic, readwrite) UIFont *uiFont;
-@property (nonatomic, readwrite) UIFont *uiBoldFont;
-
-///-------------------------------
-/// @name Structural font styles
-///-------------------------------
-
-@property (nonatomic, readwrite) UIFont *bodyFont;
-@property (nonatomic, readwrite) UIFont *titleFont;
-@property (nonatomic, readwrite) UIFont *heroFont;
-@property (nonatomic, readwrite) UIFont *headlineFont;
-@property (nonatomic, readwrite) UIFont *secondaryFont;
-@property (nonatomic, readwrite) UIFont *captionFont;
-
-@property (nonatomic, readwrite) UIFont *listFont;
-@property (nonatomic, readwrite) UIFont *listSecondaryFont;
-@property (nonatomic, readwrite) UIFont *listCaptionFont;
-
-@property (nonatomic, readwrite) UIFont *alertBodyFont;
-@property (nonatomic, readwrite) UIFont *alertHeadlineFont;
-
-@end
-
-/**
- A protocol for objects that support styling via BRUIStylish to conform to.
- */
-@protocol BRUIStylish <NSObject>
-
-/** A BRUIStyle object to use. If not configured, the global default style should be returned. */
-@property (nonatomic, strong, null_resettable) IBOutlet BRUIStyle *uiStyle;
+/** The color style settings. */
+@property (nonatomic, readwrite) BRMutableUIStyleColorSettings *colors;
 
 @end
 

@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = 'BRStyle'
-  s.version      = '0.9.2'
+  s.version      = '0.9.3'
   s.summary      = 'Basic color and font style framework for UIKit.'
 
   s.description        = <<-DESC
@@ -20,12 +20,11 @@ Pod::Spec.new do |s|
   
   s.requires_arc       = true
 
-  s.default_subspecs = 'Core'
+  s.default_subspecs = 'All'
   
   s.subspec 'All' do |sp|
     sp.source_files = 'BRStyle/Code/BRStyle.h'
     sp.dependency 'BRStyle/Core'
-    sp.dependency 'BRStyle/RestKit'
 	sp.dependency 'BRStyle/UIBarButtonItem'
 	sp.dependency 'BRStyle/UIButton'
 	sp.dependency 'BRStyle/UINavigationBar'
@@ -36,14 +35,6 @@ Pod::Spec.new do |s|
     sp.source_files = 'BRStyle/Code/Core.h', 'BRStyle/Code/Core'
   end
   
-  s.subspec 'RestKit' do |sp|
-    sp.source_files = 'BRStyle/Code/RestKit.h', 'BRStyle/Code/RestKit'
-	sp.dependency 'BRStyle/Core'
-    sp.dependency 'RestKit/ObjectMapping', '~> 0.24'
-    sp.dependency 'MAObjCRuntime',         '~> 0.0.1'
-    sp.ios.frameworks = 'MobileCoreServices'
-  end
-
   s.subspec 'UIBarButtonItem' do |sp|
     sp.source_files = 'BRStyle/Code/UIBarButtonItem'
     sp.dependency 'BRStyle/Core'

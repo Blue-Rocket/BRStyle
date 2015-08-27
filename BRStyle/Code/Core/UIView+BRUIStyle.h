@@ -10,6 +10,13 @@
 
 #import "BRUIStyle.h"
 
+/**
+ Extension to UIView to allow for stylish objects.
+ 
+ This extension will hook into the @c willMoveToWindow: method and for any UIView that also
+ conforms to @c BRUIStylishHost will have their style automatically updated, as well as when 
+ global style changes are made.
+ */
 @interface UIView (BRUIStyle)
 
 /** A BRUIStyle object to use. If not configured, the global default style will be returned. */

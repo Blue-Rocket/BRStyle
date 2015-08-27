@@ -11,6 +11,10 @@
 #import "BRUIStyle.h"
 #import "BRUIStylishHost.h"
 
+/**
+ Turn all UIBarButtonItem objects into stylish hosts, appling title text attributes based on 
+ the @c inverseControlSettings.normalColorSettings.actionColor color and @c actionFont.
+ */
 @interface UIBarButtonItem (BRUIStylishHost) <BRUIStylishHost>
 
 @end

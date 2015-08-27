@@ -10,7 +10,6 @@
 
 #import <BRCocoaLumberjack/BRCocoaLumberjack.h>
 #import <BRStyle/BRStyle.h>
-#import "RestKitDataMapper.h"
 
 @interface StyleExportViewController () <BRUIStylish>
 @property (strong, nonatomic) IBOutlet UITextView *textView;
@@ -28,17 +27,8 @@
 }
 
 - (NSString *)jsonForStyle:(BRUIStyle *)style {
-	static RestKitDataMapper *mapper;
-	if ( !mapper ) {
-		mapper = [[RestKitDataMapper alloc] initWithObjectMapping:[BRUIStyleMappingRestKit uiStyleMapping]];
-	}
-	
+	NSDictionary *dict = [style dictionaryRepresentation];
 	NSError *error = nil;
-	NSDictionary *dict = [mapper performEncodingWithObject:style error:&error];
-	if ( error ) {
-		log4Error(@"Error mapping JSON: %@", [error localizedDescription]);
-		return nil;
-	}
 	NSData *data = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:&error];
 	if ( error ) {
 		log4Error(@"Error encoding JSON: %@", [error localizedDescription]);

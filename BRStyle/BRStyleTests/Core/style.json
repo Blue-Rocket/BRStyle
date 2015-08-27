@@ -1,0 +1,12 @@
+{
+	"colors" : {
+		"primaryColor" : "#ff0000ff",
+		"backgroundColor" : null
+	},
+	"fonts" : {
+		"actionFont" : {
+			"name" : "Helvetica-Regular",
+			"size" : 12
+		}
+	}
+}

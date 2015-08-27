@@ -1,5 +1,0 @@
-#include "RestKit.xcconfig"
-GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Private" "${PODS_ROOT}/Headers/Private/RestKit" "${PODS_ROOT}/Headers/Private/RestKit/ObjectMapping" "${PODS_ROOT}/Headers/Private/RestKit/Support" "${PODS_ROOT}/Headers/Private/Vendor/LibComponentLogging/Core" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/BRCocoaLumberjack" "${PODS_ROOT}/Headers/Public/BRStyle" "${PODS_ROOT}/Headers/Public/CocoaLumberjack" "${PODS_ROOT}/Headers/Public/Color-Picker-for-iOS" "${PODS_ROOT}/Headers/Public/ISO8601DateFormatterValueTransformer" "${PODS_ROOT}/Headers/Public/MAObjCRuntime" "${PODS_ROOT}/Headers/Public/RKValueTransformers" "${PODS_ROOT}/Headers/Public/RestKit" "${PODS_ROOT}/Headers/Public/RestKit/ObjectMapping" "${PODS_ROOT}/Headers/Public/RestKit/Support" "${PODS_ROOT}/Headers/Public/TransitionKit" "${PODS_ROOT}/Headers/Public/Vendor/LibComponentLogging/Core"
-PODS_ROOT = ${SRCROOT}
-SKIP_INSTALL = YES

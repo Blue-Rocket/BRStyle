@@ -10,6 +10,13 @@
 
 #import "BRUIStyle.h"
 
+/**
+ Extension to UIViewController to allow for stylish objects.
+ 
+ This extension will hook into the @c viewDidLoad method and for any UIViewController that also
+ conforms to @c BRUIStylishHost will have their style automatically updated, as well as when
+ global style changes are made.
+ */
 @interface UIViewController (BRUIStyle)
 
 /** A BRUIStyle object to use. If not configured, the global default style will be returned. */

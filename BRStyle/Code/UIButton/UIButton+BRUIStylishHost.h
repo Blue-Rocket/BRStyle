@@ -11,6 +11,11 @@
 #import "BRUIStyle.h"
 #import "BRUIStylishHost.h"
 
+/**
+ Turn all UIButton objects into stylish hosts, appling title font and color based on
+ the @c colors.controlSettings. If the button is contained within a @c UIToolbar or
+ a @c UINavigationBar then @c colors.inverseControlSettings will be used instead.
+ */
 @interface UIButton (BRUIStylishHost) <BRUIStylishHost>
 
 @end
