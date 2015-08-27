@@ -98,6 +98,10 @@ static BRUIStyle *DefaultStyle;
 	return self;
 }
 
+- (NSString *)debugDescription {
+	return [NSString stringWithFormat:@"BRUIStyle{colors=%@; fonts = %@}", [colors debugDescription], [fonts debugDescription]];
+}
+
 #pragma mark - Dictionary representation
 
 + (instancetype)styleWithDictionary:(NSDictionary *)dictionary {

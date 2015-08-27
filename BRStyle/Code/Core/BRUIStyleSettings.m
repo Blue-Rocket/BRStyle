@@ -75,6 +75,10 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 	return settings;
 }
 
+- (NSString *)debugDescription {
+	return [settings debugDescription];
+}
+
 #pragma mark - Dictionary representation
 
 - (instancetype)initWithDictionaryRepresentation:(NSDictionary *)dictionary {
