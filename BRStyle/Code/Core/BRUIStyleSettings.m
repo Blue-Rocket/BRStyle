@@ -150,7 +150,7 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 		id result = nil;
 		if ( [value isKindOfClass:[UIColor class]] ) {
 			char hexStr[20];
-			sprintf(hexStr,"#%08lx", (unsigned long)[BRUIStyle rgbaHexIntegerForColor:value]);
+			sprintf(hexStr,"#%08lx", (unsigned long)[BRUIStyle rgbaIntegerForColor:value]);
 			result = [[NSString alloc] initWithUTF8String:hexStr];
 		} else if ( [value isKindOfClass:[UIFont class]] ) {
 			if ( [BRUIStyleFontSettings isSystemFont:value] ) {

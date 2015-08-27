@@ -66,7 +66,7 @@ static BRUIStyle *DefaultStyle;
 	return 0;
 }
 
-+ (UInt32)rgbaHexIntegerForColor:(UIColor *)color {
++ (UInt32)rgbaIntegerForColor:(UIColor *)color {
 	CGFloat r, g, b, a;
 	if ( [color getRed:&r green:&g blue:&b alpha:&a] ) {
 		return (

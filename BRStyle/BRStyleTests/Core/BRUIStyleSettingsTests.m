@@ -122,8 +122,8 @@
 - (void)testControlColorInitWithDictionary {
 	NSDictionary *dict = @{ @"actionColor" : @"#1247b8ff", @"glossColor" : @"#1247B8FF", @"shadowColor" : [NSNull null] };
 	BRUIStyleControlColorSettings *settings = [[BRUIStyleControlColorSettings alloc] initWithDictionaryRepresentation:dict];
-	assertThatUnsignedInt([BRUIStyle rgbaHexIntegerForColor:settings.actionColor], equalToUnsignedInt(0x1247b8ff));
-	assertThatUnsignedInt([BRUIStyle rgbaHexIntegerForColor:settings.glossColor], equalToUnsignedInt(0x1247b8ff));
+	assertThatUnsignedInt([BRUIStyle rgbaIntegerForColor:settings.actionColor], equalToUnsignedInt(0x1247b8ff));
+	assertThatUnsignedInt([BRUIStyle rgbaIntegerForColor:settings.glossColor], equalToUnsignedInt(0x1247b8ff));
 	assertThat(settings.shadowColor, nilValue());
 }
 
@@ -147,7 +147,7 @@
 	BRUIStyleControlStateColorSettings *settings = [[BRUIStyleControlStateColorSettings alloc] initWithDictionaryRepresentation:dict];
 	BRUIStyleControlColorSettings *normalSettings = settings.normalColorSettings;
 	assertThat(normalSettings, notNilValue());
-	assertThatUnsignedInt([BRUIStyle rgbaHexIntegerForColor:normalSettings.actionColor], equalToUnsignedInt(0x1247b8ff));
+	assertThatUnsignedInt([BRUIStyle rgbaIntegerForColor:normalSettings.actionColor], equalToUnsignedInt(0x1247b8ff));
 	assertThat(normalSettings.glossColor, nilValue());
 	assertThat(normalSettings.shadowColor, nilValue());
 }
