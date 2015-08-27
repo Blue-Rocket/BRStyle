@@ -1,6 +1,6 @@
 {
   "name": "BRStyle",
-  "version": "0.9.4",
+  "version": "0.9.6",
   "summary": "Basic color and font style framework for UIKit.",
   "description": "BRStyle provides a basic style framework for application-wide\ncolors and fonts. It aims to make it easy to define a global\nstyle for your application, in a simple way.",
   "homepage": "https://github.com/Blue-Rocket/BRStyle",
@@ -17,7 +17,7 @@
   },
   "source": {
     "git": "https://github.com/Blue-Rocket/BRStyle.git",
-    "tag": "0.9.4"
+    "tag": "0.9.6"
   },
   "requires_arc": true,
   "default_subspecs": "All",

@@ -114,7 +114,7 @@
 - (void)testControlColorDictionaryRepresentation {
 	BRUIStyleControlColorSettings *settings = [BRUIStyleControlColorSettings new];
 	NSDictionary *result = [settings dictionaryRepresentation];
-	assertThat(result, hasCountOf(4));
+	assertThat(result, hasCountOf(5));
 	assertThat(result[@"actionColor"], equalToIgnoringCase(@"#1247b8ff"));
 	assertThat(result[@"shadowColor"], equalToIgnoringCase(@"#5555557F"));
 }
@@ -135,7 +135,7 @@
 	assertThat(result, hasCountOf(5));
 	NSDictionary *normalColorSettings = result[@"normalColorSettings"];
 	assertThat(normalColorSettings, instanceOf([NSDictionary class]));
-	assertThat(normalColorSettings, hasCountOf(4));
+	assertThat(normalColorSettings, hasCountOf(5));
 	assertThat(normalColorSettings[@"actionColor"], equalToIgnoringCase(@"#555555FF"));
 	assertThat(normalColorSettings[@"borderColor"], equalToIgnoringCase(@"#CACACAFF"));
 	assertThat(normalColorSettings[@"glossColor"], equalToIgnoringCase(@"#FFFFFFA8"));
