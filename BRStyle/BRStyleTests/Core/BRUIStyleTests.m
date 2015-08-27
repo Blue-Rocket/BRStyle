@@ -22,7 +22,7 @@
 - (void)testColorIntegerEncode {
 	UIColor *color = [UIColor colorWithRed:0.2 green:0.4 blue:0.6 alpha:0.5];
 	assertThatUnsignedInt([BRUIStyle rgbIntegerForColor:color], equalToUnsignedInt(0x336699));
-	assertThatUnsignedInt([BRUIStyle rgbaHexIntegerForColor:color], equalToUnsignedInt(0x33669980));
+	assertThatUnsignedInt([BRUIStyle rgbaIntegerForColor:color], equalToUnsignedInt(0x33669980));
 }
 
 - (void)testColorRGBIntegerDecode {
@@ -112,7 +112,7 @@
 	BRUIStyle *style = [BRUIStyle styleWithDictionary:dict];
 	BRUIStyleColorSettings *colors = style.colors;
 	assertThat(colors, notNilValue());
-	assertThatUnsignedInt([BRUIStyle rgbaHexIntegerForColor:colors.primaryColor], equalToUnsignedInt(0xff0000ff));
+	assertThatUnsignedInt([BRUIStyle rgbaIntegerForColor:colors.primaryColor], equalToUnsignedInt(0xff0000ff));
 	assertThat(colors.backgroundColor, nilValue());
 }
 
@@ -120,7 +120,7 @@
 	BRUIStyle *style = [BRUIStyle styleWithJSONResource:@"style.json" inBundle:[NSBundle bundleForClass:[BRUIStyle class]]];
 	BRUIStyleColorSettings *colors = style.colors;
 	assertThat(colors, notNilValue());
-	assertThatUnsignedInt([BRUIStyle rgbaHexIntegerForColor:colors.primaryColor], equalToUnsignedInt(0xff0000ff));
+	assertThatUnsignedInt([BRUIStyle rgbaIntegerForColor:colors.primaryColor], equalToUnsignedInt(0xff0000ff));
 	assertThat(colors.backgroundColor, nilValue());
 }
 

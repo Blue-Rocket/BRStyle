@@ -127,7 +127,7 @@ extern NSString * const BRStyleNotificationUIStyleDidChange;
  @param color The color to convert.
  @return integer The color as a 32-bit RGBA integer value.
  */
-+ (UInt32)rgbaHexIntegerForColor:(UIColor *)color;
++ (UInt32)rgbaIntegerForColor:(UIColor *)color;
 
 @end
 
