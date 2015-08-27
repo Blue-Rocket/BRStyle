@@ -100,7 +100,12 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 			result = [BRUIStyle colorWithRGBAInteger:(UInt32)colorInteger];
 		} else if ( [value isKindOfClass:[NSDictionary class]] ) {
 			if ( [key hasSuffix:@"Font"] ) {
-				result = [UIFont fontWithName:value[@"name"] size:[value[@"size"] floatValue]];
+				// if no name provided, use system font
+				if ( value[@"name"] ) {
+					result = [UIFont fontWithName:value[@"name"] size:[value[@"size"] floatValue]];
+				} else {
+					result = [UIFont systemFontOfSize:[value[@"size"] floatValue]];
+				}
 			} else if ( [key hasSuffix:@"ColorSettings"] ) {
 				NSMutableDictionary *ccDefaults = [[NSMutableDictionary alloc] initWithCapacity:8];
 				BRUIStyleControlColorSettings *ccSettings = decoded[key];
@@ -128,6 +133,15 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 	return [self initWithSettings:decoded];
 }
 
++ (BOOL)isSystemFont:(UIFont *)font {
+	static NSString *systemFontFamilyName;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		systemFontFamilyName = [[UIFont systemFontOfSize:12] familyName];
+	});
+	return [[font familyName] isEqualToString:systemFontFamilyName];
+}
+
 - (NSDictionary *)dictionaryRepresentation {
 	NSMutableDictionary *encoded = [[NSMutableDictionary alloc] initWithCapacity:16];
 	[[[self class] supportedSettingNames] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -139,7 +153,11 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 			sprintf(hexStr,"#%08lx", (unsigned long)[BRUIStyle rgbaHexIntegerForColor:value]);
 			result = [[NSString alloc] initWithUTF8String:hexStr];
 		} else if ( [value isKindOfClass:[UIFont class]] ) {
-			result = @{ @"name" : [value fontName], @"size" : @([value pointSize])};
+			if ( [BRUIStyleFontSettings isSystemFont:value] ) {
+				result = @{ @"size" : @([value pointSize])};
+			} else {
+				result = @{ @"name" : [value fontName], @"size" : @([value pointSize])};
+			}
 		} else if ( [value respondsToSelector:@selector(dictionaryRepresentation)] ) {
 			result = [value dictionaryRepresentation];
 		}

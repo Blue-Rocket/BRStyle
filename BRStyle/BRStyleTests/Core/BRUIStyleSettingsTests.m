@@ -61,18 +61,22 @@
 }
 
 - (void)testFontDictionaryRepresentation {
-	BRUIStyleFontSettings *settings = [BRUIStyleFontSettings new];
+	BRMutableUIStyleFontSettings *settings = [BRMutableUIStyleFontSettings new];
+	settings.heroFont = [UIFont systemFontOfSize:24];
 	NSDictionary *result = [settings dictionaryRepresentation];
 	assertThat(result, hasCountOf(13));
 	assertThat(result[@"actionFont"], instanceOf([NSDictionary class]));
 	assertThat(result[@"actionFont"], equalTo(@{@"name" : @"AvenirNext-Medium", @"size" : @15}));
+	assertThat(result[@"heroFont"], instanceOf([NSDictionary class]));
+	assertThat(result[@"heroFont"], equalTo(@{@"size" : @24}));
 }
 
 - (void)testFontInitWithDictionary {
-	NSDictionary *dict = @{ @"actionFont" : @{@"name" : @"AvenirNext-Regular", @"size" : @12} };
+	NSDictionary *dict = @{ @"actionFont" : @{@"name" : @"AvenirNext-Regular", @"size" : @12},
+							@"heroFont" : @{@"size" : @24} };
 	BRUIStyleFontSettings *settings = [[BRUIStyleFontSettings alloc] initWithDictionaryRepresentation:dict];
-	UIFont *font = settings.actionFont;
-	assertThat(font, equalTo([UIFont fontWithName:@"AvenirNext-Regular" size:12]));
+	assertThat(settings.actionFont, equalTo([UIFont fontWithName:@"AvenirNext-Regular" size:12]));
+	assertThat(settings.heroFont, equalTo([UIFont systemFontOfSize:24]));
 }
 
 #pragma mark -
