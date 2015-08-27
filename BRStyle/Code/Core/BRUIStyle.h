@@ -26,34 +26,40 @@ extern NSString * const BRStyleNotificationUIStyleDidChange;
 ///-------------------------------
 
 /**
- Create a @c UIColor instance from a 32-bit RGB hex value.
+ Create a @c UIColor instance from a 32-bit RGB value.
  
- @param integer The color as a 32-bit RGB hex value. Only the last 24 bits are used.
+ This is a convenient way to get colors from code, when you can specify a color like full-red
+ in hex notation like @c 0xFF0000.
+ 
+ @param integer The color as a 32-bit RGB integer value. Only the last 24 bits are used.
  @return The color object.
  */
-+ (UIColor *)colorWithRGBHexInteger:(UInt32)integer;
++ (UIColor *)colorWithRGBInteger:(UInt32)integer;
 
 /**
- Create a @c UIColor instance from a 32-bit RGBA hex value.
+ Create a @c UIColor instance from a 32-bit RGBA value.
  
- @param integer The color as a 32-bit RGBA hex value.
+ This is a convenient way to get colors from code, when you can specify a color like full-red
+ 50% transparent in hex notation like @c 0xFF000080.
+
+ @param integer The color as a 32-bit RGBA integer value.
  @return The color object.
  */
-+ (UIColor *)colorWithRGBAHexInteger:(UInt32)integer;
++ (UIColor *)colorWithRGBAInteger:(UInt32)integer;
 
 /**
- Create a 32-bit RGB hex value from a @c UIColor instance.
+ Create a 32-bit RGB integer value from a @c UIColor instance.
  
  @param color The color to convert.
- @return integer The color as a 32-bit RGB hex value. Only the last 24 bits are used.
+ @return integer The color as a 32-bit RGB integer value. Only the last 24 bits are used.
  */
-+ (UInt32)rgbHexIntegerForColor:(UIColor *)color;
++ (UInt32)rgbIntegerForColor:(UIColor *)color;
 
 /**
- Create a 32-bit RGBA hex value from a @c UIColor instance.
+ Create a 32-bit RGBA integer value from a @c UIColor instance.
  
  @param color The color to convert.
- @return integer The color as a 32-bit RGBA hex value.
+ @return integer The color as a 32-bit RGBA integer value.
  */
 + (UInt32)rgbaHexIntegerForColor:(UIColor *)color;
 

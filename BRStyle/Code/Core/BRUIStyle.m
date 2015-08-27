@@ -40,21 +40,21 @@ static BRUIStyle *DefaultStyle;
 	[[NSNotificationCenter defaultCenter] postNotificationName:BRStyleNotificationUIStyleDidChange object:newStyle];
 }
 
-+ (UIColor *)colorWithRGBHexInteger:(UInt32)integer {
++ (UIColor *)colorWithRGBInteger:(UInt32)integer {
 	return [UIColor colorWithRed:(((integer >> 16) & 0xFF) / 255.0f)
 						   green:(((integer >> 8) & 0xFF) / 255.0f)
 							blue:((integer & 0xFF) / 255.0f)
 						   alpha:1.0];
 }
 
-+ (UIColor *)colorWithRGBAHexInteger:(UInt32)integer {
++ (UIColor *)colorWithRGBAInteger:(UInt32)integer {
 	return [UIColor colorWithRed:(((integer >> 24) & 0xFF) / 255.0f)
 						   green:(((integer >> 16) & 0xFF) / 255.0f)
 							blue:(((integer >> 8) & 0xFF) / 255.0f)
 						   alpha:((integer & 0xFF) / 255.0f)];
 }
 
-+ (UInt32)rgbHexIntegerForColor:(UIColor *)color {
++ (UInt32)rgbIntegerForColor:(UIColor *)color {
 	CGFloat r, g, b, a;
 	if ( [color getRed:&r green:&g blue:&b alpha:&a] ) {
 		return (

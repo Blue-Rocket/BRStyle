@@ -90,7 +90,7 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 			NSScanner *scanner = [[NSScanner alloc] initWithString:value];
 			[scanner scanString:@"#" intoString:NULL];
 			[scanner scanHexLongLong:&colorInteger];
-			result = [BRUIStyle colorWithRGBAHexInteger:(UInt32)colorInteger];
+			result = [BRUIStyle colorWithRGBAInteger:(UInt32)colorInteger];
 		} else if ( [value isKindOfClass:[NSDictionary class]] ) {
 			if ( [key hasSuffix:@"Font"] ) {
 				result = [UIFont fontWithName:value[@"name"] size:[value[@"size"] floatValue]];
@@ -322,10 +322,10 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 
 + (NSDictionary *)defaultSettings {
 	NSMutableDictionary *defaults = [[NSMutableDictionary alloc] initWithCapacity:4];
-	defaults[NSStringFromSelector(@selector(actionColor))] = [BRUIStyle colorWithRGBHexInteger:0x1247b8];
-	defaults[NSStringFromSelector(@selector(borderColor))] = [BRUIStyle colorWithRGBHexInteger:0xCACACA];
+	defaults[NSStringFromSelector(@selector(actionColor))] = [BRUIStyle colorWithRGBInteger:0x1247b8];
+	defaults[NSStringFromSelector(@selector(borderColor))] = [BRUIStyle colorWithRGBInteger:0xCACACA];
 	defaults[NSStringFromSelector(@selector(glossColor))] = [[UIColor whiteColor] colorWithAlphaComponent:0.66];
-	defaults[NSStringFromSelector(@selector(shadowColor))] = [BRUIStyle colorWithRGBAHexInteger:0x5555557F];
+	defaults[NSStringFromSelector(@selector(shadowColor))] = [BRUIStyle colorWithRGBAInteger:0x5555557F];
 	return [defaults copy];
 }
 
@@ -390,8 +390,8 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 	
 	// normal settings
 	BRMutableUIStyleControlColorSettings *controlColorSettings = [BRMutableUIStyleControlColorSettings new];
-	controlColorSettings.actionColor = [BRUIStyle colorWithRGBHexInteger:0x555555];
-	controlColorSettings.borderColor = [BRUIStyle colorWithRGBHexInteger:0xCACACA];
+	controlColorSettings.actionColor = [BRUIStyle colorWithRGBInteger:0x555555];
+	controlColorSettings.borderColor = [BRUIStyle colorWithRGBInteger:0xCACACA];
 	controlColorSettings.glossColor = [[UIColor whiteColor] colorWithAlphaComponent:0.66];
 	controlColorSettings.shadowColor = nil;
 	defaults[NSStringFromSelector(@selector(normalColorSettings))] = (mutable ? controlColorSettings : [controlColorSettings copy]);
@@ -399,22 +399,22 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 	// highlighted settings
 	BRMutableUIStyleControlColorSettings *highlightedControlColorSettings = [controlColorSettings mutableCopy];
 	highlightedControlColorSettings.actionColor = [UIColor colorWithRed: 0.833 green: 0.833 blue: 0.833 alpha: 0.5];
-	highlightedControlColorSettings.shadowColor = [BRUIStyle colorWithRGBAHexInteger:0x5555557F];
+	highlightedControlColorSettings.shadowColor = [BRUIStyle colorWithRGBAInteger:0x5555557F];
 	defaults[NSStringFromSelector(@selector(highlightedColorSettings))] = (mutable ? highlightedControlColorSettings : [highlightedControlColorSettings copy]);
 
 	// selected settings
 	BRMutableUIStyleControlColorSettings *selectedControlColorSettings = [controlColorSettings mutableCopy];
-	selectedControlColorSettings.actionColor = [BRUIStyle colorWithRGBHexInteger:0x1247b8];
+	selectedControlColorSettings.actionColor = [BRUIStyle colorWithRGBInteger:0x1247b8];
 	defaults[NSStringFromSelector(@selector(selectedColorSettings))] = (mutable ? selectedControlColorSettings : [selectedControlColorSettings copy]);
 
 	// disabled settings
 	BRMutableUIStyleControlColorSettings *disabledControlColorSettings = [controlColorSettings mutableCopy];
-	disabledControlColorSettings.actionColor = [BRUIStyle colorWithRGBHexInteger:0xCACACA];
+	disabledControlColorSettings.actionColor = [BRUIStyle colorWithRGBInteger:0xCACACA];
 	defaults[NSStringFromSelector(@selector(disabledColorSettings))] = (mutable ? disabledControlColorSettings : [disabledControlColorSettings copy]);
 
 	// dangerous settings
 	BRMutableUIStyleControlColorSettings *dangerousControlColorSettings = [controlColorSettings mutableCopy];
-	dangerousControlColorSettings.actionColor = [BRUIStyle colorWithRGBHexInteger:0xEB2D38];
+	dangerousControlColorSettings.actionColor = [BRUIStyle colorWithRGBInteger:0xEB2D38];
 	defaults[NSStringFromSelector(@selector(dangerousColorSettings))] = (mutable ? dangerousControlColorSettings : [dangerousControlColorSettings copy]);
 	
 	return [defaults copy];
@@ -508,13 +508,13 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 
 + (NSDictionary *)defaultSettings {
 	NSMutableDictionary *defaults = [[NSMutableDictionary alloc] initWithCapacity:4];
-	UIColor *primaryColor = [BRUIStyle colorWithRGBHexInteger:0x1247b8];
+	UIColor *primaryColor = [BRUIStyle colorWithRGBInteger:0x1247b8];
 	defaults[NSStringFromSelector(@selector(primaryColor))] = primaryColor;
-	defaults[NSStringFromSelector(@selector(secondaryColor))] = [BRUIStyle colorWithRGBHexInteger:0xCACACA];
-	defaults[NSStringFromSelector(@selector(backgroundColor))] = [BRUIStyle colorWithRGBHexInteger:0xfafafa];
-	defaults[NSStringFromSelector(@selector(separatorColor))] = [BRUIStyle colorWithRGBHexInteger:0xe1e1e1];
+	defaults[NSStringFromSelector(@selector(secondaryColor))] = [BRUIStyle colorWithRGBInteger:0xCACACA];
+	defaults[NSStringFromSelector(@selector(backgroundColor))] = [BRUIStyle colorWithRGBInteger:0xfafafa];
+	defaults[NSStringFromSelector(@selector(separatorColor))] = [BRUIStyle colorWithRGBInteger:0xe1e1e1];
 
-	UIColor *textColor = [BRUIStyle colorWithRGBHexInteger:0x1a1a1a];
+	UIColor *textColor = [BRUIStyle colorWithRGBInteger:0x1a1a1a];
 	defaults[NSStringFromSelector(@selector(heroColor))] = textColor;
 	defaults[NSStringFromSelector(@selector(headlineColor))] = textColor;
 	defaults[NSStringFromSelector(@selector(secondaryHeadlineColor))] = textColor;
@@ -541,7 +541,7 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 	// normal settings
 	BRMutableUIStyleControlColorSettings *controlColorSettings = [inverseControlSettings.normalColorSettings mutableCopy];
 	controlColorSettings.actionColor = [UIColor whiteColor];
-	controlColorSettings.borderColor = [BRUIStyle colorWithRGBHexInteger:0x264891];
+	controlColorSettings.borderColor = [BRUIStyle colorWithRGBInteger:0x264891];
 	controlColorSettings.glossColor = [[UIColor whiteColor] colorWithAlphaComponent:0.3];
 	inverseControlSettings.normalColorSettings = controlColorSettings;
 	
