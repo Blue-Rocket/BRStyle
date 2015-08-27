@@ -82,6 +82,9 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 	[[[self class] supportedSettingNames] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 		NSString *key = obj;
 		id value = dictionary[key];
+		if ( !value ) {
+			return;
+		}
 		id result = nil;
 		BOOL nullValue = [value isKindOfClass:[NSNull class]];
 		if ( [key hasSuffix:@"Color"] && nullValue != YES ) {
