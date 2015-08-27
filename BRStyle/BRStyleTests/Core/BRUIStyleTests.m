@@ -45,4 +45,56 @@
 	assertThatFloat(a, closeTo(0.5, 0.01));
 }
 
+#pragma mark - 
+
+- (void)testStyleCopy {
+	BRUIStyle *style = [BRUIStyle new];
+	BRUIStyle *copy = [style copy];
+	assertThat(copy, sameInstance(style));
+}
+
+- (void)testStyleMutableCopy {
+	BRUIStyle *style = [BRUIStyle new];
+	BRUIStyleColorSettings *colors = style.colors;
+	BRMutableUIStyle *copy = [style mutableCopy];
+	assertThat(copy, isNot(sameInstance(style)));
+	assertThat(copy, isA([BRMutableUIStyle class]));
+	
+	// change a value
+	BRMutableUIStyleColorSettings *newColors = [colors mutableCopy];
+	newColors.primaryColor = [UIColor magentaColor];
+	copy.colors = newColors;
+	BRUIStyleColorSettings *setColors = copy.colors;
+	assertThat(setColors, sameInstance(newColors));
+	assertThat(style.colors, sameInstance(colors));
+}
+
+#pragma  mark - 
+
+- (void)testGetDefaultStyle {
+	BRUIStyle *style = [BRUIStyle defaultStyle];
+	assertThat(style, notNilValue());
+	assertThatBool(style.defaultStyle, isTrue());
+}
+
+- (void)testSetDefaultStyleMutableIsCopied {
+	BRUIStyle *style = [BRUIStyle defaultStyle];
+	BRMutableUIStyle *newStyle = [style mutableCopy];
+	[BRUIStyle setDefaultStyle:newStyle];
+	assertThatBool(style.defaultStyle, isFalse());
+	assertThatBool(newStyle.defaultStyle, isFalse()); // mutable newStyle should have been copied!
+	BRUIStyle *copiedNewStyle = [BRUIStyle defaultStyle];
+	assertThat(copiedNewStyle, isA([BRUIStyle class]));
+	assertThat(copiedNewStyle, isNot(sameInstance(newStyle)));
+	assertThatBool(copiedNewStyle.defaultStyle, isTrue());
+}
+
+- (void)testSetDefaultStyle {
+	BRUIStyle *style = [BRUIStyle defaultStyle];
+	BRUIStyle *newStyle = [[style mutableCopy] copy]; // get mutable copy, then immutable because setDefaultStyle: copies the style
+	[BRUIStyle setDefaultStyle:newStyle];
+	assertThatBool(style.defaultStyle, isFalse());
+	assertThatBool(newStyle.defaultStyle, isTrue());
+}
+
 @end

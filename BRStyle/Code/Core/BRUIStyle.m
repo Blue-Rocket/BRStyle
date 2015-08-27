@@ -91,8 +91,8 @@ static BRUIStyle *DefaultStyle;
 			fonts = [BRUIStyleFontSettings new];
 			colors = [BRUIStyleColorSettings new];
 		} else {
-			fonts = other.fonts;
-			colors = other.colors;
+			fonts = [other.fonts copy];
+			colors = [other.colors copy];
 		}
 	}
 	return self;
