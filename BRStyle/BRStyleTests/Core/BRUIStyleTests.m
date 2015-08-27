@@ -97,4 +97,23 @@
 	assertThatBool(newStyle.defaultStyle, isTrue());
 }
 
+#pragma mark - 
+
+- (void)testDictionaryRepresentation {
+	NSDictionary *dict = [[BRUIStyle defaultStyle] dictionaryRepresentation];
+	assertThat(dict, hasCountOf(2));
+	assertThat(dict[@"colors"], instanceOf([NSDictionary class]));
+	assertThat(dict[@"fonts"], instanceOf([NSDictionary class]));
+}
+
+- (void)testInitWithDictionary {
+	NSDictionary *dict = @{ @"colors" : @{ @"primaryColor" : @"#ff0000ff", @"backgroundColor" : [NSNull null] },
+							@"fonts" : @{ @"actionFont" : @{ @"name" : @"Helvetica-Regular", @"size" : @12 } } };
+	BRUIStyle *style = [BRUIStyle styleWithDictionary:dict];
+	BRUIStyleColorSettings *colors = style.colors;
+	assertThat(colors, notNilValue());
+	assertThatUnsignedInt([BRUIStyle rgbaHexIntegerForColor:colors.primaryColor], equalToUnsignedInt(0xff0000ff));
+	assertThat(colors.backgroundColor, nilValue());
+}
+
 @end
