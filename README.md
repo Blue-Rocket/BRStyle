@@ -119,8 +119,7 @@ method will be called on those controllers _when their views load_.
 properties from your app: it can automatically apply those properties to your
 classes. This support comes from some additional categories added to core system
 classes such as `UIButton`. Using buttons as an example, the
-`UIBarButtonItem+BRUIStylishHost` category makes every button a
-`BRUIStylishHost`:
+`UIButton+BRUIStylishHost` category makes every button a `BRUIStylishHost`:
 
 ```objc
 // UIButton+BRUIStylishHost.h
