@@ -116,4 +116,13 @@
 	assertThat(colors.backgroundColor, nilValue());
 }
 
+- (void)testLoadFromJSON {
+	BRUIStyle *style = [BRUIStyle styleWithJSONResource:@"style.json" inBundle:[NSBundle bundleForClass:[BRUIStyle class]]];
+	BRUIStyleColorSettings *colors = style.colors;
+	assertThat(colors, notNilValue());
+	assertThatUnsignedInt([BRUIStyle rgbaHexIntegerForColor:colors.primaryColor], equalToUnsignedInt(0xff0000ff));
+	assertThat(colors.backgroundColor, nilValue());
+}
+
+
 @end

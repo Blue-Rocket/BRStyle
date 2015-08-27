@@ -102,9 +102,28 @@ static BRUIStyle *DefaultStyle;
 	return [NSString stringWithFormat:@"BRUIStyle{colors=%@; fonts = %@}", [colors debugDescription], [fonts debugDescription]];
 }
 
-#pragma mark - Dictionary representation
+#pragma mark - Serialization
 
-+ (instancetype)styleWithDictionary:(NSDictionary *)dictionary {
++ (BRUIStyle *)styleWithJSONResource:(NSString *)resourceName inBundle:(nullable NSBundle *)bundle {
+	NSBundle *bundleToUse = (bundle ? bundle : [NSBundle mainBundle]);
+	NSString *jsonPath = [bundleToUse pathForResource:resourceName ofType:nil];
+	BRUIStyle *style = nil;
+	if ( [jsonPath length] > 0 ) {
+		NSInputStream *input = [NSInputStream inputStreamWithFileAtPath:jsonPath];
+		[input open];
+		NSError *error = nil;
+		NSDictionary *dict = [NSJSONSerialization JSONObjectWithStream:input options:0 error:&error];
+		if ( error ) {
+			NSLog(@"Error reading BRUIStyle from %@: %@", jsonPath, [error localizedDescription]);
+		} else {
+			style = [BRUIStyle styleWithDictionary:dict];
+		}
+		[input close];
+	}
+	return style;
+}
+
++ (BRUIStyle *)styleWithDictionary:(NSDictionary *)dictionary {
 	return [[self alloc] initWithDictionaryRepresentation:dictionary];
 }
 

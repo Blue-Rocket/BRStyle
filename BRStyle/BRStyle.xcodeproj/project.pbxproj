@@ -10,6 +10,7 @@
 		00B53FA6742C71400A37071D /* libPods-BRStyle.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23359DD70EE4F0C6C9CF6DB5 /* libPods-BRStyle.a */; };
 		471FC8256573EAF93CECA129 /* libPods-BRStyle-BRStyleTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF8520217BB38401BF8B86A7 /* libPods-BRStyle-BRStyleTests.a */; };
 		C91BBE3C1B8E9019008E5D60 /* BRUIStyleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C91BBE3B1B8E9019008E5D60 /* BRUIStyleTests.m */; };
+		C91BBE3E1B8EA338008E5D60 /* style.json in Resources */ = {isa = PBXBuildFile; fileRef = C91BBE3D1B8EA338008E5D60 /* style.json */; };
 		C93ABE5B1B8BC65100202CA9 /* libBRStyle.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C93ABE4F1B8BC65100202CA9 /* libBRStyle.a */; };
 		C93ABE811B8BCA1C00202CA9 /* BRUIStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABE791B8BCA1C00202CA9 /* BRUIStyle.m */; };
 		C93ABE821B8BCA1C00202CA9 /* BRUIStyleObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABE7B1B8BCA1C00202CA9 /* BRUIStyleObserver.m */; };
@@ -53,6 +54,7 @@
 		3E7F28E36B7AFD4CE81898FD /* Pods-BRStyle-BRStyleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BRStyle-BRStyleTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BRStyle-BRStyleTests/Pods-BRStyle-BRStyleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A54C20481DC5313558E807D0 /* Pods-BRStyle-BRStyleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BRStyle-BRStyleTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BRStyle-BRStyleTests/Pods-BRStyle-BRStyleTests.release.xcconfig"; sourceTree = "<group>"; };
 		C91BBE3B1B8E9019008E5D60 /* BRUIStyleTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRUIStyleTests.m; sourceTree = "<group>"; };
+		C91BBE3D1B8EA338008E5D60 /* style.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = style.json; sourceTree = "<group>"; };
 		C93ABE4F1B8BC65100202CA9 /* libBRStyle.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libBRStyle.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C93ABE5A1B8BC65100202CA9 /* BRStyleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BRStyleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C93ABE601B8BC65100202CA9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -262,6 +264,7 @@
 			children = (
 				C91BBE3B1B8E9019008E5D60 /* BRUIStyleTests.m */,
 				C9DC16C61B8D7CE500F5C6C3 /* BRUIStyleSettingsTests.m */,
+				C91BBE3D1B8EA338008E5D60 /* style.json */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -346,6 +349,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C91BBE3E1B8EA338008E5D60 /* style.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

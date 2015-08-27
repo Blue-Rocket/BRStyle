@@ -21,9 +21,75 @@ extern NSString * const BRStyleNotificationUIStyleDidChange;
  */
 @interface BRUIStyle : NSObject <NSCopying, NSMutableCopying, NSSecureCoding>
 
-///-------------------------------
+/// -------------------------------
+/// @name Default support
+/// -------------------------------
+
+/**
+ Get a global shared style instance.
+ 
+ @return A shared global default style instance.
+ */
++ (instancetype)defaultStyle;
+
+/**
+ Set the global shared style instance.
+ 
+ @param style The new style to set.
+ */
++ (void)setDefaultStyle:(BRUIStyle *)style;
+
+/**
+ Test if this style represents the default style.
+ */
+@property (nonatomic, readonly, getter=isDefaultStyle) BOOL defaultStyle;
+
+/// -------------------------------
+/// @name Style properties
+/// -------------------------------
+
+/** The font style settings. */
+@property (nonatomic, readonly) BRUIStyleFontSettings *fonts;
+
+/** The color style settings. */
+@property (nonatomic, readonly) BRUIStyleColorSettings *colors;
+
+/// -------------------------------
+/// @name Serialization
+/// -------------------------------
+
+/**
+ Create a style instance from a JSON-encoded bundle resource.
+ 
+ @param resourceName The name of the JSON resource to load.
+ @param bundle The bundle to use, or @c nil for the main bundle.
+ @return The new style instance, or @c nil if the resource could not be loaded.
+ */
++ (nullable BRUIStyle *)styleWithJSONResource:(NSString *)resourceName inBundle:(nullable NSBundle *)bundle;
+
+/**
+ Decode a style intance from a dictionary representation.
+ 
+ The dictionary shoud be in the form returned by the @c dictionaryRepresentation method.
+ @param dictionary The dictionary to decode.
+ @return A new style instance.
+ */
++ (BRUIStyle *)styleWithDictionary:(NSDictionary *)dictionary;
+
+/**
+ Get a dictionary representation of the receiver.
+ 
+ The resulting dictionary will contain only simple data types, suitable for serializing
+ into JSON or other encodings.
+ 
+ @return A dictionary representation.
+ @see styleWithDictionary:
+ */
+- (NSDictionary *)dictionaryRepresentation;
+
+/// -------------------------------
 /// @name Utilities
-///-------------------------------
+/// -------------------------------
 
 /**
  Create a @c UIColor instance from a 32-bit RGB value.
@@ -41,7 +107,7 @@ extern NSString * const BRStyleNotificationUIStyleDidChange;
  
  This is a convenient way to get colors from code, when you can specify a color like full-red
  50% transparent in hex notation like @c 0xFF000080.
-
+ 
  @param integer The color as a 32-bit RGBA integer value.
  @return The color object.
  */
@@ -62,55 +128,6 @@ extern NSString * const BRStyleNotificationUIStyleDidChange;
  @return integer The color as a 32-bit RGBA integer value.
  */
 + (UInt32)rgbaHexIntegerForColor:(UIColor *)color;
-
-///-------------------------------
-/// @name Default support
-///-------------------------------
-
-/**
- Get a global shared style instance.
- 
- @return A shared global default style instance.
- */
-+ (instancetype)defaultStyle;
-
-/**
- Set the global shared style instance.
- 
- @param style The new style to set.
- */
-+ (void)setDefaultStyle:(BRUIStyle *)style;
-
-/**
- Decode a style intance from a dictionary representation.
- 
- The dictionary shoud be in the form returned by the @c dictionaryRepresentation method.
- @param dictionary The dictionary to decode.
- @return A new style instance.
- */
-+ (instancetype)styleWithDictionary:(NSDictionary *)dictionary;
-
-/**
- Test if this style represents the default style.
- */
-@property (nonatomic, readonly, getter=isDefaultStyle) BOOL defaultStyle;
-
-/** The font style settings. */
-@property (nonatomic, readonly) BRUIStyleFontSettings *fonts;
-
-/** The color style settings. */
-@property (nonatomic, readonly) BRUIStyleColorSettings *colors;
-
-/**
- Get a dictionary representation of the receiver.
- 
- The resulting dictionary will contain only simple data types, suitable for serializing
- into JSON or other encodings.
- 
- @return A dictionary representation.
- @see styleWithDictionary:
- */
-- (NSDictionary *)dictionaryRepresentation;
 
 @end
 
