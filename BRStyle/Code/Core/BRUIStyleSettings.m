@@ -328,6 +328,7 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 
 @dynamic actionColor;
 @dynamic borderColor;
+@dynamic fillColor;
 @dynamic glossColor;
 @dynamic shadowColor;
 
@@ -338,6 +339,7 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 		keys = @[
 				 NSStringFromSelector(@selector(actionColor)),
 				 NSStringFromSelector(@selector(borderColor)),
+				 NSStringFromSelector(@selector(fillColor)),
 				 NSStringFromSelector(@selector(glossColor)),
 				 NSStringFromSelector(@selector(shadowColor)),
 				 ];
@@ -349,6 +351,7 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 	NSMutableDictionary *defaults = [[NSMutableDictionary alloc] initWithCapacity:4];
 	defaults[NSStringFromSelector(@selector(actionColor))] = [BRUIStyle colorWithRGBInteger:0x1247b8];
 	defaults[NSStringFromSelector(@selector(borderColor))] = [BRUIStyle colorWithRGBInteger:0xCACACA];
+	defaults[NSStringFromSelector(@selector(fillColor))] = [UIColor clearColor];
 	defaults[NSStringFromSelector(@selector(glossColor))] = [[UIColor whiteColor] colorWithAlphaComponent:0.66];
 	defaults[NSStringFromSelector(@selector(shadowColor))] = [BRUIStyle colorWithRGBAInteger:0x5555557F];
 	return [defaults copy];
@@ -366,6 +369,7 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 
 @dynamic actionColor;
 @dynamic borderColor;
+@dynamic fillColor;
 @dynamic glossColor;
 @dynamic shadowColor;
 
@@ -423,7 +427,8 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 
 	// highlighted settings
 	BRMutableUIStyleControlColorSettings *highlightedControlColorSettings = [controlColorSettings mutableCopy];
-	highlightedControlColorSettings.actionColor = [UIColor colorWithRed: 0.833 green: 0.833 blue: 0.833 alpha: 0.5];
+	highlightedControlColorSettings.actionColor = [controlColorSettings.actionColor colorWithAlphaComponent:0.8];
+	highlightedControlColorSettings.fillColor = [UIColor colorWithRed: 0.833 green: 0.833 blue: 0.833 alpha: 0.5];
 	highlightedControlColorSettings.shadowColor = [BRUIStyle colorWithRGBAInteger:0x5555557F];
 	defaults[NSStringFromSelector(@selector(highlightedColorSettings))] = (mutable ? highlightedControlColorSettings : [highlightedControlColorSettings copy]);
 
@@ -440,6 +445,7 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 	// dangerous settings
 	BRMutableUIStyleControlColorSettings *dangerousControlColorSettings = [controlColorSettings mutableCopy];
 	dangerousControlColorSettings.actionColor = [BRUIStyle colorWithRGBInteger:0xEB2D38];
+	dangerousControlColorSettings.borderColor = dangerousControlColorSettings.actionColor;
 	defaults[NSStringFromSelector(@selector(dangerousColorSettings))] = (mutable ? dangerousControlColorSettings : [dangerousControlColorSettings copy]);
 	
 	return [defaults copy];

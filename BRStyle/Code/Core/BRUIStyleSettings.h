@@ -105,6 +105,9 @@ NS_ASSUME_NONNULL_BEGIN
 /** An action color to use in controls, often the @c tintColor of a control */
 @property (nonatomic, readonly) UIColor *actionColor;
 
+/** A fill color to use in controls. */
+@property (nonatomic, readwrite) UIColor *fillColor;
+
 /** A border color to use in controls. */
 @property (nonatomic, readonly) UIColor *borderColor;
 
@@ -282,6 +285,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** A border color to use in controls. */
 @property (nonatomic, readwrite) UIColor *borderColor;
+
+/** A fill color to use in controls. */
+@property (nonatomic, readwrite) UIColor *fillColor;
 
 /** A gloss effect color to use in controls. */
 @property (nonatomic, readwrite, nullable) UIColor *glossColor;
