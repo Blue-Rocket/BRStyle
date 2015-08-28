@@ -63,28 +63,28 @@
 	// look for: UltraLight, Thin, Light, (-)Regular|Normal, Medium, (Semi|Demi)bold, Bold, (Extra|Ultra)Bold|Heavy Black|ExtraBlack
 	// as        100,        200,  300,   400,               500,    600,             700,  800,                    900
 	
-	if ( [name hasSuffix:@"ultralight"] ) {
+	if ( [name containsString:@"ultralight"] ) {
 		return 100;
 	}
-	if ( [name hasSuffix:@"thin"] ) {
+	if ( [name containsString:@"thin"] ) {
 		return 200;
 	}
-	if ( [name hasSuffix:@"light"] ) {
+	if ( [name containsString:@"light"] ) {
 		return 300;
 	}
-	if ( [name hasSuffix:@"medium"] ) {
+	if ( [name containsString:@"medium"] ) {
 		return 500;
 	}
-	if ( [name hasSuffix:@"semibold"] || [name hasSuffix:@"demibold"] ) {
+	if ( [name containsString:@"semibold"] || [name containsString:@"demibold"] ) {
 		return 600;
 	}
-	if ( [name hasSuffix:@"extrabold"] || [name hasSuffix:@"ultrabold"] ) {
+	if ( [name containsString:@"extrabold"] || [name containsString:@"ultrabold"] ) {
 		return 800;
 	}
-	if ( [name hasSuffix:@"bold"] ) {
+	if ( [name containsString:@"bold"] ) {
 		return 700;
 	}
-	if ( [name hasSuffix:@"heavy"] || [name hasSuffix:@"black"] ) {
+	if ( [name containsString:@"heavy"] || [name containsString:@"black"] ) {
 		return 900;
 	}
 
@@ -101,36 +101,77 @@
 	return BRUIStyleCSSFontWeightNormal;
 }
 
-- (UIFont *)fontWithUIStyleCSSFontWeight:(BRUIStyleCSSFontWeight)weight {
-	CGFloat desiredFontWeight = 0; // normal
-	if ( weight == BRUIStyleCSSFontWeightLighter || weight == BRUIStyleCSSFontWeightBolder ) {
-		BRUIStyleCSSFontWeight desiredWeight = [self uiStyleCSSFontWeight];
-		if ( weight == BRUIStyleCSSFontWeightBolder && desiredWeight < 900 ) {
-			desiredWeight += 100;
-		} else if ( weight == BRUIStyleCSSFontWeightLighter && desiredWeight > 100 ) {
-			desiredWeight -= 100;
++ (NSArray *)fontNamesForFamilyNameSortedByWeight:(NSString *)familyName weights:(NSArray * __autoreleasing *)weights {
+	NSMutableArray *fontNames = [[UIFont fontNamesForFamilyName:familyName] mutableCopy];
+	NSMutableDictionary *fontWeights = [[NSMutableDictionary alloc] initWithCapacity:fontNames.count];
+	[fontNames sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+		NSNumber *w1 = fontWeights[obj1];
+		if ( !w1 ) {
+			UIFont *f1 = [UIFont fontWithName:obj1 size:12];
+			w1 = @([f1 uiStyleCSSFontWeight]);
+			fontWeights[obj1] = w1;
 		}
-		desiredFontWeight = [UIFont fontWeightForUIStyleCSSFontWeight:desiredWeight];
-	} else {
-		desiredFontWeight = [UIFont fontWeightForUIStyleCSSFontWeight:weight];
+		NSNumber *w2 = fontWeights[obj2];
+		if ( !w2 ) {
+			UIFont *f2 = [UIFont fontWithName:obj2 size:12];
+			w2 = @([f2 uiStyleCSSFontWeight]);
+			fontWeights[obj2] = w2;
+		}
+		return [w1 compare:w2];
+	}];
+	if ( weights ) {
+		NSMutableArray *wOut = [[NSMutableArray alloc] initWithCapacity:fontNames.count];
+		for ( NSString * fontName in fontNames ) {
+			NSNumber *w = fontWeights[fontName];
+			if ( !w ) {
+				w = @0;
+			}
+			[wOut addObject:w];
+		};
+		*weights = wOut;
 	}
-	
-	NSDictionary *attributes = [[self fontDescriptor] fontAttributes];
-	NSMutableDictionary *traits = [attributes[UIFontDescriptorTraitsAttribute] mutableCopy];
-	if ( !traits ) {
-		traits = [[NSMutableDictionary alloc] initWithCapacity:4];
+	return fontNames;
+}
+
+- (UIFont *)fontWithUIStyleCSSFontWeight:(const BRUIStyleCSSFontWeight)weight {
+	NSArray *familyWeights = nil;
+	NSArray *fontFamilyNames = [UIFont fontNamesForFamilyNameSortedByWeight:self.familyName weights:&familyWeights];
+
+	// get symboilc traits for italic variant
+	UIFontDescriptorSymbolicTraits symbolic = [[self fontDescriptor] symbolicTraits];
+	BOOL italic = NO;
+	BOOL condensed = NO;
+	if ( (symbolic & UIFontDescriptorTraitItalic) == UIFontDescriptorTraitItalic ) {
+		italic = YES;
 	}
-	traits[UIFontWeightTrait] = @(desiredFontWeight);
-	
-	NSDictionary *newAttributes = @{UIFontDescriptorFamilyAttribute: self.familyName,
-									UIFontDescriptorTraitsAttribute: traits};
-	
-	UIFontDescriptor *newDescriptor = [UIFontDescriptor fontDescriptorWithFontAttributes:newAttributes];
-	UIFont *result = [UIFont fontWithDescriptor:newDescriptor size:self.pointSize];
-	if ( result == nil ) {
-		result = self;
+	if ( (symbolic & UIFontDescriptorTraitCondensed) == UIFontDescriptorTraitCondensed ) {
+		condensed = YES;
 	}
-	return result;
+	__block NSString *previousName = nil;
+	__block NSString *matchingName = nil;
+	[fontFamilyNames enumerateObjectsUsingBlock:^(id fontName, NSUInteger idx, BOOL *stop) {
+		NSString *lcName = [fontName lowercaseString];
+		if ( (italic != [lcName containsString:@"italic"]) || (condensed != [lcName containsString:@"condensed"]) ) {
+			return;
+		}
+		BRUIStyleCSSFontWeight w = [familyWeights[idx] intValue];
+		if ( w >= weight ) {
+			matchingName = (w > weight && previousName ? previousName : fontName);
+			*stop = YES;
+		} else {
+			previousName = fontName;
+		}
+	}];
+	if ( !matchingName ) {
+		matchingName = previousName;
+	}
+	if ( !matchingName ) {
+		return self;
+	}
+	if ( [self.fontName isEqualToString:matchingName] ) {
+		return self;
+	}
+	return [UIFont fontWithName:matchingName size:self.pointSize];
 }
 
 @end

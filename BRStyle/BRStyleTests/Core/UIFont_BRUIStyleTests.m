@@ -120,4 +120,72 @@
 	assertThatInt([f uiStyleCSSFontWeight], equalToInt(900));
 }
 
+- (void)testWeightNormalVariation {
+	UIFont *f = [UIFont fontWithName:@"HelveticaNeue" size:12];
+	
+	assertThat([f fontWithUIStyleCSSFontWeight:100].fontName, equalTo(@"HelveticaNeue-UltraLight"));
+
+	assertThat([f fontWithUIStyleCSSFontWeight:200].fontName, equalTo(@"HelveticaNeue-Thin"));
+	
+	assertThat([f fontWithUIStyleCSSFontWeight:300].fontName, equalTo(@"HelveticaNeue-Light"));
+	
+	assertThat([f fontWithUIStyleCSSFontWeight:400], sameInstance(f));
+	
+	assertThat([f fontWithUIStyleCSSFontWeight:500].fontName, equalTo(@"HelveticaNeue-Medium"));
+	
+	assertThat([f fontWithUIStyleCSSFontWeight:600].fontName, equalTo(@"HelveticaNeue-Medium"));
+	
+	assertThat([f fontWithUIStyleCSSFontWeight:700].fontName, equalTo(@"HelveticaNeue-Bold"));
+	
+	assertThat([f fontWithUIStyleCSSFontWeight:800].fontName, equalTo(@"HelveticaNeue-Bold"));
+	
+	// the following should return -Bold, NOT -CondensedBlack
+	assertThat([f fontWithUIStyleCSSFontWeight:900].fontName, equalTo(@"HelveticaNeue-Bold"));
+}
+
+- (void)testWeightItalicVariation {
+	UIFont *f = [UIFont fontWithName:@"HelveticaNeue-Italic" size:12];
+	
+	assertThat([f fontWithUIStyleCSSFontWeight:100].fontName, equalTo(@"HelveticaNeue-UltraLightItalic"));
+	
+	assertThat([f fontWithUIStyleCSSFontWeight:200].fontName, equalTo(@"HelveticaNeue-ThinItalic"));
+	
+	assertThat([f fontWithUIStyleCSSFontWeight:300].fontName, equalTo(@"HelveticaNeue-LightItalic"));
+	
+	assertThat([f fontWithUIStyleCSSFontWeight:400], sameInstance(f));
+	
+	assertThat([f fontWithUIStyleCSSFontWeight:500].fontName, equalTo(@"HelveticaNeue-MediumItalic"));
+	
+	assertThat([f fontWithUIStyleCSSFontWeight:600].fontName, equalTo(@"HelveticaNeue-MediumItalic"));
+	
+	assertThat([f fontWithUIStyleCSSFontWeight:700].fontName, equalTo(@"HelveticaNeue-BoldItalic"));
+	
+	assertThat([f fontWithUIStyleCSSFontWeight:800].fontName, equalTo(@"HelveticaNeue-BoldItalic"));
+	
+	// the following should return -Bold, NOT -CondensedBlack
+	assertThat([f fontWithUIStyleCSSFontWeight:900].fontName, equalTo(@"HelveticaNeue-BoldItalic"));
+}
+
+- (void)testWeightCondensedVariation {
+	UIFont *f = [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:12];
+	
+	assertThat([f fontWithUIStyleCSSFontWeight:100], sameInstance(f));
+	
+	assertThat([f fontWithUIStyleCSSFontWeight:200], sameInstance(f));
+	
+	assertThat([f fontWithUIStyleCSSFontWeight:300], sameInstance(f));
+	
+	assertThat([f fontWithUIStyleCSSFontWeight:400], sameInstance(f));
+	
+	assertThat([f fontWithUIStyleCSSFontWeight:500], sameInstance(f));
+	
+	assertThat([f fontWithUIStyleCSSFontWeight:600], sameInstance(f));
+	
+	assertThat([f fontWithUIStyleCSSFontWeight:700], sameInstance(f));
+	
+	assertThat([f fontWithUIStyleCSSFontWeight:800], sameInstance(f));
+	
+	assertThat([f fontWithUIStyleCSSFontWeight:900].fontName, equalTo(@"HelveticaNeue-CondensedBlack"));
+}
+
 @end
