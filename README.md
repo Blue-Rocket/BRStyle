@@ -44,7 +44,32 @@ the setup code is then reduced to this:
 
 ```objc
 BRUIStyle *style = [BRUIStyle styleWithJSONResource:@"style.json" inBundle:nil];
-[BRUIStyle setDefaultStyle:mutableStyle];
+[BRUIStyle setDefaultStyle:style];
+```
+
+# For the ❤️ of UIAppearance
+
+**BRStyle** does not try to replace `UIAppearance`! In fact, you can use BRStyle as
+a way to configure UIAppearance proxies. For example, you might do something like
+this when your app starts up:
+
+```objc
+// load up style from JSON resource
+BRUIStyle *style = [BRUIStyle styleWithJSONResource:@"style.json" inBundle:nil];
+[BRUIStyle setDefaultStyle:style];
+
+// configure UINavigationBar and UIToolbar style via UIAppearance
+UINavigationBar *bar = [UINavigationBar appearance];
+bar.tintColor = style.colors.inverseControlSettings.normalColorSettings.actionColor;
+bar.barTintColor = style.colors.navigationColor;
+[bar setTitleTextAttributes:@{
+							  NSForegroundColorAttributeName: style.colors.inverseControlSettings.normalColorSettings.actionColor,
+							  NSFontAttributeName: style.fonts.navigationFont,
+							  }];
+
+UIToolbar *toolbar = [UIToolbar appearance];
+toolbar.tintColor = bar.tintColor;
+toolbar.barTintColor = bar.barTintColor;
 ```
 
 # Style properties
