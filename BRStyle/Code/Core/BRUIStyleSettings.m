@@ -75,6 +75,18 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 	return settings;
 }
 
+- (NSMutableDictionary *)mutableSettingsWithZone:(NSZone *)zone {
+	NSMutableDictionary *dict = [[NSMutableDictionary allocWithZone:zone] initWithDictionary:self.settings];
+	NSMutableDictionary *mutated = [[NSMutableDictionary allocWithZone:zone] init];
+	[dict enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+		if ( [obj conformsToProtocol:@protocol(NSMutableCopying)] ) {
+			mutated[key] = [obj mutableCopy];
+		}
+	}];
+	[dict addEntriesFromDictionary:mutated];
+	return dict;
+}
+
 - (NSString *)debugDescription {
 	return [settings debugDescription];
 }
@@ -284,7 +296,7 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 }
 
 - (id)mutableCopyWithZone:(NSZone *)zone {
-	return [[[BRMutableUIStyleFontSettings class] allocWithZone:zone] initWithSettings:[self.settings mutableCopy]];
+	return [[[BRMutableUIStyleFontSettings class] allocWithZone:zone] initWithSettings:[self mutableSettingsWithZone:zone]];
 }
 
 @end
@@ -358,7 +370,7 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 }
 
 - (id)mutableCopyWithZone:(NSZone *)zone {
-	return [[[BRMutableUIStyleControlColorSettings class] allocWithZone:zone] initWithSettings:[self.settings mutableCopy]];
+	return [[[BRMutableUIStyleControlColorSettings class] allocWithZone:zone] initWithSettings:[self mutableSettingsWithZone:zone]];
 }
 
 @end
@@ -452,7 +464,7 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 }
 
 - (id)mutableCopyWithZone:(NSZone *)zone {
-	return [[[BRMutableUIStyleControlStateColorSettings class] allocWithZone:zone] initWithSettings:[self.settings mutableCopy]];
+	return [[[BRMutableUIStyleControlStateColorSettings class] allocWithZone:zone] initWithSettings:[self mutableSettingsWithZone:zone]];
 }
 
 @end
@@ -587,7 +599,7 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 }
 
 - (id)mutableCopyWithZone:(NSZone *)zone {
-	return [[[BRMutableUIStyleColorSettings class] allocWithZone:zone] initWithSettings:[self.settings mutableCopy]];
+	return [[[BRMutableUIStyleColorSettings class] allocWithZone:zone] initWithSettings:[self mutableSettingsWithZone:zone]];
 }
 
 @end

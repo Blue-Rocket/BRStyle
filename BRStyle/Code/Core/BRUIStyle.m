@@ -196,6 +196,14 @@ static BRUIStyle *DefaultStyle;
 @dynamic fonts;
 @dynamic colors;
 
+- (instancetype)initWithUIStyle:(BRUIStyle *)other {
+	if ( (self = [super initWithUIStyle:other]) ) {
+		fonts = [fonts mutableCopy];
+		colors = [colors mutableCopy];
+	}
+	return self;
+}
+
 - (instancetype)initWithDictionaryRepresentation:(NSDictionary *)dictionary {
 	if ( (self = [super initWithDictionaryRepresentation:dictionary]) ) {
 		fonts = [fonts mutableCopy];

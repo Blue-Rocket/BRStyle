@@ -81,6 +81,17 @@
 
 #pragma mark -
 
+- (void)testColorsMutableCopy {
+	BRUIStyleColorSettings *settings = [BRUIStyleColorSettings new];
+	BRMutableUIStyleColorSettings *copy = [settings mutableCopy];
+	assertThat(copy, isNot(sameInstance(settings)));
+	assertThat(copy, isA([BRMutableUIStyleColorSettings class]));
+	assertThat(copy.controlSettings, isA([BRMutableUIStyleControlStateColorSettings class]));
+	assertThat(copy.inverseControlSettings, isA([BRMutableUIStyleControlStateColorSettings class]));
+}
+
+#pragma mark -
+
 - (void)testControlColorGetters {
 	BRUIStyleControlColorSettings *settings = [BRUIStyleControlColorSettings new];
 	assertThat(settings.actionColor, notNilValue());
@@ -128,6 +139,18 @@
 }
 
 #pragma mark -
+
+- (void)testControlStateColorMutableCopy {
+	BRUIStyleControlStateColorSettings *settings = [BRUIStyleControlStateColorSettings new];
+	BRMutableUIStyleControlStateColorSettings *copy = [settings mutableCopy];
+	assertThat(copy, isNot(sameInstance(settings)));
+	assertThat(copy, isA([BRMutableUIStyleControlStateColorSettings class]));
+	assertThat(copy.normalColorSettings, isA([BRMutableUIStyleControlColorSettings class]));
+	assertThat(copy.highlightedColorSettings, isA([BRMutableUIStyleControlColorSettings class]));
+	assertThat(copy.selectedColorSettings, isA([BRMutableUIStyleControlColorSettings class]));
+	assertThat(copy.disabledColorSettings, isA([BRMutableUIStyleControlColorSettings class]));
+	assertThat(copy.dangerousColorSettings, isA([BRMutableUIStyleControlColorSettings class]));
+}
 
 - (void)testControlStateColorDictionaryRepresentation {
 	BRUIStyleControlStateColorSettings *settings = [BRUIStyleControlStateColorSettings new];

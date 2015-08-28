@@ -53,6 +53,15 @@
 	assertThat(copy, sameInstance(style));
 }
 
+- (void)testStyleMutableProperties {
+	BRUIStyle *style = [BRUIStyle new];
+	BRUIStyle *copy = [style mutableCopy];
+	assertThat(copy, isNot(sameInstance(style)));
+	assertThat(copy, isA([BRMutableUIStyle class]));
+	assertThat(copy.fonts, isA([BRMutableUIStyleFontSettings class]));
+	assertThat(copy.colors, isA([BRMutableUIStyleColorSettings class]));
+}
+
 - (void)testStyleMutableCopy {
 	BRUIStyle *style = [BRUIStyle new];
 	BRUIStyleColorSettings *colors = style.colors;

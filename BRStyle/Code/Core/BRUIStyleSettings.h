@@ -303,19 +303,19 @@ NS_ASSUME_NONNULL_BEGIN
 @interface BRMutableUIStyleControlStateColorSettings : BRUIStyleControlStateColorSettings
 
 /** Color settings to use for a control's normal state. */
-@property (nonatomic, readwrite) BRUIStyleControlColorSettings *normalColorSettings;
+@property (nonatomic, readwrite) BRMutableUIStyleControlColorSettings *normalColorSettings;
 
 /** Color settings to use for a control's highlighted (active) state. */
-@property (nonatomic, readwrite) BRUIStyleControlColorSettings *highlightedColorSettings;
+@property (nonatomic, readwrite) BRMutableUIStyleControlColorSettings *highlightedColorSettings;
 
 /** Color settings to use for a control's selected state. */
-@property (nonatomic, readwrite) BRUIStyleControlColorSettings *selectedColorSettings;
+@property (nonatomic, readwrite) BRMutableUIStyleControlColorSettings *selectedColorSettings;
 
 /** Color settings to use for a control's disabled state. */
-@property (nonatomic, readwrite) BRUIStyleControlColorSettings *disabledColorSettings;
+@property (nonatomic, readwrite) BRMutableUIStyleControlColorSettings *disabledColorSettings;
 
 /** Color settings to use for a control's dangerous state. This state represents a destructive action the user should be cautious of executing. */
-@property (nonatomic, readwrite) BRUIStyleControlColorSettings *dangerousColorSettings;
+@property (nonatomic, readwrite) BRMutableUIStyleControlColorSettings *dangerousColorSettings;
 
 @end
 
@@ -386,10 +386,10 @@ NS_ASSUME_NONNULL_BEGIN
 ///-------------------------------
 
 /** Color settings to apply to controls when shown on top of neutral content, e.g. not toolbars or navigation bars. */
-@property (nonatomic, readwrite) BRUIStyleControlStateColorSettings *controlSettings;
+@property (nonatomic, readwrite) BRMutableUIStyleControlStateColorSettings *controlSettings;
 
 /** Color settings to apply to controls when shown on top of primary colored content, e.g. toolbars or navigation bars. */
-@property (nonatomic, readwrite) BRUIStyleControlStateColorSettings *inverseControlSettings;
+@property (nonatomic, readwrite) BRMutableUIStyleControlStateColorSettings *inverseControlSettings;
 
 @end
 
