@@ -8,6 +8,7 @@
 
 #import <BRStyle/BRUIStyle.h>
 #import <BRStyle/BRUIStyleObserver.h>
+#import <BRStyle/BRUIStyleSettings.h>
 #import <BRStyle/BRUIStylishHost.h>
 #import <BRStyle/NSObject+BRUIStyle.h>
 #import <BRStyle/UIBarButtonItem+BRUIStyle.h>
