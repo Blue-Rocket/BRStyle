@@ -12,6 +12,5 @@
 #import <BRStyle/BRUIStylishHost.h>
 #import <BRStyle/NSObject+BRUIStyle.h>
 #import <BRStyle/UIBarButtonItem+BRUIStyle.h>
-#import <BRStyle/UIFont+BRUIStyle.h>
 #import <BRStyle/UIView+BRUIStyle.h>
 #import <BRStyle/UIViewController+BRUIStyle.h>
