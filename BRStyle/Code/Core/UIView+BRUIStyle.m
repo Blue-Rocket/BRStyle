@@ -16,7 +16,7 @@ static IMP original_willMoveToWindow;//(id, SEL, UIWindow *);
 
 void bruistyle_willMoveToWindow(id self, SEL _cmd, UIWindow * window) {
 	((void(*)(id,SEL,UIWindow *))original_willMoveToWindow)(self, _cmd, window);
-	if ( ![self conformsToProtocol:@protocol(BRUIStylishHost)] ) {
+	if ( !(window && [self conformsToProtocol:@protocol(BRUIStylishHost)]) ) {
 		return;
 	}
 	if ( [self respondsToSelector:@selector(uiStyleDidChange:)] ) {
