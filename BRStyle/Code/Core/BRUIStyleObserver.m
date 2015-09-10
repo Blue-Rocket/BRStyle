@@ -16,6 +16,19 @@ static void *BRUIStyleObserverKey = &BRUIStyleObserverKey;
 
 @implementation BRUIStyleObserver
 
+- (id)initWithHost:(id<BRUIStylishHost>)host {
+	if ( (self = [super init]) ) {
+		__weak id<BRUIStylishHost> myHost = host;
+		_updateObserver = [[NSNotificationCenter defaultCenter] addObserverForName:BRStyleNotificationUIStyleDidChange object:nil queue:nil usingBlock:^(NSNotification *note) {
+			BRUIStyle *myStyle = [myHost uiStyle];
+			if ( myStyle.defaultStyle ) {
+				[myHost uiStyleDidChange:myStyle];
+			}
+		}];
+	}
+	return self;
+}
+
 - (void)dealloc {
 	if ( _updateObserver ) {
 		[[NSNotificationCenter defaultCenter] removeObserver:_updateObserver];
@@ -25,17 +38,8 @@ static void *BRUIStyleObserverKey = &BRUIStyleObserverKey;
 + (void)addStyleObservation:(id<BRUIStylishHost>)host {
 	BRUIStyleObserver *obs = objc_getAssociatedObject(host, BRUIStyleObserverKey);
 	if ( !obs ) {
-		obs = [BRUIStyleObserver new];
-		obs.host = host;
+		obs = [[BRUIStyleObserver alloc] initWithHost:host];
 		objc_setAssociatedObject(host, BRUIStyleObserverKey, obs, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-	}
-	if ( !obs.updateObserver ) {
-		obs.updateObserver = [[NSNotificationCenter defaultCenter] addObserverForName:BRStyleNotificationUIStyleDidChange object:nil queue:nil usingBlock:^(NSNotification *note) {
-			BRUIStyle *myStyle = [host uiStyle];
-			if ( myStyle.defaultStyle ) {
-				[host uiStyleDidChange:myStyle];
-			}
-		}];
 	}
 }
 

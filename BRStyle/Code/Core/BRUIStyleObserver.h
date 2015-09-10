@@ -15,7 +15,6 @@
  */
 @interface BRUIStyleObserver : NSObject
 
-@property (nonatomic, assign) __unsafe_unretained id host;
 @property (nonatomic, strong) id updateObserver;
 
 /**
