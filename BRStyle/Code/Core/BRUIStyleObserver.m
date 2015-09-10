@@ -22,7 +22,7 @@ static void *BRUIStyleObserverKey = &BRUIStyleObserverKey;
 		_updateObserver = [[NSNotificationCenter defaultCenter] addObserverForName:BRStyleNotificationUIStyleDidChange object:nil queue:nil usingBlock:^(NSNotification *note) {
 			BRUIStyle *myStyle = [myHost uiStyle];
 			if ( myStyle.defaultStyle ) {
-				[myHost uiStyleDidChange:myStyle];
+				[myHost uiStyleDidChange:note.object];
 			}
 		}];
 	}
