@@ -27,6 +27,7 @@
 		C9C5D1291B8FC25900FAF431 /* UIFont_BRUIStyleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C5D1281B8FC25900FAF431 /* UIFont_BRUIStyleTests.m */; };
 		C9DC16C31B8D11C300F5C6C3 /* BRUIStyleSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DC16C21B8D11C300F5C6C3 /* BRUIStyleSettings.m */; };
 		C9DC16C71B8D7CE500F5C6C3 /* BRUIStyleSettingsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DC16C61B8D7CE500F5C6C3 /* BRUIStyleSettingsTests.m */; };
+		C9ED4FDB1BA22967000A50FD /* BRUIStyleObserverTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9ED4FDA1BA22967000A50FD /* BRUIStyleObserverTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +93,7 @@
 		C9DC16C21B8D11C300F5C6C3 /* BRUIStyleSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRUIStyleSettings.m; sourceTree = "<group>"; };
 		C9DC16C41B8D289F00F5C6C3 /* BRUIStylish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRUIStylish.h; sourceTree = "<group>"; };
 		C9DC16C61B8D7CE500F5C6C3 /* BRUIStyleSettingsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRUIStyleSettingsTests.m; sourceTree = "<group>"; };
+		C9ED4FDA1BA22967000A50FD /* BRUIStyleObserverTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRUIStyleObserverTests.m; sourceTree = "<group>"; };
 		CF096CDD98419257F1054C2D /* Pods-BRStyle.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BRStyle.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BRStyle/Pods-BRStyle.debug.xcconfig"; sourceTree = "<group>"; };
 		CF8520217BB38401BF8B86A7 /* libPods-BRStyle-BRStyleTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BRStyle-BRStyleTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F87CB3C970C60CEAECF43A34 /* Pods-BRStyle.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BRStyle.release.xcconfig"; path = "Pods/Target Support Files/Pods-BRStyle/Pods-BRStyle.release.xcconfig"; sourceTree = "<group>"; };
@@ -270,6 +272,7 @@
 			isa = PBXGroup;
 			children = (
 				C91BBE3B1B8E9019008E5D60 /* BRUIStyleTests.m */,
+				C9ED4FDA1BA22967000A50FD /* BRUIStyleObserverTests.m */,
 				C9DC16C61B8D7CE500F5C6C3 /* BRUIStyleSettingsTests.m */,
 				C9C5D1281B8FC25900FAF431 /* UIFont_BRUIStyleTests.m */,
 				C91BBE3D1B8EA338008E5D60 /* style.json */,
@@ -421,6 +424,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C9DC16C71B8D7CE500F5C6C3 /* BRUIStyleSettingsTests.m in Sources */,
+				C9ED4FDB1BA22967000A50FD /* BRUIStyleObserverTests.m in Sources */,
 				C9C5D1291B8FC25900FAF431 /* UIFont_BRUIStyleTests.m in Sources */,
 				C91BBE3C1B8E9019008E5D60 /* BRUIStyleTests.m in Sources */,
 			);

@@ -34,11 +34,6 @@ static NSString * const kExportStyleSegue = @"ExportStyle";
 	controller = [[StyleController alloc] initWithStyle:[[BRUIStyle defaultStyle] mutableCopy]];
 }
 
-- (void)setColor:(UIColor *)color forName:(NSString *)colorName inStyle:(BRMutableUIStyle *)style {
-	[style setValue:color forKeyPath:[colorName stringByAppendingString:@"Color"]];
-	[BRUIStyle setDefaultStyle:style];
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -87,6 +82,7 @@ static const NSInteger kFontSection = 6;
 		[controller.style setValue:picker.color forKeyPath:selectedStyleKeyPath];
 		StyleColorTableViewCell *cell = (StyleColorTableViewCell *)[self.tableView cellForRowAtIndexPath:selectedStyleIndexPath];
 		cell.colorSwatch.color = picker.color;
+		[BRUIStyle setDefaultStyle:controller.style];
 	}
 }
 

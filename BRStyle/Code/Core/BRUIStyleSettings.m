@@ -582,15 +582,15 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 	BRMutableUIStyleControlStateColorSettings *inverseControlSettings = [controlSettings mutableCopy];
 	
 	// normal settings
-	BRMutableUIStyleControlColorSettings *controlColorSettings = [inverseControlSettings.normalColorSettings mutableCopy];
-	controlColorSettings.actionColor = [UIColor whiteColor];
-	controlColorSettings.borderColor = [BRUIStyle colorWithRGBInteger:0x264891];
-	controlColorSettings.glossColor = [[UIColor whiteColor] colorWithAlphaComponent:0.3];
-	inverseControlSettings.normalColorSettings = controlColorSettings;
+	inverseControlSettings.normalColorSettings.actionColor = [UIColor whiteColor];
+	inverseControlSettings.normalColorSettings.borderColor = [BRUIStyle colorWithRGBInteger:0x264891];
+	inverseControlSettings.normalColorSettings.glossColor = [inverseControlSettings.normalColorSettings.glossColor colorWithAlphaComponent:0.5];
+	inverseControlSettings.normalColorSettings.shadowColor = [[UIColor whiteColor] colorWithAlphaComponent:0.3];
 	
 	// highlighted settings
-	BRMutableUIStyleControlColorSettings *highlightedControlColorSettings = [controlColorSettings mutableCopy];
-	highlightedControlColorSettings.actionColor = [[UIColor blackColor] colorWithAlphaComponent:0.1];
+	BRMutableUIStyleControlColorSettings *highlightedControlColorSettings = [inverseControlSettings.normalColorSettings mutableCopy];
+	highlightedControlColorSettings.shadowColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
+	highlightedControlColorSettings.fillColor = [[UIColor blackColor] colorWithAlphaComponent:0.1];
 	inverseControlSettings.highlightedColorSettings = highlightedControlColorSettings;
 	
 	defaults[NSStringFromSelector(@selector(inverseControlSettings))] = (mutable ? inverseControlSettings : [inverseControlSettings copy]);
