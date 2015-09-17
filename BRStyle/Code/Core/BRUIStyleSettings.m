@@ -9,7 +9,7 @@
 #import "BRUIStyleSettings.h"
 
 #import "BRUIStyle.h"
-#import <objc/objc-runtime.h>
+#import <objc/runtime.h>
 
 id dynamicSettingGetterIMP(id self, SEL _cmd);
 void dynamicSettingSetterIMP(id self, SEL _cmd, id value);
