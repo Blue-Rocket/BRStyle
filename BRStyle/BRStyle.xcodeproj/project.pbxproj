@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00B53FA6742C71400A37071D /* libPods-BRStyle.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23359DD70EE4F0C6C9CF6DB5 /* libPods-BRStyle.a */; };
 		471FC8256573EAF93CECA129 /* libPods-BRStyle-BRStyleTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF8520217BB38401BF8B86A7 /* libPods-BRStyle-BRStyleTests.a */; };
 		C91BBE3C1B8E9019008E5D60 /* BRUIStyleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C91BBE3B1B8E9019008E5D60 /* BRUIStyleTests.m */; };
 		C91BBE3E1B8EA338008E5D60 /* style.json in Resources */ = {isa = PBXBuildFile; fileRef = C91BBE3D1B8EA338008E5D60 /* style.json */; };
@@ -104,7 +103,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00B53FA6742C71400A37071D /* libPods-BRStyle.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
