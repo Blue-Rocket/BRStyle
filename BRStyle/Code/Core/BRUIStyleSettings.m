@@ -593,6 +593,12 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 	highlightedControlColorSettings.fillColor = [[UIColor blackColor] colorWithAlphaComponent:0.1];
 	inverseControlSettings.highlightedColorSettings = highlightedControlColorSettings;
 	
+	// dangerous settings
+	BRMutableUIStyleControlColorSettings *dangerousControlColorSettings = [inverseControlSettings.normalColorSettings mutableCopy];
+	dangerousControlColorSettings.fillColor = [BRUIStyle colorWithRGBInteger:0xEB2D38];
+	dangerousControlColorSettings.borderColor = dangerousControlColorSettings.fillColor;
+	defaults[NSStringFromSelector(@selector(dangerousColorSettings))] = (mutable ? dangerousControlColorSettings : [dangerousControlColorSettings copy]);
+	
 	defaults[NSStringFromSelector(@selector(inverseControlSettings))] = (mutable ? inverseControlSettings : [inverseControlSettings copy]);
 
 	return [defaults copy];
