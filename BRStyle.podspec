@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = 'BRStyle'
-  s.version      = '0.9.13'
+  s.version      = '0.9.14'
   s.summary      = 'Basic color and font style framework for UIKit.'
 
   s.description        = <<-DESC
