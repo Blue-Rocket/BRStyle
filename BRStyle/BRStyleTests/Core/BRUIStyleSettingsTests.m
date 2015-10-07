@@ -93,7 +93,7 @@
 	assertThat(settings.actionColor, notNilValue());
 	assertThat(settings.borderColor, notNilValue());
 	assertThat(settings.glossColor, notNilValue());
-	assertThat(settings.shadowColor, notNilValue());
+	assertThat(settings.shadowColor, nilValue());
 	assertThat(settings.shadow, nilValue());
 	assertThat(settings.textShadow, nilValue());
 }
@@ -130,8 +130,8 @@
 	settings.textShadow = shadow;
 	NSDictionary *result = [settings dictionaryRepresentation];
 	assertThat(result, hasCountOf(7));
-	assertThat(result[@"actionColor"], equalToIgnoringCase(@"#1247b8ff"));
-	assertThat(result[@"shadowColor"], equalToIgnoringCase(@"#5555557F"));
+	assertThat(result[@"actionColor"], equalToIgnoringCase(@"#555555ff"));
+	assertThat(result[@"shadowColor"], equalTo([NSNull null]));
 	assertThat(result[@"shadow"], instanceOf([NSDictionary class]));
 	assertThat(result[@"shadow"][@"color"], equalToIgnoringCase(@"#00000033"));
 	assertThat(result[@"shadow"][@"offset"], hasCountOf(2));
