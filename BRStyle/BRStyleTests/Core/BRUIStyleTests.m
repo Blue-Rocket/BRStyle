@@ -110,9 +110,10 @@
 
 - (void)testDictionaryRepresentation {
 	NSDictionary *dict = [[BRUIStyle defaultStyle] dictionaryRepresentation];
-	assertThat(dict, hasCountOf(2));
+	assertThat(dict, hasCountOf(3));
 	assertThat(dict[@"colors"], instanceOf([NSDictionary class]));
 	assertThat(dict[@"fonts"], instanceOf([NSDictionary class]));
+	assertThat(dict[@"controls"], instanceOf([NSDictionary class]));
 }
 
 - (void)testInitWithDictionary {

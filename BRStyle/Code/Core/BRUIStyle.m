@@ -16,6 +16,7 @@ static BRUIStyle *DefaultStyle;
 	@protected
 	BRUIStyleFontSettings *fonts;
 	BRUIStyleColorSettings *colors;
+	BRUIStyleControlSettings *controls;
 }
 
 + (instancetype)defaultStyle {
@@ -90,16 +91,19 @@ static BRUIStyle *DefaultStyle;
 		if ( other == nil ) {
 			fonts = [BRUIStyleFontSettings new];
 			colors = [BRUIStyleColorSettings new];
+			controls = [BRUIStyleControlSettings new];
 		} else {
 			fonts = [other.fonts copy];
 			colors = [other.colors copy];
+			controls = [other.controls copy];
 		}
 	}
 	return self;
 }
 
 - (NSString *)debugDescription {
-	return [NSString stringWithFormat:@"BRUIStyle{colors=%@; fonts = %@}", [colors debugDescription], [fonts debugDescription]];
+	return [NSString stringWithFormat:@"BRUIStyle{colors=%@; fonts = %@; controls = %@}",
+			[colors debugDescription], [fonts debugDescription], [controls debugDescription]];
 }
 
 #pragma mark - Serialization
@@ -123,6 +127,37 @@ static BRUIStyle *DefaultStyle;
 	return style;
 }
 
++ (NSDictionary<NSString *, BRUIStyle *> *)stylesWithJSONResource:(NSString *)resourceName inBundle:(NSBundle *)bundle {
+	NSBundle *bundleToUse = (bundle ? bundle : [NSBundle mainBundle]);
+	NSString *jsonPath = [bundleToUse pathForResource:resourceName ofType:nil];
+	NSDictionary<NSString *, BRUIStyle *> *styles = nil;
+	if ( [jsonPath length] > 0 ) {
+		NSInputStream *input = [NSInputStream inputStreamWithFileAtPath:jsonPath];
+		[input open];
+		NSError *error = nil;
+		NSDictionary *dict = [NSJSONSerialization JSONObjectWithStream:input options:0 error:&error];
+		if ( error ) {
+			NSLog(@"Error reading BRUIStyle set from %@: %@", jsonPath, [error localizedDescription]);
+		} else {
+			NSMutableDictionary *result = [[NSMutableDictionary alloc] initWithCapacity:dict.count];
+			[result enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+				if ( !([key isKindOfClass:[NSString class]] && [obj isKindOfClass:[NSDictionary class]]) ) {
+					return;
+				}
+				BRUIStyle *style = [BRUIStyle styleWithDictionary:obj];
+				if ( style ) {
+					result[key] = style;
+				}
+			}];
+			if ( result.count > 0 ) {
+				styles = [result copy];
+			}
+		}
+		[input close];
+	}
+	return styles;
+}
+
 + (BRUIStyle *)styleWithDictionary:(NSDictionary *)dictionary {
 	return [[self alloc] initWithDictionaryRepresentation:dictionary];
 }
@@ -131,13 +166,15 @@ static BRUIStyle *DefaultStyle;
 	if ( (self = [super init]) ) {
 		fonts = [[BRUIStyleFontSettings alloc] initWithDictionaryRepresentation:dictionary[@"fonts"]];
 		colors = [[BRUIStyleColorSettings alloc] initWithDictionaryRepresentation:dictionary[@"colors"]];
+		controls = [[BRUIStyleControlSettings alloc] initWithDictionaryRepresentation:dictionary[@"controls"]];
 	}
 	return self;
 }
 
 - (NSDictionary *)dictionaryRepresentation {
 	return @{@"fonts" : (fonts ? [fonts dictionaryRepresentation] : [NSNull null]),
-			 @"colors" : (colors ? [colors dictionaryRepresentation] : [NSNull null])};
+			 @"colors" : (colors ? [colors dictionaryRepresentation] : [NSNull null]),
+			 @"controls" : (controls ? [controls dictionaryRepresentation] : [NSNull null])};
 }
 
 #pragma mark - NSCopying
@@ -165,12 +202,14 @@ static BRUIStyle *DefaultStyle;
 	}
 	fonts = [decoder decodeObjectOfClass:[BRUIStyleFontSettings class] forKey:NSStringFromSelector(@selector(fonts))];
 	colors = [decoder decodeObjectOfClass:[BRUIStyleColorSettings class] forKey:NSStringFromSelector(@selector(colors))];
+	controls = [decoder decodeObjectOfClass:[BRUIStyleControlSettings class] forKey:NSStringFromSelector(@selector(controls))];
 	return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder {
 	[coder encodeObject:fonts forKey:NSStringFromSelector(@selector(fonts))];
 	[coder encodeObject:colors forKey:NSStringFromSelector(@selector(fonts))];
+	[coder encodeObject:controls forKey:NSStringFromSelector(@selector(controls))];
 }
 
 #pragma mark - Helpers
@@ -187,6 +226,10 @@ static BRUIStyle *DefaultStyle;
 	return (colors || self.defaultStyle ? colors : [BRUIStyle defaultStyle].colors);
 }
 
+- (BRUIStyleControlSettings *)controls {
+	return (controls || self.defaultStyle ? controls : [BRUIStyle defaultStyle].controls);
+}
+
 @end
 
 #pragma BRMutableUIStyle support
@@ -200,6 +243,7 @@ static BRUIStyle *DefaultStyle;
 	if ( (self = [super initWithUIStyle:other]) ) {
 		fonts = [fonts mutableCopy];
 		colors = [colors mutableCopy];
+		controls = [controls mutableCopy];
 	}
 	return self;
 }
@@ -208,6 +252,7 @@ static BRUIStyle *DefaultStyle;
 	if ( (self = [super initWithDictionaryRepresentation:dictionary]) ) {
 		fonts = [fonts mutableCopy];
 		colors = [colors mutableCopy];
+		controls = [controls mutableCopy];
 	}
 	return self;
 }
@@ -218,6 +263,10 @@ static BRUIStyle *DefaultStyle;
 
 - (void)setColors:(BRMutableUIStyleColorSettings * __nonnull)theColors {
 	colors = theColors;
+}
+
+- (void)setControls:(BRMutableUIStyleControlSettings * __nonnull)theControls {
+	controls = theControls;
 }
 
 - (id)copyWithZone:(NSZone *)zone {

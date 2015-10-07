@@ -57,12 +57,6 @@ NS_ASSUME_NONNULL_BEGIN
 /** A font to use for navigation items, like navigation bars. */
 @property (nonatomic, readonly) UIFont *navigationFont;
 
-/** A font to use in alert titles. */
-@property (nonatomic, readonly) UIFont *alertHeadlineFont;
-
-/** A font to use in alert messages. */
-@property (nonatomic, readonly) UIFont *alertFont;
-
 ///-------------------------------
 /// @name Structural font styles
 ///-------------------------------
@@ -100,7 +94,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Control style settings.
  */
-@interface BRUIStyleControlColorSettings : BRUIStyleSettings <NSMutableCopying>
+@interface BRUIStyleControlSettings : BRUIStyleSettings <NSMutableCopying>
 
 /** An action color to use in controls, often the @c tintColor of a control */
 @property (nonatomic, readonly) UIColor *actionColor;
@@ -117,27 +111,11 @@ NS_ASSUME_NONNULL_BEGIN
 /** A shadow effect color to use in controls. */
 @property (nonatomic, readonly, nullable) UIColor *shadowColor;
 
-@end
+/** A shadow effect to use in controls. */
+@property (nonatomic, readonly, nullable) NSShadow *shadow;
 
-/**
- Control state style settings.
- */
-@interface BRUIStyleControlStateColorSettings : BRUIStyleSettings <NSMutableCopying>
-
-/** Color settings to use for a control's normal state. */
-@property (nonatomic, readonly) BRUIStyleControlColorSettings *normalColorSettings;
-
-/** Color settings to use for a control's highlighted (active) state. */
-@property (nonatomic, readonly) BRUIStyleControlColorSettings *highlightedColorSettings;
-
-/** Color settings to use for a control's selected state. */
-@property (nonatomic, readonly) BRUIStyleControlColorSettings *selectedColorSettings;
-
-/** Color settings to use for a control's disabled state. */
-@property (nonatomic, readonly) BRUIStyleControlColorSettings *disabledColorSettings;
-
-/** Color settings to use for a control's dangerous state. This state represents a destructive action the user should be cautious of executing. */
-@property (nonatomic, readonly) BRUIStyleControlColorSettings *dangerousColorSettings;
+/** A text shadow effect to use in controls. */
+@property (nonatomic, readonly, nullable) NSShadow *textShadow;
 
 @end
 
@@ -187,31 +165,12 @@ NS_ASSUME_NONNULL_BEGIN
 /** The color to apply to placeholder text. */
 @property (nonatomic, readonly) UIColor *placeholderColor;
 
-/** The color to apply to alert titles. */
-@property (nonatomic, readonly) UIColor *alertHeadlineColor;
-
-/** The color to apply to alert messages. */
-@property (nonatomic, readonly) UIColor *alertColor;
-
 ///-------------------------------
 /// @name UI color styles
 ///-------------------------------
 
 /** The color to apply to navigation elements, such as @c UINavigationBar or @c UIToolbar objects. */
 @property (nonatomic, readonly) UIColor *navigationColor;
-
-/** The color to apply to alert backgrounds. */
-@property (nonatomic, readonly) UIColor *alertBackgroundColor;
-
-///-------------------------------
-/// @name Control color styles
-///-------------------------------
-
-/** Color settings to apply to controls when shown on top of neutral content, e.g. not toolbars or navigation bars. */
-@property (nonatomic, readonly) BRUIStyleControlStateColorSettings *controlSettings;
-
-/** Color settings to apply to controls when shown on top of primary colored content, e.g. toolbars or navigation bars. */
-@property (nonatomic, readonly) BRUIStyleControlStateColorSettings *inverseControlSettings;
 
 @end
 
@@ -234,12 +193,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** A font to use for navigation items, like navigation bars. */
 @property (nonatomic, readwrite) UIFont *navigationFont;
-
-/** A font to use in alert titles. */
-@property (nonatomic, readwrite) UIFont *alertHeadlineFont;
-
-/** A font to use in alert messages. */
-@property (nonatomic, readwrite) UIFont *alertFont;
 
 ///-------------------------------
 /// @name Structural font styles
@@ -278,7 +231,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Control style settings.
  */
-@interface BRMutableUIStyleControlColorSettings : BRUIStyleControlColorSettings
+@interface BRMutableUIStyleControlSettings : BRUIStyleControlSettings
 
 /** An action color to use in controls, often the @c tintColor of a control */
 @property (nonatomic, readwrite) UIColor *actionColor;
@@ -295,27 +248,11 @@ NS_ASSUME_NONNULL_BEGIN
 /** A shadow effect color to use in controls. */
 @property (nonatomic, readwrite, nullable) UIColor *shadowColor;
 
-@end
+/** A shadow effect to use in controls. */
+@property (nonatomic, readwrite, nullable) NSShadow *shadow;
 
-/**
- Control state style settings.
- */
-@interface BRMutableUIStyleControlStateColorSettings : BRUIStyleControlStateColorSettings
-
-/** Color settings to use for a control's normal state. */
-@property (nonatomic, readwrite) BRMutableUIStyleControlColorSettings *normalColorSettings;
-
-/** Color settings to use for a control's highlighted (active) state. */
-@property (nonatomic, readwrite) BRMutableUIStyleControlColorSettings *highlightedColorSettings;
-
-/** Color settings to use for a control's selected state. */
-@property (nonatomic, readwrite) BRMutableUIStyleControlColorSettings *selectedColorSettings;
-
-/** Color settings to use for a control's disabled state. */
-@property (nonatomic, readwrite) BRMutableUIStyleControlColorSettings *disabledColorSettings;
-
-/** Color settings to use for a control's dangerous state. This state represents a destructive action the user should be cautious of executing. */
-@property (nonatomic, readwrite) BRMutableUIStyleControlColorSettings *dangerousColorSettings;
+/** A text shadow effect to use in controls. */
+@property (nonatomic, readwrite, nullable) NSShadow *textShadow;
 
 @end
 
@@ -365,31 +302,12 @@ NS_ASSUME_NONNULL_BEGIN
 /** The color to apply to placeholder text. */
 @property (nonatomic, readwrite) UIColor *placeholderColor;
 
-/** The color to apply to alert titles. */
-@property (nonatomic, readwrite) UIColor *alertHeadlineColor;
-
-/** The color to apply to alert messages. */
-@property (nonatomic, readwrite) UIColor *alertColor;
-
 ///-------------------------------
 /// @name UI color styles
 ///-------------------------------
 
 /** The color to apply to navigation elements, such as @c UINavigationBar or @c UIToolbar objects. */
 @property (nonatomic, readwrite) UIColor *navigationColor;
-
-/** The color to apply to alert backgrounds. */
-@property (nonatomic, readwrite) UIColor *alertBackgroundColor;
-
-///-------------------------------
-/// @name Control color styles
-///-------------------------------
-
-/** Color settings to apply to controls when shown on top of neutral content, e.g. not toolbars or navigation bars. */
-@property (nonatomic, readwrite) BRMutableUIStyleControlStateColorSettings *controlSettings;
-
-/** Color settings to apply to controls when shown on top of primary colored content, e.g. toolbars or navigation bars. */
-@property (nonatomic, readwrite) BRMutableUIStyleControlStateColorSettings *inverseControlSettings;
 
 @end
 

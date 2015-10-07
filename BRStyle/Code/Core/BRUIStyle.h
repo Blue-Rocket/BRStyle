@@ -54,6 +54,9 @@ extern NSString * const BRStyleNotificationUIStyleDidChange;
 /** The color style settings. */
 @property (nonatomic, readonly) BRUIStyleColorSettings *colors;
 
+/** The control style settings. */
+@property (nonatomic, readonly) BRMutableUIStyleControlSettings *controls;
+
 /// -------------------------------
 /// @name Serialization
 /// -------------------------------
@@ -66,6 +69,15 @@ extern NSString * const BRStyleNotificationUIStyleDidChange;
  @return The new style instance, or @c nil if the resource could not be loaded.
  */
 + (nullable BRUIStyle *)styleWithJSONResource:(NSString *)resourceName inBundle:(nullable NSBundle *)bundle;
+
+/**
+ Create a dictionary of style instances from a JSON-encoded bundle resource.
+ 
+ @param resourceName The name of the JSON resource to load, which contains any number of string keys with associated BRUIStyle JSON representations.
+ @param bundle The bundle to use, or @c nil for the main bundle.
+ @return The new style instance, or @c nil if the resource could not be loaded.
+ */
++ (nullable NSDictionary<NSString *, BRUIStyle *> *)stylesWithJSONResource:(NSString *)resourceName inBundle:(nullable NSBundle *)bundle;
 
 /**
  Decode a style intance from a dictionary representation.
@@ -140,6 +152,9 @@ extern NSString * const BRStyleNotificationUIStyleDidChange;
 
 /** The color style settings. */
 @property (nonatomic, readwrite) BRMutableUIStyleColorSettings *colors;
+
+/** The control style settings. */
+@property (nonatomic, readwrite) BRMutableUIStyleControlSettings *controls;
 
 @end
 

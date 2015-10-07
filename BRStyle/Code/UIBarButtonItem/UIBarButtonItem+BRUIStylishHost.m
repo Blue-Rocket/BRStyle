@@ -16,7 +16,7 @@
 
 - (void)uiStyleDidChange:(BRUIStyle *)style {
 	[self setTitleTextAttributes:@{
-								   NSForegroundColorAttributeName: style.colors.inverseControlSettings.normalColorSettings.actionColor,
+								   NSForegroundColorAttributeName: style.controls.actionColor,
 								   NSFontAttributeName: style.fonts.actionFont,
 								   }
 						forState:UIControlStateNormal];

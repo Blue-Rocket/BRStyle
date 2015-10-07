@@ -93,6 +93,37 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 
 #pragma mark - Dictionary representation
 
+- (nullable UIColor *)parseColor:(nullable NSString *)value {
+	if ( [value length] < 1 ) {
+		return nil;
+	}
+	// colors assumed to be #rgba format
+	unsigned long long colorInteger = 0;
+	NSScanner *scanner = [[NSScanner alloc] initWithString:value];
+	[scanner scanString:@"#" intoString:NULL];
+	[scanner scanHexLongLong:&colorInteger];
+	return [BRUIStyle colorWithRGBAInteger:(UInt32)colorInteger];
+}
+
+/**
+ Parse an array of two floats into a CGSize.
+ 
+ @param value An array of two float number values.
+ 
+ @return The parsed CGSize, or @c nil if @c value is not parsable.
+ */
+- (CGSize)parseCGSize:(nullable id)value {
+	CGSize result = CGSizeZero;
+	if ( [value isKindOfClass:[NSArray class]] ) {
+		NSArray *array = value;
+		if ( array.count > 1 ) {
+			result.width = [array[0] floatValue];
+			result.height = [array [1] floatValue];
+		}
+	}
+	return result;
+}
+
 - (instancetype)initWithDictionaryRepresentation:(NSDictionary *)dictionary {
 	NSMutableDictionary *decoded = [[[self class] defaultSettings] mutableCopy];
 	[[[self class] supportedSettingNames] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -104,12 +135,7 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 		id result = nil;
 		BOOL nullValue = [value isKindOfClass:[NSNull class]];
 		if ( [key hasSuffix:@"Color"] && nullValue != YES ) {
-			// colors assumed to be #rgba format
-			unsigned long long colorInteger = 0;
-			NSScanner *scanner = [[NSScanner alloc] initWithString:value];
-			[scanner scanString:@"#" intoString:NULL];
-			[scanner scanHexLongLong:&colorInteger];
-			result = [BRUIStyle colorWithRGBAInteger:(UInt32)colorInteger];
+			result = [self parseColor:value];
 		} else if ( [value isKindOfClass:[NSDictionary class]] ) {
 			if ( [key hasSuffix:@"Font"] ) {
 				// if no name provided, use system font
@@ -118,22 +144,17 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 				} else {
 					result = [UIFont systemFontOfSize:[value[@"size"] floatValue]];
 				}
-			} else if ( [key hasSuffix:@"ColorSettings"] ) {
-				NSMutableDictionary *ccDefaults = [[NSMutableDictionary alloc] initWithCapacity:8];
-				BRUIStyleControlColorSettings *ccSettings = decoded[key];
-				if ( ccSettings ) {
-					[ccDefaults addEntriesFromDictionary:[ccSettings dictionaryRepresentation]];
+			} else if ( [key hasSuffix:@"hadow"] ) {
+				UIColor *color = value[@"color"];
+				if ( color ) {
+					CGSize offset = [self parseCGSize:value[@"offset"]];
+					CGFloat blurRadius = [value[@"blurRadius"] floatValue];
+					NSShadow *shadow = [[NSShadow alloc] init];
+					shadow.shadowOffset = offset;
+					shadow.shadowBlurRadius = blurRadius;
+					shadow.shadowColor = color;
+					result = shadow;
 				}
-				[ccDefaults addEntriesFromDictionary:value];
-				result = [[BRUIStyleControlColorSettings alloc] initWithDictionaryRepresentation:ccDefaults];
-			} else if ( [key hasSuffix:@"ontrolSettings"] ) {
-				NSMutableDictionary *csDefaults = [[NSMutableDictionary alloc] initWithCapacity:8];
-				BRUIStyleControlStateColorSettings *csSettings = decoded[key];
-				if ( csSettings ) {
-					[csDefaults addEntriesFromDictionary:[csSettings dictionaryRepresentation]];
-				}
-				[csDefaults addEntriesFromDictionary:value];
-				result = [[BRUIStyleControlStateColorSettings alloc] initWithDictionaryRepresentation:csDefaults];
 			}
 		}
 		if ( result ) {
@@ -154,6 +175,12 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 	return [[font familyName] isEqualToString:systemFontFamilyName];
 }
 
++ (NSString *)stringValueForColor:(UIColor *)color {
+	char hexStr[20];
+	sprintf(hexStr,"#%08lx", (unsigned long)[BRUIStyle rgbaIntegerForColor:color]);
+	return [[NSString alloc] initWithUTF8String:hexStr];
+}
+
 - (NSDictionary *)dictionaryRepresentation {
 	NSMutableDictionary *encoded = [[NSMutableDictionary alloc] initWithCapacity:16];
 	[[[self class] supportedSettingNames] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -161,15 +188,18 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 		id value = settings[key];
 		id result = nil;
 		if ( [value isKindOfClass:[UIColor class]] ) {
-			char hexStr[20];
-			sprintf(hexStr,"#%08lx", (unsigned long)[BRUIStyle rgbaIntegerForColor:value]);
-			result = [[NSString alloc] initWithUTF8String:hexStr];
+			result = [BRUIStyleSettings stringValueForColor:value];
 		} else if ( [value isKindOfClass:[UIFont class]] ) {
 			if ( [BRUIStyleFontSettings isSystemFont:value] ) {
 				result = @{ @"size" : @([value pointSize])};
 			} else {
 				result = @{ @"name" : [value fontName], @"size" : @([value pointSize])};
 			}
+		} else if ( [value isKindOfClass:[NSShadow class]] ) {
+			NSShadow *shadow = value;
+			result = @{ @"color" : [BRUIStyleSettings stringValueForColor:shadow.shadowColor],
+						@"offset" : @[@(shadow.shadowOffset.width), @(shadow.shadowOffset.height)],
+						@"blurRadius" : @(shadow.shadowBlurRadius) };
 		} else if ( [value respondsToSelector:@selector(dictionaryRepresentation)] ) {
 			result = [value dictionaryRepresentation];
 		}
@@ -192,9 +222,7 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 
 - (id)initWithCoder:(NSCoder *)decoder {
 	NSMutableDictionary *decodedSettings = [[NSMutableDictionary alloc] initWithCapacity:16];
-	NSSet *allowedSettings = [[NSSet alloc] initWithArray:@[[UIColor class],
-															[BRUIStyleControlColorSettings class],
-															[BRUIStyleControlStateColorSettings class]]];
+	NSSet *allowedSettings = [NSSet setWithObjects:[UIColor class], [NSShadow class], [BRUIStyleControlSettings class], nil];
 	[[[self class] supportedSettingNames] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 		NSString *key = obj;
 		id value = nil;
@@ -235,8 +263,6 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 @dynamic actionFont;
 @dynamic formFont;
 @dynamic navigationFont;
-@dynamic alertHeadlineFont;
-@dynamic alertFont;
 
 @dynamic heroFont;
 @dynamic headlineFont;
@@ -257,8 +283,6 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 				 
 				 NSStringFromSelector(@selector(formFont)),
 				 NSStringFromSelector(@selector(navigationFont)),
-				 NSStringFromSelector(@selector(alertHeadlineFont)),
-				 NSStringFromSelector(@selector(alertFont)),
 				 
 				 NSStringFromSelector(@selector(heroFont)),
 				 NSStringFromSelector(@selector(headlineFont)),
@@ -280,8 +304,6 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 	
 	defaults[NSStringFromSelector(@selector(formFont))] =  [UIFont fontWithName:@"GillSans-Light" size:17];
 	defaults[NSStringFromSelector(@selector(navigationFont))] =  [UIFont fontWithName:@"GillSans" size:21];
-	defaults[NSStringFromSelector(@selector(alertHeadlineFont))] =  [UIFont fontWithName:@"GillSans" size:15];
-	defaults[NSStringFromSelector(@selector(alertFont))] =  [UIFont fontWithName:@"GillSans-Light" size:13];
 	
 	defaults[NSStringFromSelector(@selector(heroFont))] =  [UIFont fontWithName:@"GillSans-Bold" size:21];
 	defaults[NSStringFromSelector(@selector(headlineFont))] =  [UIFont fontWithName:@"GillSans-Bold" size:17];
@@ -306,8 +328,6 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 @dynamic actionFont;
 @dynamic formFont;
 @dynamic navigationFont;
-@dynamic alertHeadlineFont;
-@dynamic alertFont;
 
 @dynamic heroFont;
 @dynamic headlineFont;
@@ -336,13 +356,15 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 
 #pragma mark -
 
-@implementation BRUIStyleControlColorSettings
+@implementation BRUIStyleControlSettings
 
 @dynamic actionColor;
 @dynamic borderColor;
 @dynamic fillColor;
 @dynamic glossColor;
 @dynamic shadowColor;
+@dynamic shadow;
+@dynamic textShadow;
 
 + (NSArray *)supportedSettingNames {
 	static dispatch_once_t controlColorSettingNamesToken;
@@ -354,6 +376,8 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 				 NSStringFromSelector(@selector(fillColor)),
 				 NSStringFromSelector(@selector(glossColor)),
 				 NSStringFromSelector(@selector(shadowColor)),
+				 NSStringFromSelector(@selector(shadow)),
+				 NSStringFromSelector(@selector(textShadow)),
 				 ];
 	});
 	return keys;
@@ -370,20 +394,22 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 }
 
 - (id)mutableCopyWithZone:(NSZone *)zone {
-	return [[[BRMutableUIStyleControlColorSettings class] allocWithZone:zone] initWithSettings:[self mutableSettingsWithZone:zone]];
+	return [[[BRMutableUIStyleControlSettings class] allocWithZone:zone] initWithSettings:[self mutableSettingsWithZone:zone]];
 }
 
 @end
 
 #pragma mark -
 
-@implementation BRMutableUIStyleControlColorSettings
+@implementation BRMutableUIStyleControlSettings
 
 @dynamic actionColor;
 @dynamic borderColor;
 @dynamic fillColor;
 @dynamic glossColor;
 @dynamic shadowColor;
+@dynamic shadow;
+@dynamic textShadow;
 
 - (id)init {
 	self = [self initWithSettings:[[[self class] defaultSettings] mutableCopy]];
@@ -395,101 +421,7 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 }
 
 - (id)copyWithZone:(NSZone *)zone {
-	return [[[BRUIStyleControlColorSettings class] allocWithZone:zone] initWithSettings:[self.settings copy]];
-}
-
-@end
-
-#pragma mark -
-
-@implementation BRUIStyleControlStateColorSettings
-
-@dynamic normalColorSettings;
-@dynamic highlightedColorSettings;
-@dynamic selectedColorSettings;
-@dynamic disabledColorSettings;
-@dynamic dangerousColorSettings;
-
-+ (NSArray *)supportedSettingNames {
-	static dispatch_once_t controlStateColorSettingNamesToken;
-	static NSArray *keys;
-	dispatch_once(&controlStateColorSettingNamesToken, ^{
-		keys = @[
-				 NSStringFromSelector(@selector(normalColorSettings)),
-				 NSStringFromSelector(@selector(highlightedColorSettings)),
-				 NSStringFromSelector(@selector(selectedColorSettings)),
-				 NSStringFromSelector(@selector(disabledColorSettings)),
-				 NSStringFromSelector(@selector(dangerousColorSettings)),
-				 ];
-	});
-	return keys;
-}
-
-+ (NSDictionary *)defaultSettings {
-	BOOL mutable = [[self class] mutable];
-	NSMutableDictionary *defaults = [[NSMutableDictionary alloc] initWithCapacity:4];
-	
-	// normal settings
-	BRMutableUIStyleControlColorSettings *controlColorSettings = [BRMutableUIStyleControlColorSettings new];
-	controlColorSettings.actionColor = [BRUIStyle colorWithRGBInteger:0x555555];
-	controlColorSettings.borderColor = [BRUIStyle colorWithRGBInteger:0xCACACA];
-	controlColorSettings.glossColor = [[UIColor whiteColor] colorWithAlphaComponent:0.66];
-	controlColorSettings.shadowColor = nil;
-	defaults[NSStringFromSelector(@selector(normalColorSettings))] = (mutable ? controlColorSettings : [controlColorSettings copy]);
-
-	// highlighted settings
-	BRMutableUIStyleControlColorSettings *highlightedControlColorSettings = [controlColorSettings mutableCopy];
-	highlightedControlColorSettings.actionColor = [controlColorSettings.actionColor colorWithAlphaComponent:0.8];
-	highlightedControlColorSettings.fillColor = [UIColor colorWithRed: 0.833 green: 0.833 blue: 0.833 alpha: 0.5];
-	highlightedControlColorSettings.shadowColor = [BRUIStyle colorWithRGBAInteger:0x5555557F];
-	defaults[NSStringFromSelector(@selector(highlightedColorSettings))] = (mutable ? highlightedControlColorSettings : [highlightedControlColorSettings copy]);
-
-	// selected settings
-	BRMutableUIStyleControlColorSettings *selectedControlColorSettings = [controlColorSettings mutableCopy];
-	selectedControlColorSettings.actionColor = [BRUIStyle colorWithRGBInteger:0x1247b8];
-	defaults[NSStringFromSelector(@selector(selectedColorSettings))] = (mutable ? selectedControlColorSettings : [selectedControlColorSettings copy]);
-
-	// disabled settings
-	BRMutableUIStyleControlColorSettings *disabledControlColorSettings = [controlColorSettings mutableCopy];
-	disabledControlColorSettings.actionColor = [BRUIStyle colorWithRGBInteger:0xCACACA];
-	defaults[NSStringFromSelector(@selector(disabledColorSettings))] = (mutable ? disabledControlColorSettings : [disabledControlColorSettings copy]);
-
-	// dangerous settings
-	BRMutableUIStyleControlColorSettings *dangerousControlColorSettings = [controlColorSettings mutableCopy];
-	dangerousControlColorSettings.actionColor = [BRUIStyle colorWithRGBInteger:0xEB2D38];
-	dangerousControlColorSettings.borderColor = dangerousControlColorSettings.actionColor;
-	defaults[NSStringFromSelector(@selector(dangerousColorSettings))] = (mutable ? dangerousControlColorSettings : [dangerousControlColorSettings copy]);
-	
-	return [defaults copy];
-}
-
-- (id)mutableCopyWithZone:(NSZone *)zone {
-	return [[[BRMutableUIStyleControlStateColorSettings class] allocWithZone:zone] initWithSettings:[self mutableSettingsWithZone:zone]];
-}
-
-@end
-
-#pragma mark -
-
-@implementation BRMutableUIStyleControlStateColorSettings
-
-@dynamic normalColorSettings;
-@dynamic highlightedColorSettings;
-@dynamic selectedColorSettings;
-@dynamic disabledColorSettings;
-@dynamic dangerousColorSettings;
-
-- (id)init {
-	self = [self initWithSettings:[[[self class] defaultSettings] mutableCopy]];
-	return self;
-}
-
-+ (BOOL)mutable {
-	return YES;
-}
-
-- (id)copyWithZone:(NSZone *)zone {
-	return [[[BRUIStyleControlStateColorSettings class] allocWithZone:zone] initWithSettings:[self.settings copy]];
+	return [[[BRUIStyleControlSettings class] allocWithZone:zone] initWithSettings:[self.settings copy]];
 }
 
 @end
@@ -512,12 +444,6 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 @dynamic formColor;
 @dynamic placeholderColor;
 @dynamic navigationColor;
-@dynamic alertHeadlineColor;
-@dynamic alertColor;
-@dynamic alertBackgroundColor;
-
-@dynamic controlSettings;
-@dynamic inverseControlSettings;
 
 + (NSArray *)supportedSettingNames {
 	static dispatch_once_t controlColorSettingNamesToken;
@@ -538,12 +464,6 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 				 NSStringFromSelector(@selector(formColor)),
 				 NSStringFromSelector(@selector(placeholderColor)),
 				 NSStringFromSelector(@selector(navigationColor)),
-				 NSStringFromSelector(@selector(alertHeadlineColor)),
-				 NSStringFromSelector(@selector(alertColor)),
-				 NSStringFromSelector(@selector(alertBackgroundColor)),
-				 
-				 NSStringFromSelector(@selector(controlSettings)),
-				 NSStringFromSelector(@selector(inverseControlSettings)),
 				 ];
 	});
 	return keys;
@@ -568,50 +488,7 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 	defaults[NSStringFromSelector(@selector(formColor))] = textColor;
 	defaults[NSStringFromSelector(@selector(placeholderColor))] = [UIColor lightGrayColor];
 	defaults[NSStringFromSelector(@selector(navigationColor))] = primaryColor;
-	defaults[NSStringFromSelector(@selector(alertHeadlineColor))] = textColor;
-	defaults[NSStringFromSelector(@selector(alertColor))] = [UIColor lightGrayColor];
-	defaults[NSStringFromSelector(@selector(alertBackgroundColor))] = [UIColor lightGrayColor];
 	
-	BOOL mutable = [[self class] mutable];
-	
-	// normal control settings
-	BRMutableUIStyleControlStateColorSettings *controlSettings = [BRMutableUIStyleControlStateColorSettings new];
-	defaults[NSStringFromSelector(@selector(controlSettings))] = (mutable ? controlSettings : [controlSettings copy]);
-
-	// inverse control settings
-	BRMutableUIStyleControlStateColorSettings *inverseControlSettings = [controlSettings mutableCopy];
-	
-	// normal settings
-	inverseControlSettings.normalColorSettings.actionColor = [UIColor whiteColor];
-	inverseControlSettings.normalColorSettings.borderColor = [BRUIStyle colorWithRGBInteger:0x264891];
-	inverseControlSettings.normalColorSettings.glossColor = [inverseControlSettings.normalColorSettings.glossColor colorWithAlphaComponent:0.4];
-	inverseControlSettings.normalColorSettings.shadowColor = [[UIColor whiteColor] colorWithAlphaComponent:0.3];
-	
-	// highlighted settings
-	BRMutableUIStyleControlColorSettings *highlightedControlColorSettings = [inverseControlSettings.normalColorSettings mutableCopy];
-	highlightedControlColorSettings.shadowColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
-	highlightedControlColorSettings.fillColor = [[UIColor blackColor] colorWithAlphaComponent:0.1];
-	inverseControlSettings.highlightedColorSettings = highlightedControlColorSettings;
-	
-	// selected settings
-	BRMutableUIStyleControlColorSettings *selectedControlColorSettings = [inverseControlSettings.normalColorSettings mutableCopy];
-	inverseControlSettings.selectedColorSettings = selectedControlColorSettings;
-	
-	// disabled settings
-	BRMutableUIStyleControlColorSettings *disabledControlColorSettings = [inverseControlSettings.normalColorSettings mutableCopy];
-	disabledControlColorSettings.actionColor = controlSettings.disabledColorSettings.actionColor;
-	disabledControlColorSettings.borderColor = [inverseControlSettings.normalColorSettings.borderColor colorWithAlphaComponent:0.8];
-	disabledControlColorSettings.glossColor = [inverseControlSettings.normalColorSettings.glossColor colorWithAlphaComponent:0.3];
-	inverseControlSettings.disabledColorSettings = disabledControlColorSettings;
-	
-	// dangerous settings
-	BRMutableUIStyleControlColorSettings *dangerousControlColorSettings = [inverseControlSettings.normalColorSettings mutableCopy];
-	dangerousControlColorSettings.fillColor = [BRUIStyle colorWithRGBInteger:0xEB2D38];
-	dangerousControlColorSettings.glossColor = nil;
-	inverseControlSettings.dangerousColorSettings = dangerousControlColorSettings;
-	
-	defaults[NSStringFromSelector(@selector(inverseControlSettings))] = (mutable ? inverseControlSettings : [inverseControlSettings copy]);
-
 	return [defaults copy];
 }
 
@@ -639,12 +516,6 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 @dynamic formColor;
 @dynamic placeholderColor;
 @dynamic navigationColor;
-@dynamic alertHeadlineColor;
-@dynamic alertColor;
-@dynamic alertBackgroundColor;
-
-@dynamic controlSettings;
-@dynamic inverseControlSettings;
 
 - (id)init {
 	self = [self initWithSettings:[[[self class] defaultSettings] mutableCopy]];
