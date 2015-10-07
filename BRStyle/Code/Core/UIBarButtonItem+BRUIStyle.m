@@ -49,7 +49,7 @@ id bruistyle_initWithTitleStyleTargetAction(id self, SEL _cmd, NSString *title, 
 - (void)setUiStyle:(BRUIStyle *)style {
 	objc_setAssociatedObject(self, @selector(uiStyle), style, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 	if ( [self respondsToSelector:@selector(uiStyleDidChange:)] ) {
-		[(id<BRUIStylishHost>)self uiStyleDidChange:style];
+		[(id<BRUIStylishHost>)self uiStyleDidChange:[self uiStyle]];
 	}
 }
 
