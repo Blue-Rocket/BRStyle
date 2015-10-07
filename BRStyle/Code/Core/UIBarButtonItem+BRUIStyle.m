@@ -34,7 +34,7 @@ id bruistyle_initWithTitleStyleTargetAction(id self, SEL _cmd, NSString *title, 
 		Class class = [self class];		
 		SEL originalSelector = @selector(initWithTitle:style:target:action:);
 		Method originalMethod = class_getInstanceMethod(class, originalSelector);
-		original_initWithTitleStyleTargetAction = method_setImplementation(originalMethod, (IMP)original_initWithTitleStyleTargetAction);
+		original_initWithTitleStyleTargetAction = method_setImplementation(originalMethod, (IMP)bruistyle_initWithTitleStyleTargetAction);
 	});
 }
 
