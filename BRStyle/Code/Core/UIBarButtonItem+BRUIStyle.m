@@ -14,7 +14,7 @@
 
 static IMP original_initWithTitleStyleTargetAction;//(id, SEL, NSString *, UIBarButtonItemStyle, id, SEL);
 
-id bruistyle_initWithTitleStyleTargetAction(id self, SEL _cmd, NSString *title, UIBarButtonItemStyle style, id target, SEL action) {
+static id bruistyle_initWithTitleStyleTargetAction(id self, SEL _cmd, NSString *title, UIBarButtonItemStyle style, id target, SEL action) {
 	self = ((id(*)(id,SEL,NSString *, UIBarButtonItemStyle, id, SEL))original_initWithTitleStyleTargetAction)(self, _cmd, title, style, target, action);
 	if ( ![self conformsToProtocol:@protocol(BRUIStylishHost)] ) {
 		return self;

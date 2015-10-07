@@ -14,7 +14,7 @@
 
 static IMP original_didMoveToWindow;//(id, SEL);
 
-void bruistyle_didMoveToWindow(id self, SEL _cmd) {
+static void bruistyle_didMoveToWindow(id self, SEL _cmd) {
 	((void(*)(id,SEL))original_didMoveToWindow)(self, _cmd);
 	if ( !([self window] && [self conformsToProtocol:@protocol(BRUIStylishHost)]) ) {
 		return;
