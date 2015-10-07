@@ -385,11 +385,10 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 
 + (NSDictionary *)defaultSettings {
 	NSMutableDictionary *defaults = [[NSMutableDictionary alloc] initWithCapacity:4];
-	defaults[NSStringFromSelector(@selector(actionColor))] = [BRUIStyle colorWithRGBInteger:0x1247b8];
+	defaults[NSStringFromSelector(@selector(actionColor))] = [BRUIStyle colorWithRGBInteger:0x555555];
 	defaults[NSStringFromSelector(@selector(borderColor))] = [BRUIStyle colorWithRGBInteger:0xCACACA];
 	defaults[NSStringFromSelector(@selector(fillColor))] = [UIColor clearColor];
 	defaults[NSStringFromSelector(@selector(glossColor))] = [[UIColor whiteColor] colorWithAlphaComponent:0.66];
-	defaults[NSStringFromSelector(@selector(shadowColor))] = [BRUIStyle colorWithRGBAInteger:0x5555557F];
 	return [defaults copy];
 }
 
