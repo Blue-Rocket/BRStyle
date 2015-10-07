@@ -8,6 +8,8 @@
 
 #import "BRUIStyle.h"
 
+#import "UIControl+BRUIStyle.h"
+
 NSString * const BRStyleNotificationUIStyleDidChange = @"BRUIStyleDidChange";
 
 static BRUIStyle *DefaultStyle;
@@ -21,7 +23,28 @@ static BRUIStyle *DefaultStyle;
 
 + (instancetype)defaultStyle {
 	if ( !DefaultStyle ) {
-		[self setDefaultStyle:[[BRUIStyle alloc] initWithUIStyle:nil]];
+		BRUIStyle *base = [[BRUIStyle alloc] initWithUIStyle:nil];
+		[self setDefaultStyle:base];
+		
+		// register default control settings
+		BRMutableUIStyle *highlighted = [base mutableCopy];
+		highlighted.controls.actionColor = [base.controls.actionColor colorWithAlphaComponent:0.8];
+		highlighted.controls.fillColor = [UIColor colorWithRed: 0.833 green: 0.833 blue: 0.833 alpha: 0.5];
+		highlighted.controls.shadowColor = [BRUIStyle colorWithRGBAInteger:0x5555557F];
+		[UIControl setDefaultUiStyle:[highlighted copy] forState:UIControlStateHighlighted];
+		
+		BRMutableUIStyle *selected = [base mutableCopy];
+		selected.controls.actionColor = [BRUIStyle colorWithRGBInteger:0x1247b8];
+		[UIControl setDefaultUiStyle:[selected copy] forState:UIControlStateSelected];
+		
+		BRMutableUIStyle *disabled = [base mutableCopy];
+		disabled.controls.actionColor = [BRUIStyle colorWithRGBInteger:0xCACACA];
+		[UIControl setDefaultUiStyle:[disabled copy] forState:UIControlStateDisabled];
+		
+		BRMutableUIStyle *dangerous = [base mutableCopy];
+		dangerous.controls.actionColor = [BRUIStyle colorWithRGBInteger:0xEB2D38];
+		dangerous.controls.borderColor = dangerous.controls.actionColor;
+		[UIControl setDefaultUiStyle:[dangerous copy] forState:BRUIStyleControlStateDangerous];
 	}
 	return DefaultStyle;
 }

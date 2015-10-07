@@ -13,7 +13,11 @@
 const UIControlState BRUIStyleControlStateDangerous = (1 << 16);
 
 static IMP original_getState;//(id, SEL);
+static IMP original_setHighlighted;//(id, SEL, BOOL);
+static IMP original_setEnabled;//(id, SEL, BOOL);
+static IMP original_setSelected;//(id, SEL, BOOL);
 static UIControlState bruistyle_getState(id self, SEL _cmd);
+static void bruistyle_setState(id self, SEL _cmd, BOOL);
 
 static NSMutableDictionary *DefaultStateStyles;
 
@@ -26,6 +30,18 @@ static NSMutableDictionary *DefaultStateStyles;
 		SEL originalSelector = @selector(state);
 		Method originalMethod = class_getInstanceMethod(class, originalSelector);
 		original_getState = method_setImplementation(originalMethod, (IMP)bruistyle_getState);
+		
+		originalSelector = @selector(setHighlighted:);
+		originalMethod = class_getInstanceMethod(class, originalSelector);
+		original_setHighlighted = method_setImplementation(originalMethod, (IMP)bruistyle_setState);
+		
+		originalSelector = @selector(setEnabled:);
+		originalMethod = class_getInstanceMethod(class, originalSelector);
+		original_setEnabled = method_setImplementation(originalMethod, (IMP)bruistyle_setState);
+		
+		originalSelector = @selector(setSelected:);
+		originalMethod = class_getInstanceMethod(class, originalSelector);
+		original_setSelected = method_setImplementation(originalMethod, (IMP)bruistyle_setState);
 	});
 }
 
@@ -165,3 +181,21 @@ static UIControlState bruistyle_getState(id self, SEL _cmd) {
 	UIControlState result = ((UIControlState(*)(id,SEL))original_getState)(self, _cmd);
 	return (result | [self uiStyleState]);
 }
+
+static void bruistyle_setState(id self, SEL _cmd, BOOL value) {
+	BOOL previousValue = NO;
+	if ( _cmd == @selector(setHighlighted:) ) {
+		previousValue = [self isHighlighted];
+		((void(*)(id,SEL,BOOL))original_setHighlighted)(self, _cmd, value);
+	} else if ( _cmd == @selector(setEnabled:) ) {
+		previousValue = [self isEnabled];
+		((void(*)(id,SEL,BOOL))original_setEnabled)(self, _cmd, value);
+	} else if ( _cmd == @selector(setSelected:) ) {
+		previousValue = [self isSelected];
+		((void(*)(id,SEL,BOOL))original_setSelected)(self, _cmd, value);
+	}
+	if ( previousValue != value && [self respondsToSelector:@selector(stateDidChange)] ) {
+		[self stateDidChange];
+	}
+}
+

@@ -13,6 +13,25 @@
 
 #import "UIControl+BRUIStyle.h"
 
+@interface TestControl : UIControl {
+	NSMutableArray *stateChanges;
+}
+@property (nonatomic, readonly) NSArray *stateChanges;
+@end
+
+@implementation TestControl
+
+@synthesize stateChanges;
+
+- (void)stateDidChange {
+	if ( !stateChanges ) {
+		stateChanges = [[NSMutableArray alloc] initWithCapacity:4];
+	}
+	[stateChanges addObject:@(self.state)];
+}
+
+@end
+
 @interface UIControl_BRUIStyleTests : XCTestCase
 
 @end
@@ -21,6 +40,9 @@
 
 - (void)setUp {
 	[super setUp];
+	[BRUIStyle defaultStyle]; // load defaults
+	
+	// now clear UIControl defaults
 	[UIControl setDefaultUiStyle:nil forState:UIControlStateNormal];
 	[UIControl setDefaultUiStyle:nil forState:UIControlStateHighlighted];
 	[UIControl setDefaultUiStyle:nil forState:UIControlStateSelected];
@@ -172,6 +194,37 @@
 	assertThat([c uiStyleForState:UIControlStateHighlighted], sameInstance(n));
 	assertThat([c uiStyleForState:UIControlStateSelected], sameInstance(n));
 	assertThat([c uiStyleForState:UIControlStateDisabled], sameInstance(n));
+}
+
+- (void)testStateDidChangeHighlighted {
+	TestControl *c = [[TestControl alloc] initWithFrame:CGRectZero];
+	c.highlighted = YES;
+	assertThat(c.stateChanges, contains(@(UIControlStateHighlighted), nil));
+}
+
+- (void)testStateDidChangeEnabled {
+	TestControl *c = [[TestControl alloc] initWithFrame:CGRectZero];
+	c.enabled = NO;
+	assertThat(c.stateChanges, contains(@(UIControlStateDisabled), nil));
+}
+
+- (void)testStateDidChangeSelected {
+	TestControl *c = [[TestControl alloc] initWithFrame:CGRectZero];
+	c.selected = YES;
+	assertThat(c.stateChanges, contains(@(UIControlStateSelected), nil));
+}
+
+- (void)testStateDidChangeDangerous {
+	TestControl *c = [[TestControl alloc] initWithFrame:CGRectZero];
+	c.dangerous = YES;
+	assertThat(c.stateChanges, contains(@(BRUIStyleControlStateDangerous), nil));
+}
+
+- (void)testStateDidChangeDangerousAndHighlighted {
+	TestControl *c = [[TestControl alloc] initWithFrame:CGRectZero];
+	c.dangerous = YES;
+	c.highlighted = YES;
+	assertThat(c.stateChanges, contains(@(BRUIStyleControlStateDangerous), @(BRUIStyleControlStateDangerous|UIControlStateHighlighted), nil));
 }
 
 @end
