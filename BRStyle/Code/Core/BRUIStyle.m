@@ -261,6 +261,7 @@ static BRUIStyle *DefaultStyle;
 
 @dynamic fonts;
 @dynamic colors;
+@dynamic controls;
 
 - (instancetype)initWithUIStyle:(BRUIStyle *)other {
 	if ( (self = [super initWithUIStyle:other]) ) {
