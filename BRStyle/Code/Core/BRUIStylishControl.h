@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol BRUIStylishControl <NSObject>
 
 /** Manage theBRUIStyleControlStateDangerous state flag. */
-@property(nonatomic, getter=isDangerous) BOOL dangerous;
+@property(nonatomic, getter=isDangerous) IBInspectable BOOL dangerous;
 
 /**
  Get a style for a control state. If a style is not defined for the given state, then the style configured
