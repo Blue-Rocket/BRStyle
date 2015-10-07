@@ -67,6 +67,18 @@
 	assertThatUnsignedInteger([UIControl controlStateForKeyName:@"dangerous"], equalToUnsignedInteger(BRUIStyleControlStateDangerous));
 }
 
+- (void)testKeyNameForStateCombinations {
+	assertThat([UIControl keyNameForControlState:(UIControlStateHighlighted|BRUIStyleControlStateDangerous)], equalTo(@"dangerous|highlighted"));
+	assertThat([UIControl keyNameForControlState:(UIControlStateHighlighted|UIControlStateSelected)], equalTo(@"highlighted|selected"));
+	assertThat([UIControl keyNameForControlState:(UIControlStateDisabled|UIControlStateSelected|BRUIStyleControlStateDangerous)], equalTo(@"disabled|dangerous|selected"));
+}
+
+- (void)testStateForKeyNameCombinations {
+	assertThatUnsignedInteger([UIControl controlStateForKeyName:@"dangerous|highlighted"], equalToUnsignedInteger(UIControlStateHighlighted|BRUIStyleControlStateDangerous));
+	assertThatUnsignedInteger([UIControl controlStateForKeyName:@"highlighted|selected"], equalToUnsignedInteger(UIControlStateHighlighted|UIControlStateSelected));
+	assertThatUnsignedInteger([UIControl controlStateForKeyName:@"disabled|dangerous|selected"], equalToUnsignedInteger(UIControlStateDisabled|UIControlStateSelected|BRUIStyleControlStateDangerous));
+}
+
 - (void)testNormalState {
 	UIControl *c = [[UIControl alloc] initWithFrame:CGRectZero];
 	assertThatUnsignedInteger(c.state & UIControlStateNormal, equalToUnsignedInteger(UIControlStateNormal));
@@ -167,6 +179,54 @@
 	assertThat([c uiStyleForState:BRUIStyleControlStateDangerous], sameInstance(n));
 }
 
+- (void)testStyleForCombinedStates {
+	BRUIStyle *n = [BRUIStyle new];
+	BRUIStyle *h = [BRUIStyle new];
+	BRUIStyle *s = [BRUIStyle new];
+	BRUIStyle *d = [BRUIStyle new];
+	BRUIStyle *x = [BRUIStyle new];
+	UIControl *c = [[UIControl alloc] initWithFrame:CGRectZero];
+	[c setUiStyle:n forState:UIControlStateNormal];
+	[c setUiStyle:h forState:UIControlStateHighlighted];
+	[c setUiStyle:s forState:UIControlStateSelected];
+	[c setUiStyle:d forState:UIControlStateDisabled];
+	[c setUiStyle:x forState:BRUIStyleControlStateDangerous];
+	
+	// order is disabled, dangerous, highlighted, selected
+	assertThat([c uiStyleForState:(BRUIStyleControlStateDangerous|UIControlStateHighlighted)], sameInstance(x));
+	assertThat([c uiStyleForState:(UIControlStateSelected|UIControlStateHighlighted)], sameInstance(h));
+	assertThat([c uiStyleForState:(BRUIStyleControlStateDangerous|UIControlStateDisabled)], sameInstance(d));
+}
+
+- (void)testStyleForCombinedStyleState {
+	BRUIStyle *xh = [BRUIStyle new];
+	UIControl *c = [[UIControl alloc] initWithFrame:CGRectZero];
+	[c setUiStyle:xh forState:(BRUIStyleControlStateDangerous|UIControlStateHighlighted)];
+	
+	assertThat([c uiStyleForState:(BRUIStyleControlStateDangerous|UIControlStateHighlighted)], sameInstance(xh));
+	assertThatBool([c uiStyleForState:(UIControlStateHighlighted)].defaultStyle, isTrue());
+	assertThatBool([c uiStyleForState:(BRUIStyleControlStateDangerous)].defaultStyle, isTrue());
+}
+
+- (void)testGlobalDefaultForCombinedStates {
+	BRUIStyle *n = [BRUIStyle new];
+	BRUIStyle *h = [BRUIStyle new];
+	BRUIStyle *s = [BRUIStyle new];
+	BRUIStyle *d = [BRUIStyle new];
+	BRUIStyle *x = [BRUIStyle new];
+	[UIControl setDefaultUiStyle:n forState:UIControlStateNormal];
+	[UIControl setDefaultUiStyle:h forState:UIControlStateHighlighted];
+	[UIControl setDefaultUiStyle:s forState:UIControlStateSelected];
+	[UIControl setDefaultUiStyle:d forState:UIControlStateDisabled];
+	[UIControl setDefaultUiStyle:x forState:BRUIStyleControlStateDangerous];
+	
+	UIControl *c = [[UIControl alloc] initWithFrame:CGRectZero];
+	
+	// order is disabled, dangerous, highlighted, selected
+	assertThat([c uiStyleForState:(BRUIStyleControlStateDangerous|UIControlStateHighlighted)], sameInstance(x));
+	assertThat([c uiStyleForState:(UIControlStateSelected|UIControlStateHighlighted)], sameInstance(h));
+	assertThat([c uiStyleForState:(BRUIStyleControlStateDangerous|UIControlStateDisabled)], sameInstance(d));
+}
 
 - (void)testStyleForDefaultNormalState {
 	BRUIStyle *defaultNormal = [BRUIStyle new];

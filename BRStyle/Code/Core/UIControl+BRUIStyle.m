@@ -19,7 +19,7 @@ static IMP original_setSelected;//(id, SEL, BOOL);
 static UIControlState bruistyle_getState(id self, SEL _cmd);
 static void bruistyle_setState(id self, SEL _cmd, BOOL);
 
-static NSMutableDictionary *DefaultStateStyles;
+static NSMutableDictionary<NSNumber *, BRUIStyle *> *DefaultStateStyles;
 
 @implementation UIControl (BRUIStyle)
 
@@ -45,13 +45,20 @@ static NSMutableDictionary *DefaultStateStyles;
 	});
 }
 
++ (NSArray *)orderedSupportedStates {
+	return @[@(UIControlStateDisabled),
+			 @(BRUIStyleControlStateDangerous),
+			 @(UIControlStateHighlighted),
+			 @(UIControlStateSelected)];
+}
+
 + (void)setDefaultUiStyle:(nullable BRUIStyle *)style forState:(UIControlState)state {
-	NSMutableDictionary *dict = DefaultStateStyles;
+	NSMutableDictionary<NSNumber *, BRUIStyle *> *dict = DefaultStateStyles;
 	if ( !dict && style ) {
 		dict = [[NSMutableDictionary alloc] initWithCapacity:5];
 		DefaultStateStyles = dict;
 	}
-	NSString *key = [UIControl keyNameForControlState:state];
+	NSNumber *key = @(state);
 	if ( style ) {
 		dict[key] = style;
 	} else {
@@ -60,7 +67,7 @@ static NSMutableDictionary *DefaultStateStyles;
 }
 
 + (nullable BRUIStyle *)defaultUiStyleForState:(UIControlState)state {
-	return DefaultStateStyles[[UIControl keyNameForControlState:state]];
+	return DefaultStateStyles[@(state)];
 }
 
 - (void)setUiStyleStateFlag:(UIControlState)flag enabled:(BOOL)enabled {
@@ -96,46 +103,58 @@ static NSMutableDictionary *DefaultStateStyles;
 }
 
 + (NSString *)keyNameForControlState:(UIControlState)state {
-	switch ( state ) {
-		case BRUIStyleControlStateDangerous:
-			return @"dangerous";
-			
-		case UIControlStateDisabled:
-			return @"disabled";
-			
-		case UIControlStateHighlighted:
-			return @"highlighted";
-			
-		case UIControlStateSelected:
-			return @"selected";
-			
-		default:
-			return @"normal";
+	NSString *result = @"";
+	for ( NSNumber *singleKey in [self orderedSupportedStates] ) {
+		NSUInteger singleState = [singleKey unsignedIntegerValue];
+		if ( (singleState & state) == singleState ) {
+			if ( result.length > 0 ) {
+				result = [result stringByAppendingString:@"|"];
+			}
+			switch ( singleState ) {
+				case BRUIStyleControlStateDangerous:
+					result = [result stringByAppendingString:@"dangerous"];
+					break;
+					
+				case UIControlStateDisabled:
+					result = [result stringByAppendingString:@"disabled"];
+					break;
+					
+				case UIControlStateHighlighted:
+					result = [result stringByAppendingString:@"highlighted"];
+					break;
+					
+				case UIControlStateSelected:
+					result = [result stringByAppendingString:@"selected"];
+					break;
+			}
+		}
 	}
+	return (result.length > 0 ? result : @"normal");
 }
 
 + (UIControlState)controlStateForKeyName:(NSString *)name {
-	if ( [name isEqualToString:@"dangerous"] ) {
-		return BRUIStyleControlStateDangerous;
+	UIControlState result = UIControlStateNormal;
+	NSArray *keys = [name componentsSeparatedByString:@"|"];
+	for ( NSString *key in keys ) {
+		if ( [key caseInsensitiveCompare:@"dangerous"] == NSOrderedSame ) {
+			result |= BRUIStyleControlStateDangerous;
+		} else if ( [key caseInsensitiveCompare:@"disabled"] == NSOrderedSame ) {
+			result |= UIControlStateDisabled;
+		} else if ( [key caseInsensitiveCompare:@"highlighted"] == NSOrderedSame ) {
+			result |= UIControlStateHighlighted;
+		} else if ( [key caseInsensitiveCompare:@"selected"] == NSOrderedSame ) {
+			result |= UIControlStateSelected;
+		}
 	}
-	if ( [name isEqualToString:@"disabled"] ) {
-		return UIControlStateDisabled;
-	}
-	if ( [name isEqualToString:@"highlighted"] ) {
-		return UIControlStateHighlighted;
-	}
-	if ( [name isEqualToString:@"selected"] ) {
-		return UIControlStateSelected;
-	}
-	return UIControlStateNormal;
+	return result;
 }
 
-- (NSMutableDictionary<NSString *, BRUIStyle *> *)uiStyleStateDictionary {
+- (NSMutableDictionary<NSNumber *, BRUIStyle *> *)uiStyleStateDictionary {
 	return [self uiStyleStateDictionary:NO];
 }
 
-- (NSMutableDictionary<NSString *, BRUIStyle *> *)uiStyleStateDictionary:(BOOL)create {
-	NSMutableDictionary<NSString *, BRUIStyle *> *val = objc_getAssociatedObject(self, @selector(uiStyleStateDictionary));
+- (NSMutableDictionary<NSNumber *, BRUIStyle *> *)uiStyleStateDictionary:(BOOL)create {
+	NSMutableDictionary<NSNumber *, BRUIStyle *> *val = objc_getAssociatedObject(self, @selector(uiStyleStateDictionary));
 	if ( !val && create ) {
 		val = [[NSMutableDictionary alloc] initWithCapacity:5];
 		objc_setAssociatedObject(self, @selector(uiStyleStateDictionary), val, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
@@ -143,22 +162,43 @@ static NSMutableDictionary *DefaultStateStyles;
 	return val;
 }
 
-- (BRUIStyle *)uiStyleForState:(UIControlState)state {
-	NSString *key = [UIControl keyNameForControlState:state];
+- (BRUIStyle *)uiStyleForStateWithoutDefault:(UIControlState)state {
+	NSNumber *key = @(state);
 	BRUIStyle *style = [self uiStyleStateDictionary:NO][key];
 	if ( !style ) {
 		// try default for state
-		style = DefaultStateStyles[key];
+		style = DefaultStateStyles[@(state)];
 	}
 	if ( !style && state != UIControlStateNormal ) {
-		// try normal state
-		NSString *normalKey = [UIControl keyNameForControlState:UIControlStateNormal];
+		
+		// perhaps we have multiple states active, like Dangerous|Highlighted; choose based on hard-coded priority:
+		for ( NSNumber *singleKey in [UIControl orderedSupportedStates] ) {
+			NSUInteger singleState = [singleKey unsignedIntegerValue];
+			if ( (singleState & state) == singleState ) {
+				style = [self uiStyleStateDictionary:NO][singleKey];
+				if ( !style ) {
+					// and try default for single state
+					style = DefaultStateStyles[singleKey];
+				}
+				if ( style ) {
+					return style;
+				}
+			}
+		}
+		
+		// fall back to trying normal state
+		NSNumber *normalKey = @(UIControlStateNormal);
 		style = [self uiStyleStateDictionary:NO][normalKey];
 		if ( !style ) {
 			// try default for normal state
 			style = DefaultStateStyles[normalKey];
 		}
 	}
+	return style;
+}
+
+- (BRUIStyle *)uiStyleForState:(UIControlState)state {
+	BRUIStyle *style = [self uiStyleForStateWithoutDefault:state];
 	if ( !style ) {
 		// fall back to global default style
 		style = [BRUIStyle defaultStyle];
@@ -167,7 +207,7 @@ static NSMutableDictionary *DefaultStateStyles;
 }
 
 - (void)setUiStyle:(nullable BRUIStyle *)style forState:(UIControlState)state UI_APPEARANCE_SELECTOR {
-	NSString *key = [UIControl keyNameForControlState:state];
+	NSNumber *key = @(state);
 	if ( style == nil ) {
 		[[self uiStyleStateDictionary:NO] removeObjectForKey:key];
 	} else {

@@ -22,16 +22,16 @@ NS_ASSUME_NONNULL_BEGIN
  
  @param state The control state.
  
- @return The key name.
+ @return The key name. Multiple states will be returned as a delimited string using a pipe character (@c |) as the delimiter.
  */
 + (NSString *)keyNameForControlState:(UIControlState)state;
 
 /**
  Get a control state for a key name.
  
- @param name The key name to get the corresponding state value for.
+ @param name The key name to get the corresponding state value for. The name can be a combination of states by delimiting each state with a pipe character (@c |).
  
- @return The state value.
+ @return The state value, or list of values.
  */
 + (UIControlState)controlStateForKeyName:(NSString *)name;
 
