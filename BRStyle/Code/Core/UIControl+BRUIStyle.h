@@ -53,6 +53,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (nullable BRUIStyle *)defaultUiStyleForState:(UIControlState)state;
 
+/**
+ Remove all registered default styles for all states.
+ */
++ (void)removeAllDefaultUiStyles;
+
 @end
 
 NS_ASSUME_NONNULL_END

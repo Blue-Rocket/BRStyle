@@ -43,11 +43,7 @@
 	[BRUIStyle defaultStyle]; // load defaults
 	
 	// now clear UIControl defaults
-	[UIControl setDefaultUiStyle:nil forState:UIControlStateNormal];
-	[UIControl setDefaultUiStyle:nil forState:UIControlStateHighlighted];
-	[UIControl setDefaultUiStyle:nil forState:UIControlStateSelected];
-	[UIControl setDefaultUiStyle:nil forState:UIControlStateDisabled];
-	[UIControl setDefaultUiStyle:nil forState:BRUIStyleControlStateDangerous];
+	[UIControl removeAllDefaultUiStyles];
 
 }
 

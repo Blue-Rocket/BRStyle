@@ -52,6 +52,10 @@ static NSMutableDictionary<NSNumber *, BRUIStyle *> *DefaultStateStyles;
 			 @(UIControlStateSelected)];
 }
 
++ (void)removeAllDefaultUiStyles {
+	[DefaultStateStyles removeAllObjects];
+}
+
 + (void)setDefaultUiStyle:(nullable BRUIStyle *)style forState:(UIControlState)state {
 	NSMutableDictionary<NSNumber *, BRUIStyle *> *dict = DefaultStateStyles;
 	if ( !dict && style ) {
