@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 
+#import <BRStyle/Core.h>
+
 @interface AppDelegate ()
 
 @end
@@ -16,7 +18,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-	// Override point for customization after application launch.
+	[self setupAppearance];
 	return YES;
 }
 
@@ -40,6 +42,18 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
 	// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)setupAppearance {
+	NSDictionary<NSString *, BRUIStyle *> *styles = [BRUIStyle registerDefaultStylesWithJSONResource:@"styles.json" inBundle:nil];
+	BRUIStyle *navStyle = styles[@"bar-controls-normal"];
+	if ( navStyle ) {
+		// due to crash in handling of the setUiStyle:forState: appearance selector on UIBarButtonItem, set these values manually here
+		UIBarButtonItem *bbItem = [UIBarButtonItem appearance];
+		[bbItem setTitleTextAttributes:@{ NSForegroundColorAttributeName: navStyle.controls.actionColor,
+										  NSFontAttributeName: navStyle.fonts.actionFont }
+							forState:UIControlStateNormal];
+	}
 }
 
 @end

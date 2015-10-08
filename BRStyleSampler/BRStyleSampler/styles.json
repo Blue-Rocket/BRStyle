@@ -1,0 +1,29 @@
+{
+	"default" : {},
+	"controls-highlighted" : {
+		"controls" : {
+			"actionColor" : "#00cc00ff"
+		}
+	},
+	"controls-dangerous" : {
+		"controls" : {
+			"actionColor" : "#cc0000ff",
+			"borderColor" : "#cc0000ff"
+		}
+	},
+	"controls-dangerous|highlighted" : {
+		"controls" : {
+			"actionColor" : "#cc0000ff",
+			"borderColor" : "#cc0000ff",
+			"fillColor" : "#cc000033"
+		}
+	},
+	"bar-controls-normal" : {
+		"controls" : {
+			"actionColor" : "#ffffffff",
+			"borderColor" : "#264891ff",
+			"glossColor" : "#ffffff66",
+			"fillColor" : null
+		}
+	}
+}
