@@ -14,6 +14,6 @@
 @protocol BRUIStylish <NSObject>
 
 /** A BRUIStyle object to use. If not configured, the global default style should be returned. */
-@property (nonatomic, strong, null_resettable) IBOutlet BRUIStyle *uiStyle;
+@property (nonatomic, strong, null_resettable) IBOutlet BRUIStyle *uiStyle UI_APPEARANCE_SELECTOR;
 
 @end

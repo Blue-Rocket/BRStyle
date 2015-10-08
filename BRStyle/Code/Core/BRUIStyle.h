@@ -54,6 +54,9 @@ extern NSString * const BRStyleNotificationUIStyleDidChange;
 /** The color style settings. */
 @property (nonatomic, readonly) BRUIStyleColorSettings *colors;
 
+/** The control style settings. */
+@property (nonatomic, readonly) BRMutableUIStyleControlSettings *controls;
+
 /// -------------------------------
 /// @name Serialization
 /// -------------------------------
@@ -62,10 +65,38 @@ extern NSString * const BRStyleNotificationUIStyleDidChange;
  Create a style instance from a JSON-encoded bundle resource.
  
  @param resourceName The name of the JSON resource to load.
- @param bundle The bundle to use, or @c nil for the main bundle.
+ @param bundle       The bundle to use, or @c nil for the main bundle.
+ 
  @return The new style instance, or @c nil if the resource could not be loaded.
  */
 + (nullable BRUIStyle *)styleWithJSONResource:(NSString *)resourceName inBundle:(nullable NSBundle *)bundle;
+
+/**
+ Create a dictionary of style instances from a JSON-encoded bundle resource. The special key @c default is used as a starting template for all 
+ other keys, in such a way that other key's dictionaries are merged on top of the default dictionary to produce the final style for each key.
+ 
+ @param resourceName The name of the JSON resource to load, which contains any number of string keys with associated BRUIStyle JSON representations.
+ @param bundle       The bundle to use, or @c nil for the main bundle.
+ 
+ @return The parsed style instances, or @c nil if the resource could not be loaded.
+ */
++ (nullable NSDictionary<NSString *, BRUIStyle *> *)stylesWithJSONResource:(NSString *)resourceName inBundle:(nullable NSBundle *)bundle;
+
+/**
+ Parse a dictionary of style intances from a JSON-encoded bundle resource, and register specific keys as default global styles.
+ 
+ The key @c default is used to set the default global style. Then, for any key that starts with @c controls- the remainder of the key
+ value is parsed as a @c UIControlState key name and the corresponding style is registered as the default control style for that
+ state.
+ 
+ @param resourceName The name of the JSON resource to load, which contains any number of string keys with associated BRUIStyle JSON representations.
+ @param bundle       The bundle to use, or @c nil for the main bundle.
+ 
+ @return The parsed style instances, or @c nil if the resource could not be loaded.
+ @see UIControl controlStateForKeyName:
+ @see UIControl setDefaultUiStyle:forState:
+ */
++ (nullable NSDictionary<NSString *, BRUIStyle *> *)registerDefaultStylesWithJSONResource:(NSString *)resourceName inBundle:(nullable NSBundle *)bundle;
 
 /**
  Decode a style intance from a dictionary representation.
@@ -74,7 +105,7 @@ extern NSString * const BRStyleNotificationUIStyleDidChange;
  @param dictionary The dictionary to decode.
  @return A new style instance.
  */
-+ (BRUIStyle *)styleWithDictionary:(NSDictionary *)dictionary;
++ (BRUIStyle *)styleWithDictionary:(NSDictionary<NSString *, id> *)dictionary;
 
 /**
  Get a dictionary representation of the receiver.
@@ -86,6 +117,15 @@ extern NSString * const BRStyleNotificationUIStyleDidChange;
  @see styleWithDictionary:
  */
 - (NSDictionary *)dictionaryRepresentation;
+
+/**
+ Merge style settings into the receiver, returning a new style instance.
+ 
+ @param dictionary The dictionary to merge.
+ 
+ @return The new style instance.
+ */
+- (BRUIStyle *)styleByMergingDictionaryRepresentation:(NSDictionary<NSString *, id> *)dictionary;
 
 /// -------------------------------
 /// @name Utilities
@@ -140,6 +180,9 @@ extern NSString * const BRStyleNotificationUIStyleDidChange;
 
 /** The color style settings. */
 @property (nonatomic, readwrite) BRMutableUIStyleColorSettings *colors;
+
+/** The control style settings. */
+@property (nonatomic, readwrite) BRMutableUIStyleControlSettings *controls;
 
 @end
 

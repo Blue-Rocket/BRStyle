@@ -48,7 +48,7 @@ static NSString * const kExportStyleSegue = @"ExportStyle";
 	return [controller numberOfItemsInSection:section];
 }
 
-static const NSInteger kFontSection = 6;
+static const NSInteger kFontSection = 1;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	UITableViewCell *cell;

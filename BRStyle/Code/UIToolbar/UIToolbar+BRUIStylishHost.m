@@ -15,7 +15,7 @@
 @dynamic uiStyle;
 
 - (void)uiStyleDidChange:(BRUIStyle *)style {
-	self.tintColor = style.colors.inverseControlSettings.normalColorSettings.actionColor;
+	self.tintColor = style.controls.actionColor;
 	self.barTintColor = style.colors.navigationColor;
 }
 

@@ -14,7 +14,7 @@
 
 static IMP original_viewDidLoad;//(id, SEL);
 
-void bruistyle_viewDidLoad(id self, SEL _cmd) {
+static void bruistyle_viewDidLoad(id self, SEL _cmd) {
 	((void(*)(id,SEL))original_viewDidLoad)(self, _cmd);
 	if ( ![self conformsToProtocol:@protocol(BRUIStylishHost)] ) {
 		return;

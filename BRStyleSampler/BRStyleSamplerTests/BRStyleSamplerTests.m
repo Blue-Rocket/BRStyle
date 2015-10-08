@@ -31,7 +31,7 @@
 }
 
 - (void)testSectionCount {
-	assertThatInteger([controller numberOfSections], equalToInteger(7));
+	assertThatInteger([controller numberOfSections], equalToInteger(3));
 }
 
 - (void)testColorsSectionTitle {
@@ -39,32 +39,32 @@
 }
 
 - (void)testColorsSectionCount {
-	assertThatInteger([controller numberOfItemsInSection:0], equalToInteger(15));
+	assertThatInteger([controller numberOfItemsInSection:0], equalToInteger(12));
 }
 
 - (void)testColorsSectionItemTitle {
-	assertThat([controller titleForStyleItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]], equalTo(@"Alert Background Color"));
+	assertThat([controller titleForStyleItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]], equalTo(@"Background Color"));
 }
 
 - (void)testColorsSectionItemValue {
 	UIColor *val = [controller styleItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
-	assertThat(style.colors.alertBackgroundColor, sameInstance(val));
+	assertThat(style.colors.backgroundColor, sameInstance(val));
 }
 
 - (void)testFontsSectionTitle {
-	assertThat([controller titleForSection:6], equalTo(@"Fonts"));
+	assertThat([controller titleForSection:1], equalTo(@"Fonts"));
 }
 
 - (void)testFontsSectionCount {
-	assertThatInteger([controller numberOfItemsInSection:6], equalToInteger(13));
+	assertThatInteger([controller numberOfItemsInSection:2], equalToInteger(5));
 }
 
 - (void)testFontsSectionItemTitle {
-	assertThat([controller titleForStyleItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:6]], equalTo(@"Action Font"));
+	assertThat([controller titleForStyleItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:1]], equalTo(@"Action Font"));
 }
 
 - (void)testFontsSectionItemValue {
-	UIFont *val = [controller styleItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:6]];
+	UIFont *val = [controller styleItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:1]];
 	assertThat(style.fonts.actionFont, sameInstance(val));
 }
 
