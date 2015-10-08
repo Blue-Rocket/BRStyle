@@ -12,8 +12,6 @@
 
 @implementation UINavigationBar (BRUIStylishHost)
 
-@dynamic uiStyle;
-
 - (void)uiStyleDidChange:(BRUIStyle *)style {
 	self.tintColor = style.controls.actionColor;
 	self.barTintColor = style.colors.navigationColor;

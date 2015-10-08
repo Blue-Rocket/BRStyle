@@ -14,6 +14,6 @@
  Turn all UINavigationBar objects into stylish hosts, appling a title font based on
  @c navigationFont and a bar tint color based on @c navigationColor.
  */
-@interface UINavigationBar (BRUIStylishHost) <BRUIStylishHost>
+@interface UINavigationBar (BRUIStylishHost)
 
 @end
