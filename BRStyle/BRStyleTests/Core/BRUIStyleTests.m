@@ -12,6 +12,7 @@
 #import <OCHamcrest/OCHamcrest.h>
 
 #import "BRUIStyle.h"
+#import "UIControl+BRUIStyle.h"
 
 @interface BRUIStyleTests : XCTestCase
 
@@ -132,6 +133,53 @@
 	assertThat(colors, notNilValue());
 	assertThatUnsignedInt([BRUIStyle rgbaIntegerForColor:colors.primaryColor], equalToUnsignedInt(0xff0000ff));
 	assertThat(colors.backgroundColor, nilValue());
+}
+
+- (void)testLoadSetsFromJSON {
+	NSDictionary<NSString *, BRUIStyle *> *styles = [BRUIStyle stylesWithJSONResource:@"styles.json" inBundle:[NSBundle bundleForClass:[BRUIStyle class]]];
+	assertThat(styles, hasCountOf(4));
+	assertThat([styles allKeys], containsInAnyOrder(@"default", @"controls-highlighted", @"controls-dangerous", @"controls-dangerous|highlighted", nil));
+	
+	[styles enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, BRUIStyle * _Nonnull obj, BOOL * _Nonnull stop) {
+		assertThat(obj, isA([BRUIStyle class]));
+	}];
+	
+	// verify a few individual settings
+	BRUIStyle *defaultStyle = styles[@"default"];
+	assertThatUnsignedInteger([BRUIStyle rgbaIntegerForColor:defaultStyle.controls.actionColor], equalToUnsignedInteger(0x0000ccff));
+	
+	BRUIStyle *dangerousStyle = styles[@"controls-dangerous"];
+	assertThatUnsignedInteger([BRUIStyle rgbaIntegerForColor:dangerousStyle.controls.actionColor], equalToUnsignedInteger(0xcc0000ff));
+	
+	BRUIStyle *dangerousHighlightedStyle = styles[@"controls-dangerous|highlighted"];
+	assertThatUnsignedInteger([BRUIStyle rgbaIntegerForColor:dangerousHighlightedStyle.controls.fillColor], equalToUnsignedInteger(0xcc000033));
+}
+
+- (void)testRegisterDefaultsSetsFromJSON {
+	NSDictionary<NSString *, BRUIStyle *> *styles = [BRUIStyle registerDefaultStylesWithJSONResource:@"styles.json" inBundle:[NSBundle bundleForClass:[BRUIStyle class]]];
+	
+	assertThat(styles, hasCountOf(4));
+	assertThat([styles allKeys], containsInAnyOrder(@"default", @"controls-highlighted", @"controls-dangerous", @"controls-dangerous|highlighted", nil));
+
+	// verify a few individual settings
+	BRUIStyle *defaultStyle = [BRUIStyle defaultStyle];
+	assertThat(styles[@"default"], sameInstance(defaultStyle));
+	assertThatUnsignedInteger([BRUIStyle rgbaIntegerForColor:defaultStyle.controls.actionColor], equalToUnsignedInteger(0x0000ccff));
+	assertThatUnsignedInteger([BRUIStyle rgbaIntegerForColor:defaultStyle.controls.glossColor], equalToUnsignedInteger(0xffffff33));
+	
+	BRUIStyle *dangerousStyle = [UIControl defaultUiStyleForState:BRUIStyleControlStateDangerous];
+	assertThat(dangerousStyle, notNilValue());
+	assertThat(dangerousStyle, sameInstance(styles[@"controls-dangerous"]));
+	assertThatUnsignedInteger([BRUIStyle rgbaIntegerForColor:dangerousStyle.controls.actionColor], equalToUnsignedInteger(0xcc0000ff));
+	assertThat(dangerousStyle.controls.glossColor,
+							  describedAs(@"Should inherit gloss from default style", equalTo(defaultStyle.controls.glossColor), nil));
+	
+	BRUIStyle *dangerousHighlightedStyle = [UIControl defaultUiStyleForState:(BRUIStyleControlStateDangerous|UIControlStateHighlighted)];
+	assertThat(dangerousHighlightedStyle, notNilValue());
+	assertThat(dangerousHighlightedStyle, sameInstance(styles[@"controls-dangerous|highlighted"]));
+	assertThatUnsignedInteger([BRUIStyle rgbaIntegerForColor:dangerousHighlightedStyle.controls.actionColor], equalToUnsignedInteger(0xcc0000ff));
+	assertThat(dangerousHighlightedStyle.controls.glossColor,
+							  describedAs(@"Should inherit gloss from default style", equalTo(defaultStyle.controls.glossColor), nil));
 }
 
 @end

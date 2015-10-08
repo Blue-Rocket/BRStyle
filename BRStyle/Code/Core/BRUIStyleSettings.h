@@ -37,6 +37,15 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (NSDictionary *)dictionaryRepresentation;
 
+/**
+ Merge settings into the receiver, returning a new style instance.
+ 
+ @param dictionary The dictionary to merge.
+ 
+ @return The new settings instance.
+ */
+- (instancetype)settingsByMergingDictionaryRepresentation:(NSDictionary<NSString *, id> *)dictionary;
+
 @end
 
 /**

@@ -166,6 +166,12 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 	return [self initWithSettings:decoded];
 }
 
+- (instancetype)settingsByMergingDictionaryRepresentation:(NSDictionary<NSString *, id> *)dictionary {
+	NSMutableDictionary *dict = [[self dictionaryRepresentation] mutableCopy];
+	[dict addEntriesFromDictionary:dictionary];
+	return [[[self class] alloc] initWithDictionaryRepresentation:dict];
+}
+
 + (BOOL)isSystemFont:(UIFont *)font {
 	static NSString *systemFontFamilyName;
 	static dispatch_once_t onceToken;

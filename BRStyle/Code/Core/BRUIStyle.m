@@ -163,7 +163,7 @@ static BRUIStyle *DefaultStyle;
 			NSLog(@"Error reading BRUIStyle set from %@: %@", jsonPath, [error localizedDescription]);
 		} else {
 			NSMutableDictionary *result = [[NSMutableDictionary alloc] initWithCapacity:dict.count];
-			[result enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+			[dict enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
 				if ( !([key isKindOfClass:[NSString class]] && [obj isKindOfClass:[NSDictionary class]]) ) {
 					return;
 				}
@@ -181,6 +181,63 @@ static BRUIStyle *DefaultStyle;
 	return styles;
 }
 
+static NSString * const kStylesControlsPrefix = @"controls-";
+
++ (nullable NSDictionary<NSString *, BRUIStyle *> *)registerDefaultStylesWithJSONResource:(NSString *)resourceName inBundle:(nullable NSBundle *)bundle {
+	NSMutableDictionary<NSString *, BRUIStyle *> *result = nil;
+	NSBundle *bundleToUse = (bundle ? bundle : [NSBundle mainBundle]);
+	NSString *jsonPath = [bundleToUse pathForResource:resourceName ofType:nil];
+	if ( [jsonPath length] > 0 ) {
+		NSInputStream *input = [NSInputStream inputStreamWithFileAtPath:jsonPath];
+		[input open];
+		NSError *error = nil;
+		NSDictionary *dict = [NSJSONSerialization JSONObjectWithStream:input options:0 error:&error];
+		[input close];
+		if ( error ) {
+			NSLog(@"Error reading BRUIStyle set from %@: %@", jsonPath, [error localizedDescription]);
+		} else {
+			result = [[NSMutableDictionary alloc] initWithCapacity:dict.count];
+			
+			// get default style to serve as base first
+			NSDictionary<NSString *, id> *defaultStyleDict = dict[@"default"];
+			BRUIStyle *defaultStyle = [[BRUIStyle alloc] initWithDictionaryRepresentation:defaultStyleDict];
+			if ( defaultStyle ) {
+				result[@"default"] = defaultStyle;
+				[BRUIStyle setDefaultStyle:defaultStyle];
+			}
+			
+			// now loop over other styles, merging with defaults
+			[dict enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+				if ( !([key isKindOfClass:[NSString class]] && [obj isKindOfClass:[NSDictionary class]]) ) {
+					return;
+				}
+				if ([key isEqualToString:@"default"] ) {
+					return;
+				}
+				
+				BRUIStyle *finalStyle;
+				if ( defaultStyleDict.count < 1 ) {
+					// use style without merging
+					finalStyle = [[BRUIStyle alloc] initWithDictionaryRepresentation:obj];
+				} else {
+					// merge default style with specific style
+					finalStyle = [defaultStyle styleByMergingDictionaryRepresentation:obj];
+				}
+				if ( finalStyle ) {
+					result[key] = finalStyle;
+					if ( [key hasPrefix:kStylesControlsPrefix] ) {
+						UIControlState state = [UIControl controlStateForKeyName:[key substringFromIndex:kStylesControlsPrefix.length]];
+						if ( state != UIControlStateNormal ) {
+							[UIControl setDefaultUiStyle:finalStyle forState:state];
+						}
+					}
+				}
+			}];
+		}
+	}
+	return (result.count > 0 ? result : nil);
+}
+
 + (BRUIStyle *)styleWithDictionary:(NSDictionary *)dictionary {
 	return [[self alloc] initWithDictionaryRepresentation:dictionary];
 }
@@ -193,6 +250,15 @@ static BRUIStyle *DefaultStyle;
 	}
 	return self;
 }
+
+- (BRUIStyle *)styleByMergingDictionaryRepresentation:(NSDictionary<NSString *, id> *)dictionary {
+	BRMutableUIStyle *mutable = [self mutableCopy];
+	mutable.fonts = [mutable.fonts settingsByMergingDictionaryRepresentation:dictionary[@"fonts"]];
+	mutable.colors = [mutable.colors settingsByMergingDictionaryRepresentation:dictionary[@"colors"]];
+	mutable.controls = [mutable.controls settingsByMergingDictionaryRepresentation:dictionary[@"controls"]];
+	return [mutable copy];
+}
+
 
 - (NSDictionary *)dictionaryRepresentation {
 	return @{@"fonts" : (fonts ? [fonts dictionaryRepresentation] : [NSNull null]),

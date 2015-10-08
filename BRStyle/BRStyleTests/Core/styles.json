@@ -1,0 +1,37 @@
+{
+	"default" : {
+		"colors" : {
+			"primaryColor" : "#ff0000ff",
+			"backgroundColor" : null
+		},
+		"fonts" : {
+			"actionFont" : {
+				"name" : "Helvetica-Regular",
+				"size" : 12
+			}
+		},
+		"controls" : {
+			"actionColor" : "#0000ccff",
+			"borderColor" : "#000000ff",
+			"glossColor" : "#ffffff33"
+		}
+	},
+	"controls-highlighted" : {
+		"controls" : {
+			"actionColor" : "#00cc00ff"
+		}
+	},
+	"controls-dangerous" : {
+		"controls" : {
+			"actionColor" : "#cc0000ff",
+			"borderColor" : "#cc0000ff"
+		}
+	},
+	"controls-dangerous|highlighted" : {
+		"controls" : {
+			"actionColor" : "#cc0000ff",
+			"borderColor" : "#cc0000ff",
+			"fillColor" : "#cc000033"
+		}
+	}
+}
