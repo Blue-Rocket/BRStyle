@@ -72,7 +72,8 @@ extern NSString * const BRStyleNotificationUIStyleDidChange;
 + (nullable BRUIStyle *)styleWithJSONResource:(NSString *)resourceName inBundle:(nullable NSBundle *)bundle;
 
 /**
- Create a dictionary of style instances from a JSON-encoded bundle resource.
+ Create a dictionary of style instances from a JSON-encoded bundle resource. The special key @c default is used as a starting template for all 
+ other keys, in such a way that other key's dictionaries are merged on top of the default dictionary to produce the final style for each key.
  
  @param resourceName The name of the JSON resource to load, which contains any number of string keys with associated BRUIStyle JSON representations.
  @param bundle       The bundle to use, or @c nil for the main bundle.

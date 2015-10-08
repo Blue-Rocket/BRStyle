@@ -151,39 +151,6 @@ static BRUIStyle *DefaultStyle;
 }
 
 + (NSDictionary<NSString *, BRUIStyle *> *)stylesWithJSONResource:(NSString *)resourceName inBundle:(NSBundle *)bundle {
-	NSBundle *bundleToUse = (bundle ? bundle : [NSBundle mainBundle]);
-	NSString *jsonPath = [bundleToUse pathForResource:resourceName ofType:nil];
-	NSDictionary<NSString *, BRUIStyle *> *styles = nil;
-	if ( [jsonPath length] > 0 ) {
-		NSInputStream *input = [NSInputStream inputStreamWithFileAtPath:jsonPath];
-		[input open];
-		NSError *error = nil;
-		NSDictionary *dict = [NSJSONSerialization JSONObjectWithStream:input options:0 error:&error];
-		if ( error ) {
-			NSLog(@"Error reading BRUIStyle set from %@: %@", jsonPath, [error localizedDescription]);
-		} else {
-			NSMutableDictionary *result = [[NSMutableDictionary alloc] initWithCapacity:dict.count];
-			[dict enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-				if ( !([key isKindOfClass:[NSString class]] && [obj isKindOfClass:[NSDictionary class]]) ) {
-					return;
-				}
-				BRUIStyle *style = [BRUIStyle styleWithDictionary:obj];
-				if ( style ) {
-					result[key] = style;
-				}
-			}];
-			if ( result.count > 0 ) {
-				styles = [result copy];
-			}
-		}
-		[input close];
-	}
-	return styles;
-}
-
-static NSString * const kStylesControlsPrefix = @"controls-";
-
-+ (nullable NSDictionary<NSString *, BRUIStyle *> *)registerDefaultStylesWithJSONResource:(NSString *)resourceName inBundle:(nullable NSBundle *)bundle {
 	NSMutableDictionary<NSString *, BRUIStyle *> *result = nil;
 	NSBundle *bundleToUse = (bundle ? bundle : [NSBundle mainBundle]);
 	NSString *jsonPath = [bundleToUse pathForResource:resourceName ofType:nil];
@@ -203,7 +170,6 @@ static NSString * const kStylesControlsPrefix = @"controls-";
 			BRUIStyle *defaultStyle = [[BRUIStyle alloc] initWithDictionaryRepresentation:defaultStyleDict];
 			if ( defaultStyle ) {
 				result[@"default"] = defaultStyle;
-				[BRUIStyle setDefaultStyle:defaultStyle];
 			}
 			
 			// now loop over other styles, merging with defaults
@@ -225,16 +191,27 @@ static NSString * const kStylesControlsPrefix = @"controls-";
 				}
 				if ( finalStyle ) {
 					result[key] = finalStyle;
-					if ( [key hasPrefix:kStylesControlsPrefix] ) {
-						UIControlState state = [UIControl controlStateForKeyName:[key substringFromIndex:kStylesControlsPrefix.length]];
-						if ( state != UIControlStateNormal ) {
-							[UIControl setDefaultUiStyle:finalStyle forState:state];
-						}
-					}
 				}
 			}];
 		}
 	}
+	return (result.count > 0 ? result : nil);
+}
+
+static NSString * const kStylesControlsPrefix = @"controls-";
+
++ (nullable NSDictionary<NSString *, BRUIStyle *> *)registerDefaultStylesWithJSONResource:(NSString *)resourceName inBundle:(nullable NSBundle *)bundle {
+	NSDictionary<NSString *, BRUIStyle *> *result = [self stylesWithJSONResource:resourceName inBundle:bundle];
+	[result enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, BRUIStyle *  _Nonnull obj, BOOL * _Nonnull stop) {
+		if ([key isEqualToString:@"default"] ) {
+			[BRUIStyle setDefaultStyle:obj];
+		} else if ( [key hasPrefix:kStylesControlsPrefix] ) {
+			UIControlState state = [UIControl controlStateForKeyName:[key substringFromIndex:kStylesControlsPrefix.length]];
+			if ( state != UIControlStateNormal ) {
+				[UIControl setDefaultUiStyle:obj forState:state];
+			}
+		}
+	}];
 	return (result.count > 0 ? result : nil);
 }
 
