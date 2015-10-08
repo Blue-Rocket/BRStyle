@@ -15,11 +15,26 @@
 @dynamic uiStyle;
 
 - (void)uiStyleDidChange:(BRUIStyle *)style {
-	[self setTitleTextAttributes:@{
-								   NSForegroundColorAttributeName: style.controls.actionColor,
-								   NSFontAttributeName: style.fonts.actionFont,
-								   }
-						forState:UIControlStateNormal];
+	if ( [style isDefaultStyle] ) {
+		// look for more specific style
+		for ( NSNumber *stateValue in @[@(UIControlStateNormal), @(UIControlStateDisabled), @(BRUIStyleControlStateDangerous)] ) {
+			UIControlState state = [stateValue unsignedIntegerValue];
+			BRUIStyle *s = [self uiStyleForState:state];
+			if ( s && ![s isDefaultStyle] && s.controls.actionColor && s.fonts.actionFont ) {
+				[self setTitleTextAttributes:@{
+											   NSForegroundColorAttributeName: s.controls.actionColor,
+											   NSFontAttributeName: s.fonts.actionFont,
+											   }
+									forState:state];
+			}
+		}
+	} else {
+		[self setTitleTextAttributes:@{
+									   NSForegroundColorAttributeName: style.controls.actionColor,
+									   NSFontAttributeName: style.fonts.actionFont,
+									   }
+							forState:UIControlStateNormal];
+	}
 }
 
 @end
