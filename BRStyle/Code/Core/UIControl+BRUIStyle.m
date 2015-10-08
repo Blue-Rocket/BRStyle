@@ -1,59 +1,55 @@
 //
-//  UIBarButtonItem+BRUIStyle.m
+//  UIControl+BRUIStyle.m
 //  BRStyle
 //
-//  Created by Matt on 25/08/15.
-//  Copyright (c) 2015 Blue Rocket, Inc. Distributable under the terms of the Apache License, Version 2.0.
+//  Created by Matt on 8/10/15.
+//  Copyright © 2015 Blue Rocket, Inc. All rights reserved.
 //
 
-#import "UIBarButtonItem+BRUIStyle.h"
-
-#import <objc/runtime.h>
-#import "BRUIStylishHost.h"
-#import "BRUIStyleObserver.h"
 #import "UIControl+BRUIStyle.h"
 
-static IMP original_initWithTitleStyleTargetAction;//(id, SEL, NSString *, UIBarButtonItemStyle, id, SEL);
-static id bruistyle_initWithTitleStyleTargetAction(id self, SEL _cmd, NSString *title, UIBarButtonItemStyle style, id target, SEL action);
+#import <objc/runtime.h>
+
+const UIControlState BRUIStyleControlStateDangerous = (1 << 16);
+
+static IMP original_getState;//(id, SEL);
+static IMP original_setHighlighted;//(id, SEL, BOOL);
 static IMP original_setEnabled;//(id, SEL, BOOL);
-static void bruistyle_setEnabled(id self, SEL _cmd, BOOL);
+static IMP original_setSelected;//(id, SEL, BOOL);
+static UIControlState bruistyle_getState(id self, SEL _cmd);
+static void bruistyle_setState(id self, SEL _cmd, BOOL);
 
 static NSMutableDictionary<NSNumber *, BRUIStyle *> *DefaultStateStyles;
 
-@implementation UIBarButtonItem (BRUIStyle)
+@implementation UIControl (BRUIStyle)
 
 + (void)load {
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		Class class = [self class];		
-		SEL originalSelector = @selector(initWithTitle:style:target:action:);
+		Class class = [self class];
+		SEL originalSelector = @selector(state);
 		Method originalMethod = class_getInstanceMethod(class, originalSelector);
-		original_initWithTitleStyleTargetAction = method_setImplementation(originalMethod, (IMP)bruistyle_initWithTitleStyleTargetAction);
-
+		original_getState = method_setImplementation(originalMethod, (IMP)bruistyle_getState);
+		
+		originalSelector = @selector(setHighlighted:);
+		originalMethod = class_getInstanceMethod(class, originalSelector);
+		original_setHighlighted = method_setImplementation(originalMethod, (IMP)bruistyle_setState);
+		
 		originalSelector = @selector(setEnabled:);
 		originalMethod = class_getInstanceMethod(class, originalSelector);
-		original_setEnabled = method_setImplementation(originalMethod, (IMP)bruistyle_setEnabled);
+		original_setEnabled = method_setImplementation(originalMethod, (IMP)bruistyle_setState);
+		
+		originalSelector = @selector(setSelected:);
+		originalMethod = class_getInstanceMethod(class, originalSelector);
+		original_setSelected = method_setImplementation(originalMethod, (IMP)bruistyle_setState);
 	});
-}
-
-- (BRUIStyle *)uiStyle {
-	BRUIStyle *style = objc_getAssociatedObject(self, @selector(uiStyle));
-	if ( !style ) {
-		style = [BRUIStyle defaultStyle];
-	}
-	return style;
-}
-
-- (void)setUiStyle:(BRUIStyle *)style {
-	objc_setAssociatedObject(self, @selector(uiStyle), style, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-	if ( [self respondsToSelector:@selector(uiStyleDidChange:)] ) {
-		[(id<BRUIStylishHost>)self uiStyleDidChange:[self uiStyle]];
-	}
 }
 
 + (NSArray *)orderedSupportedStates {
 	return @[@(UIControlStateDisabled),
-			 @(BRUIStyleControlStateDangerous)];
+			 @(BRUIStyleControlStateDangerous),
+			 @(UIControlStateHighlighted),
+			 @(UIControlStateSelected)];
 }
 
 + (void)removeAllDefaultUiStyles {
@@ -87,11 +83,7 @@ static NSMutableDictionary<NSNumber *, BRUIStyle *> *DefaultStateStyles;
 }
 
 - (BOOL)isStateFlagSet:(UIControlState)state {
-	UIControlState myState = [self uiStyleState];
-	if ( !self.enabled ) {
-		myState |= UIControlStateDisabled;
-	}
-	return ((myState & state) == state);
+	return (([self state] & state) == state);
 }
 
 - (BOOL)isDangerous {
@@ -112,6 +104,53 @@ static NSMutableDictionary<NSNumber *, BRUIStyle *> *DefaultStateStyles;
 	if ( [self respondsToSelector:@selector(stateDidChange)] ) {
 		[self stateDidChange];
 	}
+}
+
++ (NSString *)keyNameForControlState:(UIControlState)state {
+	NSString *result = @"";
+	for ( NSNumber *singleKey in [self orderedSupportedStates] ) {
+		NSUInteger singleState = [singleKey unsignedIntegerValue];
+		if ( (singleState & state) == singleState ) {
+			if ( result.length > 0 ) {
+				result = [result stringByAppendingString:@"|"];
+			}
+			switch ( singleState ) {
+				case BRUIStyleControlStateDangerous:
+					result = [result stringByAppendingString:@"dangerous"];
+					break;
+					
+				case UIControlStateDisabled:
+					result = [result stringByAppendingString:@"disabled"];
+					break;
+					
+				case UIControlStateHighlighted:
+					result = [result stringByAppendingString:@"highlighted"];
+					break;
+					
+				case UIControlStateSelected:
+					result = [result stringByAppendingString:@"selected"];
+					break;
+			}
+		}
+	}
+	return (result.length > 0 ? result : @"normal");
+}
+
++ (UIControlState)controlStateForKeyName:(NSString *)name {
+	UIControlState result = UIControlStateNormal;
+	NSArray *keys = [name componentsSeparatedByString:@"|"];
+	for ( NSString *key in keys ) {
+		if ( [key caseInsensitiveCompare:@"dangerous"] == NSOrderedSame ) {
+			result |= BRUIStyleControlStateDangerous;
+		} else if ( [key caseInsensitiveCompare:@"disabled"] == NSOrderedSame ) {
+			result |= UIControlStateDisabled;
+		} else if ( [key caseInsensitiveCompare:@"highlighted"] == NSOrderedSame ) {
+			result |= UIControlStateHighlighted;
+		} else if ( [key caseInsensitiveCompare:@"selected"] == NSOrderedSame ) {
+			result |= UIControlStateSelected;
+		}
+	}
+	return result;
 }
 
 - (NSMutableDictionary<NSNumber *, BRUIStyle *> *)uiStyleStateDictionary {
@@ -137,7 +176,7 @@ static NSMutableDictionary<NSNumber *, BRUIStyle *> *DefaultStateStyles;
 	if ( !style && state != UIControlStateNormal ) {
 		
 		// perhaps we have multiple states active, like Dangerous|Highlighted; choose based on hard-coded priority:
-		for ( NSNumber *singleKey in [UIBarButtonItem orderedSupportedStates] ) {
+		for ( NSNumber *singleKey in [UIControl orderedSupportedStates] ) {
 			NSUInteger singleState = [singleKey unsignedIntegerValue];
 			if ( (singleState & state) == singleState ) {
 				style = [self uiStyleStateDictionary:NO][singleKey];
@@ -182,22 +221,23 @@ static NSMutableDictionary<NSNumber *, BRUIStyle *> *DefaultStateStyles;
 
 @end
 
-static id bruistyle_initWithTitleStyleTargetAction(id self, SEL _cmd, NSString *title, UIBarButtonItemStyle style, id target, SEL action) {
-	self = ((id(*)(id,SEL,NSString *, UIBarButtonItemStyle, id, SEL))original_initWithTitleStyleTargetAction)(self, _cmd, title, style, target, action);
-	if ( ![self conformsToProtocol:@protocol(BRUIStylishHost)] ) {
-		return self;
-	}
-	if ( [self respondsToSelector:@selector(uiStyleDidChange:)] ) {
-		[self uiStyleDidChange:[self uiStyle]];
-		[BRUIStyleObserver addStyleObservation:self];
-	}
-	return self;
+static UIControlState bruistyle_getState(id self, SEL _cmd) {
+	UIControlState result = ((UIControlState(*)(id,SEL))original_getState)(self, _cmd);
+	return (result | [self uiStyleState]);
 }
 
-static void bruistyle_setEnabled(id self, SEL _cmd, BOOL value) {
+static void bruistyle_setState(id self, SEL _cmd, BOOL value) {
 	BOOL previousValue = NO;
-	previousValue = [self isEnabled];
-	((void(*)(id,SEL,BOOL))original_setEnabled)(self, _cmd, value);
+	if ( _cmd == @selector(setHighlighted:) ) {
+		previousValue = [self isHighlighted];
+		((void(*)(id,SEL,BOOL))original_setHighlighted)(self, _cmd, value);
+	} else if ( _cmd == @selector(setEnabled:) ) {
+		previousValue = [self isEnabled];
+		((void(*)(id,SEL,BOOL))original_setEnabled)(self, _cmd, value);
+	} else if ( _cmd == @selector(setSelected:) ) {
+		previousValue = [self isSelected];
+		((void(*)(id,SEL,BOOL))original_setSelected)(self, _cmd, value);
+	}
 	if ( previousValue != value && [self respondsToSelector:@selector(stateDidChange)] ) {
 		[self stateDidChange];
 	}

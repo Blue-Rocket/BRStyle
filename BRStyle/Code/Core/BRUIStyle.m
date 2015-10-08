@@ -8,6 +8,10 @@
 
 #import "BRUIStyle.h"
 
+#import "BRUIStylish.h"
+#import "UIBarButtonItem+BRUIStyle.h"
+#import "UIControl+BRUIStyle.h"
+
 NSString * const BRStyleNotificationUIStyleDidChange = @"BRUIStyleDidChange";
 
 static BRUIStyle *DefaultStyle;
@@ -16,11 +20,33 @@ static BRUIStyle *DefaultStyle;
 	@protected
 	BRUIStyleFontSettings *fonts;
 	BRUIStyleColorSettings *colors;
+	BRUIStyleControlSettings *controls;
 }
 
 + (instancetype)defaultStyle {
 	if ( !DefaultStyle ) {
-		[self setDefaultStyle:[[BRUIStyle alloc] initWithUIStyle:nil]];
+		BRUIStyle *base = [[BRUIStyle alloc] initWithUIStyle:nil];
+		[self setDefaultStyle:base];
+		
+		// register default control settings
+		BRMutableUIStyle *highlighted = [base mutableCopy];
+		highlighted.controls.actionColor = [base.controls.actionColor colorWithAlphaComponent:0.8];
+		highlighted.controls.fillColor = [UIColor colorWithRed: 0.833 green: 0.833 blue: 0.833 alpha: 0.5];
+		highlighted.controls.shadowColor = [BRUIStyle colorWithRGBAInteger:0x5555557F];
+		[UIControl setDefaultUiStyle:[highlighted copy] forState:UIControlStateHighlighted];
+		
+		BRMutableUIStyle *selected = [base mutableCopy];
+		selected.controls.actionColor = [BRUIStyle colorWithRGBInteger:0x1247b8];
+		[UIControl setDefaultUiStyle:[selected copy] forState:UIControlStateSelected];
+		
+		BRMutableUIStyle *disabled = [base mutableCopy];
+		disabled.controls.actionColor = [BRUIStyle colorWithRGBInteger:0xCACACA];
+		[UIControl setDefaultUiStyle:[disabled copy] forState:UIControlStateDisabled];
+		
+		BRMutableUIStyle *dangerous = [base mutableCopy];
+		dangerous.controls.actionColor = [BRUIStyle colorWithRGBInteger:0xEB2D38];
+		dangerous.controls.borderColor = dangerous.controls.actionColor;
+		[UIControl setDefaultUiStyle:[dangerous copy] forState:BRUIStyleControlStateDangerous];
 	}
 	return DefaultStyle;
 }
@@ -90,16 +116,19 @@ static BRUIStyle *DefaultStyle;
 		if ( other == nil ) {
 			fonts = [BRUIStyleFontSettings new];
 			colors = [BRUIStyleColorSettings new];
+			controls = [BRUIStyleControlSettings new];
 		} else {
 			fonts = [other.fonts copy];
 			colors = [other.colors copy];
+			controls = [other.controls copy];
 		}
 	}
 	return self;
 }
 
 - (NSString *)debugDescription {
-	return [NSString stringWithFormat:@"BRUIStyle{colors=%@; fonts = %@}", [colors debugDescription], [fonts debugDescription]];
+	return [NSString stringWithFormat:@"BRUIStyle{colors=%@; fonts = %@; controls = %@}",
+			[colors debugDescription], [fonts debugDescription], [controls debugDescription]];
 }
 
 #pragma mark - Serialization
@@ -123,6 +152,88 @@ static BRUIStyle *DefaultStyle;
 	return style;
 }
 
++ (NSDictionary<NSString *, BRUIStyle *> *)stylesWithJSONResource:(NSString *)resourceName inBundle:(NSBundle *)bundle {
+	NSMutableDictionary<NSString *, BRUIStyle *> *result = nil;
+	NSBundle *bundleToUse = (bundle ? bundle : [NSBundle mainBundle]);
+	NSString *jsonPath = [bundleToUse pathForResource:resourceName ofType:nil];
+	if ( [jsonPath length] > 0 ) {
+		NSInputStream *input = [NSInputStream inputStreamWithFileAtPath:jsonPath];
+		[input open];
+		NSError *error = nil;
+		NSDictionary *dict = [NSJSONSerialization JSONObjectWithStream:input options:0 error:&error];
+		[input close];
+		if ( error ) {
+			NSLog(@"Error reading BRUIStyle set from %@: %@", jsonPath, [error localizedDescription]);
+		} else {
+			result = [[NSMutableDictionary alloc] initWithCapacity:dict.count];
+			
+			// get default style to serve as base first
+			NSDictionary<NSString *, id> *defaultStyleDict = dict[@"default"];
+			BRUIStyle *defaultStyle = [[BRUIStyle alloc] initWithDictionaryRepresentation:defaultStyleDict];
+			if ( defaultStyle ) {
+				result[@"default"] = defaultStyle;
+			}
+			
+			// now loop over other styles, merging with defaults
+			[dict enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+				if ( !([key isKindOfClass:[NSString class]] && [obj isKindOfClass:[NSDictionary class]]) ) {
+					return;
+				}
+				if ([key isEqualToString:@"default"] ) {
+					return;
+				}
+				
+				BRUIStyle *finalStyle;
+				if ( defaultStyleDict.count < 1 ) {
+					// use style without merging
+					finalStyle = [[BRUIStyle alloc] initWithDictionaryRepresentation:obj];
+				} else {
+					// merge default style with specific style
+					finalStyle = [defaultStyle styleByMergingDictionaryRepresentation:obj];
+				}
+				if ( finalStyle ) {
+					result[key] = finalStyle;
+				}
+			}];
+		}
+	}
+	return (result.count > 0 ? result : nil);
+}
+
+static NSString * const kStylesControlsPrefix = @"controls-";
+
+static NSString * const kBarStylesControlsPrefix = @"bar-controls-";
+
++ (nullable NSDictionary<NSString *, BRUIStyle *> *)registerDefaultStylesWithJSONResource:(NSString *)resourceName inBundle:(nullable NSBundle *)bundle {
+	NSDictionary<NSString *, BRUIStyle *> *result = [self stylesWithJSONResource:resourceName inBundle:bundle];
+	[result enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, BRUIStyle *  _Nonnull obj, BOOL * _Nonnull stop) {
+		if ([key isEqualToString:@"default"] ) {
+			[BRUIStyle setDefaultStyle:obj];
+		} else if ( [key hasPrefix:kStylesControlsPrefix] ) {
+			UIControlState state = [UIControl controlStateForKeyName:[key substringFromIndex:kStylesControlsPrefix.length]];
+			if ( state != UIControlStateNormal ) {
+				[UIControl setDefaultUiStyle:obj forState:state];
+			}
+		} else if ( [key hasPrefix:kBarStylesControlsPrefix] ) {
+			UIControlState state = [UIControl controlStateForKeyName:[key substringFromIndex:kBarStylesControlsPrefix.length]];
+			// this is causing a crash on pushing controller, not sure why:
+			//UIBarButtonItem *barItem = [UIBarButtonItem appearance];
+			UIControl *navControl = [UIControl appearanceWhenContainedIn:[UINavigationBar class], nil];
+			UIControl *toolbarControl = [UIControl appearanceWhenContainedIn:[UIToolbar class], nil];
+			UIControl *tabControl = [UIControl appearanceWhenContainedIn:[UITabBar class], nil];
+			for ( id<BRUIStylishControl> control in @[/* crash! barItem,*/ navControl, toolbarControl, tabControl] ) {
+				[control setUiStyle:obj forState:state];
+			}
+			if ( state == UIControlStateNormal ) {
+				for ( id<BRUIStylish> host in @[[UINavigationBar appearance], [UIToolbar appearance]] ) {
+					host.uiStyle = obj;
+				}
+			}
+		}
+	}];
+	return (result.count > 0 ? result : nil);
+}
+
 + (BRUIStyle *)styleWithDictionary:(NSDictionary *)dictionary {
 	return [[self alloc] initWithDictionaryRepresentation:dictionary];
 }
@@ -131,13 +242,24 @@ static BRUIStyle *DefaultStyle;
 	if ( (self = [super init]) ) {
 		fonts = [[BRUIStyleFontSettings alloc] initWithDictionaryRepresentation:dictionary[@"fonts"]];
 		colors = [[BRUIStyleColorSettings alloc] initWithDictionaryRepresentation:dictionary[@"colors"]];
+		controls = [[BRUIStyleControlSettings alloc] initWithDictionaryRepresentation:dictionary[@"controls"]];
 	}
 	return self;
 }
 
+- (BRUIStyle *)styleByMergingDictionaryRepresentation:(NSDictionary<NSString *, id> *)dictionary {
+	BRMutableUIStyle *mutable = [self mutableCopy];
+	mutable.fonts = [mutable.fonts settingsByMergingDictionaryRepresentation:dictionary[@"fonts"]];
+	mutable.colors = [mutable.colors settingsByMergingDictionaryRepresentation:dictionary[@"colors"]];
+	mutable.controls = [mutable.controls settingsByMergingDictionaryRepresentation:dictionary[@"controls"]];
+	return [mutable copy];
+}
+
+
 - (NSDictionary *)dictionaryRepresentation {
 	return @{@"fonts" : (fonts ? [fonts dictionaryRepresentation] : [NSNull null]),
-			 @"colors" : (colors ? [colors dictionaryRepresentation] : [NSNull null])};
+			 @"colors" : (colors ? [colors dictionaryRepresentation] : [NSNull null]),
+			 @"controls" : (controls ? [controls dictionaryRepresentation] : [NSNull null])};
 }
 
 #pragma mark - NSCopying
@@ -165,12 +287,14 @@ static BRUIStyle *DefaultStyle;
 	}
 	fonts = [decoder decodeObjectOfClass:[BRUIStyleFontSettings class] forKey:NSStringFromSelector(@selector(fonts))];
 	colors = [decoder decodeObjectOfClass:[BRUIStyleColorSettings class] forKey:NSStringFromSelector(@selector(colors))];
+	controls = [decoder decodeObjectOfClass:[BRUIStyleControlSettings class] forKey:NSStringFromSelector(@selector(controls))];
 	return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder {
 	[coder encodeObject:fonts forKey:NSStringFromSelector(@selector(fonts))];
 	[coder encodeObject:colors forKey:NSStringFromSelector(@selector(fonts))];
+	[coder encodeObject:controls forKey:NSStringFromSelector(@selector(controls))];
 }
 
 #pragma mark - Helpers
@@ -187,6 +311,10 @@ static BRUIStyle *DefaultStyle;
 	return (colors || self.defaultStyle ? colors : [BRUIStyle defaultStyle].colors);
 }
 
+- (BRUIStyleControlSettings *)controls {
+	return (controls || self.defaultStyle ? controls : [BRUIStyle defaultStyle].controls);
+}
+
 @end
 
 #pragma BRMutableUIStyle support
@@ -195,11 +323,13 @@ static BRUIStyle *DefaultStyle;
 
 @dynamic fonts;
 @dynamic colors;
+@dynamic controls;
 
 - (instancetype)initWithUIStyle:(BRUIStyle *)other {
 	if ( (self = [super initWithUIStyle:other]) ) {
 		fonts = [fonts mutableCopy];
 		colors = [colors mutableCopy];
+		controls = [controls mutableCopy];
 	}
 	return self;
 }
@@ -208,6 +338,7 @@ static BRUIStyle *DefaultStyle;
 	if ( (self = [super initWithDictionaryRepresentation:dictionary]) ) {
 		fonts = [fonts mutableCopy];
 		colors = [colors mutableCopy];
+		controls = [controls mutableCopy];
 	}
 	return self;
 }
@@ -218,6 +349,10 @@ static BRUIStyle *DefaultStyle;
 
 - (void)setColors:(BRMutableUIStyleColorSettings * __nonnull)theColors {
 	colors = theColors;
+}
+
+- (void)setControls:(BRMutableUIStyleControlSettings * __nonnull)theControls {
+	controls = theControls;
 }
 
 - (id)copyWithZone:(NSZone *)zone {

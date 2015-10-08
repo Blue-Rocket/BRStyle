@@ -14,7 +14,7 @@
 
 static IMP original_viewDidLoad;//(id, SEL);
 
-void bruistyle_viewDidLoad(id self, SEL _cmd) {
+static void bruistyle_viewDidLoad(id self, SEL _cmd) {
 	((void(*)(id,SEL))original_viewDidLoad)(self, _cmd);
 	if ( ![self conformsToProtocol:@protocol(BRUIStylishHost)] ) {
 		return;
@@ -57,7 +57,7 @@ void bruistyle_viewDidLoad(id self, SEL _cmd) {
 - (void)setUiStyle:(BRUIStyle *)style {
 	objc_setAssociatedObject(self, @selector(uiStyle), style, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 	if ( [self respondsToSelector:@selector(uiStyleDidChange:)] ) {
-		[(id<BRUIStylishHost>)self uiStyleDidChange:style];
+		[(id<BRUIStylishHost>)self uiStyleDidChange:[self uiStyle]];
 	}
 }
 

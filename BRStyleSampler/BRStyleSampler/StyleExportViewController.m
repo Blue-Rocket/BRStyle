@@ -10,6 +10,7 @@
 
 #import <BRCocoaLumberjack/BRCocoaLumberjack.h>
 #import <BRStyle/BRStyle.h>
+#import "OrderedDictionary.h"
 
 @interface StyleExportViewController () <BRUIStylish>
 @property (strong, nonatomic) IBOutlet UITextView *textView;
@@ -26,8 +27,21 @@
 	self.textView.text = json;
 }
 
+- (NSDictionary *)orderedTree:(NSDictionary *)src {
+	NSArray *orderedKeys = [[src allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+	OrderedDictionary *result = [[OrderedDictionary alloc] initWithCapacity:orderedKeys.count];
+	for ( NSString *key in orderedKeys ) {
+		id v = src[key];
+		if ( [v isKindOfClass:[NSDictionary class]] ) {
+			v = [self orderedTree:v];
+		}
+		result[key] = v;
+	}
+	return result;
+}
+
 - (NSString *)jsonForStyle:(BRUIStyle *)style {
-	NSDictionary *dict = [style dictionaryRepresentation];
+	NSDictionary *dict = [self orderedTree:[style dictionaryRepresentation]];
 	NSError *error = nil;
 	NSData *data = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:&error];
 	if ( error ) {

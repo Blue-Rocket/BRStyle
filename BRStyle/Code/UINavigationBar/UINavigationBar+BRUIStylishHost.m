@@ -12,13 +12,11 @@
 
 @implementation UINavigationBar (BRUIStylishHost)
 
-@dynamic uiStyle;
-
 - (void)uiStyleDidChange:(BRUIStyle *)style {
-	self.tintColor = style.colors.inverseControlSettings.normalColorSettings.actionColor;
+	self.tintColor = style.controls.actionColor;
 	self.barTintColor = style.colors.navigationColor;
 	[self setTitleTextAttributes:@{
-								  NSForegroundColorAttributeName: style.colors.inverseControlSettings.normalColorSettings.actionColor,
+								  NSForegroundColorAttributeName: style.controls.actionColor,
 								  NSFontAttributeName: style.fonts.navigationFont,
 								  }];
 }

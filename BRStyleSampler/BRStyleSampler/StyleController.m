@@ -43,14 +43,10 @@
 			return [self colorProperties].count;
 		
 		case 1:
-		case 2:
-		case 3:
-		case 4:
-		case 5:
-			return [self controlColorProperties].count;
-			
-		case 6:
 			return [self fontProperties].count;
+			
+		case 2:
+			return [self controlProperties].count;
 	}
 	return 0;
 }
@@ -63,27 +59,11 @@
 			break;
 			
 		case 1:
-			keyPath = [@"colors.controlSettings.normalColorSettings." stringByAppendingString:[self controlColorProperties][indexPath.row]];
+			keyPath = [@"fonts." stringByAppendingString:[self fontProperties][indexPath.row]];
 			break;
 			
 		case 2:
-			keyPath = [@"colors.controlSettings.highlightedColorSettings." stringByAppendingString:[self controlColorProperties][indexPath.row]];
-			break;
-			
-		case 3:
-			keyPath = [@"colors.controlSettings.selectedColorSettings." stringByAppendingString:[self controlColorProperties][indexPath.row]];
-			break;
-			
-		case 4:
-			keyPath = [@"colors.controlSettings.disabledColorSettings." stringByAppendingString:[self controlColorProperties][indexPath.row]];
-			break;
-			
-		case 5:
-			keyPath = [@"colors.controlSettings.dangerousColorSettings." stringByAppendingString:[self controlColorProperties][indexPath.row]];
-			break;
-			
-		case 6:
-			keyPath = [@"fonts." stringByAppendingString:[self fontProperties][indexPath.row]];
+			keyPath = [@"controls." stringByAppendingString:[self controlProperties][indexPath.row]];
 			break;
 	}
 	return keyPath;
@@ -106,8 +86,7 @@
 	static NSArray *titles;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		titles = @[@"Colors", @"Control normal colors", @"Control highlighted colors", @"Control selected colors",
-				   @"Control disabled colors", @"Control dangerous colors", @"Fonts"];
+		titles = @[@"Colors", @"Fonts", @"Control Colors"];
 	});
 	return titles;
 }
@@ -143,12 +122,12 @@
 	return props;
 }
 
-- (NSArray *)controlColorProperties {
+- (NSArray *)controlProperties {
 	static NSArray *props;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		NSDictionary *keys = [self propertyKeys];
-		NSArray *colors = [[keys valueForKeyPath:@"colors.controlSettings.normalColorSettings"] allKeys];
+		NSArray *colors = [[keys[@"controls"] allKeys] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self ENDSWITH %@", @"Color"]];
 		props = [colors sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
 	});
 	return props;

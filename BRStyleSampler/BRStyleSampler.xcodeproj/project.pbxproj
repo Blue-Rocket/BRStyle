@@ -23,6 +23,8 @@
 		C93ABEDF1B8BD80E00202CA9 /* StyleColorTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABED91B8BD80E00202CA9 /* StyleColorTableViewCell.m */; };
 		C93ABEE81B8BF78F00202CA9 /* ShowcaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABEE71B8BF78F00202CA9 /* ShowcaseViewController.m */; };
 		C93ABF101B8C1F3600202CA9 /* SimpleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABF0F1B8C1F3600202CA9 /* SimpleTableViewCell.m */; };
+		C9948FE41BC6031C00A46BCD /* OrderedDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = C9948FE31BC6031C00A46BCD /* OrderedDictionary.m */; settings = {ASSET_TAGS = (); }; };
+		C9948FE61BC6211400A46BCD /* styles.json in Resources */ = {isa = PBXBuildFile; fileRef = C9948FE51BC6211400A46BCD /* styles.json */; settings = {ASSET_TAGS = (); }; };
 		D117AF59409DBD8D6475E893 /* libPods-BRStyleSampler-BRStyleSamplerTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF611B915F55DB3196C63AF /* libPods-BRStyleSampler-BRStyleSamplerTests.a */; };
 		D830847F2E31B7AA9DB3D8D3 /* libPods-BRStyleSampler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 92458D518F3BCD16CAA01C79 /* libPods-BRStyleSampler.a */; };
 /* End PBXBuildFile section */
@@ -72,6 +74,9 @@
 		C93ABEE71B8BF78F00202CA9 /* ShowcaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowcaseViewController.m; sourceTree = "<group>"; };
 		C93ABF0E1B8C1F3600202CA9 /* SimpleTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleTableViewCell.h; sourceTree = "<group>"; };
 		C93ABF0F1B8C1F3600202CA9 /* SimpleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleTableViewCell.m; sourceTree = "<group>"; };
+		C9948FE21BC6031C00A46BCD /* OrderedDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderedDictionary.h; sourceTree = "<group>"; };
+		C9948FE31BC6031C00A46BCD /* OrderedDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderedDictionary.m; sourceTree = "<group>"; };
+		C9948FE51BC6211400A46BCD /* styles.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = styles.json; sourceTree = "<group>"; };
 		EE74602C37DBC9FEB6A3F42E /* Pods-BRStyleSampler.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BRStyleSampler.release.xcconfig"; path = "Pods/Target Support Files/Pods-BRStyleSampler/Pods-BRStyleSampler.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -137,6 +142,8 @@
 				C93ABED61B8BD80E00202CA9 /* ColorSwatchView.m */,
 				C93ABED71B8BD80E00202CA9 /* GlobalStyleController.h */,
 				C93ABECE1B8BD80E00202CA9 /* GlobalStyleController.m */,
+				C9948FE21BC6031C00A46BCD /* OrderedDictionary.h */,
+				C9948FE31BC6031C00A46BCD /* OrderedDictionary.m */,
 				C93ABF0E1B8C1F3600202CA9 /* SimpleTableViewCell.h */,
 				C93ABF0F1B8C1F3600202CA9 /* SimpleTableViewCell.m */,
 				C93ABEE61B8BF78F00202CA9 /* ShowcaseViewController.h */,
@@ -160,6 +167,7 @@
 			children = (
 				C93ABEA91B8BD62A00202CA9 /* Info.plist */,
 				C93ABEAA1B8BD62A00202CA9 /* main.m */,
+				C9948FE51BC6211400A46BCD /* styles.json */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -278,6 +286,7 @@
 				C93ABEB41B8BD62A00202CA9 /* Main.storyboard in Resources */,
 				C93ABEB91B8BD62A00202CA9 /* LaunchScreen.xib in Resources */,
 				C93ABEB61B8BD62A00202CA9 /* Images.xcassets in Resources */,
+				C9948FE61BC6211400A46BCD /* styles.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,6 +376,7 @@
 				C93ABEAE1B8BD62A00202CA9 /* AppDelegate.m in Sources */,
 				C93ABEDB1B8BD80E00202CA9 /* StyleExportViewController.m in Sources */,
 				C93ABEDC1B8BD80E00202CA9 /* ColorPickerViewController.m in Sources */,
+				C9948FE41BC6031C00A46BCD /* OrderedDictionary.m in Sources */,
 				C93ABEAB1B8BD62A00202CA9 /* main.m in Sources */,
 				C93ABEDF1B8BD80E00202CA9 /* StyleColorTableViewCell.m in Sources */,
 			);

@@ -14,7 +14,7 @@
 
 static IMP original_didMoveToWindow;//(id, SEL);
 
-void bruistyle_didMoveToWindow(id self, SEL _cmd) {
+static void bruistyle_didMoveToWindow(id self, SEL _cmd) {
 	((void(*)(id,SEL))original_didMoveToWindow)(self, _cmd);
 	if ( !([self window] && [self conformsToProtocol:@protocol(BRUIStylishHost)]) ) {
 		return;
@@ -76,7 +76,7 @@ void bruistyle_didMoveToWindow(id self, SEL _cmd) {
 - (void)setUiStyle:(BRUIStyle *)style {
 	objc_setAssociatedObject(self, @selector(uiStyle), style, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 	if ( [self respondsToSelector:@selector(uiStyleDidChange:)] ) {
-		[(id<BRUIStylishHost>)self uiStyleDidChange:style];
+		[(id<BRUIStylishHost>)self uiStyleDidChange:[self uiStyle]];
 	}
 }
 

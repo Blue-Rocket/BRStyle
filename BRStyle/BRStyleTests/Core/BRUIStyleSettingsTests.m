@@ -24,9 +24,7 @@
 	assertThat(settings.actionFont, notNilValue());
 	assertThat(settings.formFont, notNilValue());
 	assertThat(settings.navigationFont, notNilValue());
-	assertThat(settings.alertHeadlineFont, notNilValue());
-	assertThat(settings.alertFont, notNilValue());
-		
+	
 	assertThat(settings.heroFont, notNilValue());
 	assertThat(settings.headlineFont, notNilValue());
 	assertThat(settings.secondaryHeadlineFont, notNilValue());
@@ -64,7 +62,7 @@
 	BRMutableUIStyleFontSettings *settings = [BRMutableUIStyleFontSettings new];
 	settings.heroFont = [UIFont systemFontOfSize:24];
 	NSDictionary *result = [settings dictionaryRepresentation];
-	assertThat(result, hasCountOf(13));
+	assertThat(result, hasCountOf(11));
 	assertThat(result[@"actionFont"], instanceOf([NSDictionary class]));
 	assertThat(result[@"actionFont"], equalTo(@{@"name" : @"AvenirNext-Medium", @"size" : @15}));
 	assertThat(result[@"heroFont"], instanceOf([NSDictionary class]));
@@ -86,31 +84,31 @@
 	BRMutableUIStyleColorSettings *copy = [settings mutableCopy];
 	assertThat(copy, isNot(sameInstance(settings)));
 	assertThat(copy, isA([BRMutableUIStyleColorSettings class]));
-	assertThat(copy.controlSettings, isA([BRMutableUIStyleControlStateColorSettings class]));
-	assertThat(copy.inverseControlSettings, isA([BRMutableUIStyleControlStateColorSettings class]));
 }
 
 #pragma mark -
 
 - (void)testControlColorGetters {
-	BRUIStyleControlColorSettings *settings = [BRUIStyleControlColorSettings new];
+	BRUIStyleControlSettings *settings = [BRUIStyleControlSettings new];
 	assertThat(settings.actionColor, notNilValue());
 	assertThat(settings.borderColor, notNilValue());
 	assertThat(settings.glossColor, notNilValue());
-	assertThat(settings.shadowColor, notNilValue());
+	assertThat(settings.shadowColor, nilValue());
+	assertThat(settings.shadow, nilValue());
+	assertThat(settings.textShadow, nilValue());
 }
 
 - (void)testControlColorCopy {
-	BRUIStyleControlColorSettings *settings = [BRUIStyleControlColorSettings new];
-	BRUIStyleControlColorSettings *copy = [settings copy];
+	BRUIStyleControlSettings *settings = [BRUIStyleControlSettings new];
+	BRUIStyleControlSettings *copy = [settings copy];
 	assertThat(copy, sameInstance(settings));
 }
 
 - (void)testControlColorMutableCopy {
-	BRUIStyleControlColorSettings *settings = [BRUIStyleControlColorSettings new];
-	BRMutableUIStyleControlColorSettings *copy = [settings mutableCopy];
+	BRUIStyleControlSettings *settings = [BRUIStyleControlSettings new];
+	BRMutableUIStyleControlSettings *copy = [settings mutableCopy];
 	assertThat(copy, isNot(sameInstance(settings)));
-	assertThat(copy, isA([BRMutableUIStyleControlColorSettings class]));
+	assertThat(copy, isA([BRMutableUIStyleControlSettings class]));
 	
 	// change a value
 	UIColor *origValue = copy.actionColor;
@@ -123,56 +121,32 @@
 }
 
 - (void)testControlColorDictionaryRepresentation {
-	BRUIStyleControlColorSettings *settings = [BRUIStyleControlColorSettings new];
+	BRMutableUIStyleControlSettings *settings = [[BRUIStyleControlSettings new] mutableCopy];
+	NSShadow *shadow = [NSShadow new];
+	shadow.shadowColor = [[UIColor blackColor] colorWithAlphaComponent:0.2];
+	shadow.shadowOffset = CGSizeMake(1,2);
+	shadow.shadowBlurRadius = 1;
+	settings.shadow = shadow;
+	settings.textShadow = shadow;
 	NSDictionary *result = [settings dictionaryRepresentation];
-	assertThat(result, hasCountOf(5));
-	assertThat(result[@"actionColor"], equalToIgnoringCase(@"#1247b8ff"));
-	assertThat(result[@"shadowColor"], equalToIgnoringCase(@"#5555557F"));
+	assertThat(result, hasCountOf(7));
+	assertThat(result[@"actionColor"], equalToIgnoringCase(@"#555555ff"));
+	assertThat(result[@"shadowColor"], equalTo([NSNull null]));
+	assertThat(result[@"shadow"], instanceOf([NSDictionary class]));
+	assertThat(result[@"shadow"][@"color"], equalToIgnoringCase(@"#00000033"));
+	assertThat(result[@"shadow"][@"offset"], hasCountOf(2));
+	assertThat(result[@"shadow"][@"offset"][0], equalTo(@1));
+	assertThat(result[@"shadow"][@"offset"][1], equalTo(@2));
+	assertThat(result[@"shadow"][@"blurRadius"], equalTo(@1));
 }
 
 - (void)testControlColorInitWithDictionary {
-	NSDictionary *dict = @{ @"actionColor" : @"#1247b8ff", @"glossColor" : @"#1247B8FF", @"shadowColor" : [NSNull null] };
-	BRUIStyleControlColorSettings *settings = [[BRUIStyleControlColorSettings alloc] initWithDictionaryRepresentation:dict];
+	NSDictionary *dict = @{ @"actionColor" : @"#1247b8ff", @"glossColor" : @"#1247B8FF", @"shadowColor" : [NSNull null],
+							@"shadow" : @{@"color" : @"#00000033", @"offset" : @[@1, @2], @"blurRadius" : @1} };
+	BRUIStyleControlSettings *settings = [[BRUIStyleControlSettings alloc] initWithDictionaryRepresentation:dict];
 	assertThatUnsignedInt([BRUIStyle rgbaIntegerForColor:settings.actionColor], equalToUnsignedInt(0x1247b8ff));
 	assertThatUnsignedInt([BRUIStyle rgbaIntegerForColor:settings.glossColor], equalToUnsignedInt(0x1247b8ff));
 	assertThat(settings.shadowColor, nilValue());
-}
-
-#pragma mark -
-
-- (void)testControlStateColorMutableCopy {
-	BRUIStyleControlStateColorSettings *settings = [BRUIStyleControlStateColorSettings new];
-	BRMutableUIStyleControlStateColorSettings *copy = [settings mutableCopy];
-	assertThat(copy, isNot(sameInstance(settings)));
-	assertThat(copy, isA([BRMutableUIStyleControlStateColorSettings class]));
-	assertThat(copy.normalColorSettings, isA([BRMutableUIStyleControlColorSettings class]));
-	assertThat(copy.highlightedColorSettings, isA([BRMutableUIStyleControlColorSettings class]));
-	assertThat(copy.selectedColorSettings, isA([BRMutableUIStyleControlColorSettings class]));
-	assertThat(copy.disabledColorSettings, isA([BRMutableUIStyleControlColorSettings class]));
-	assertThat(copy.dangerousColorSettings, isA([BRMutableUIStyleControlColorSettings class]));
-}
-
-- (void)testControlStateColorDictionaryRepresentation {
-	BRUIStyleControlStateColorSettings *settings = [BRUIStyleControlStateColorSettings new];
-	NSDictionary *result = [settings dictionaryRepresentation];
-	assertThat(result, hasCountOf(5));
-	NSDictionary *normalColorSettings = result[@"normalColorSettings"];
-	assertThat(normalColorSettings, instanceOf([NSDictionary class]));
-	assertThat(normalColorSettings, hasCountOf(5));
-	assertThat(normalColorSettings[@"actionColor"], equalToIgnoringCase(@"#555555FF"));
-	assertThat(normalColorSettings[@"borderColor"], equalToIgnoringCase(@"#CACACAFF"));
-	assertThat(normalColorSettings[@"glossColor"], equalToIgnoringCase(@"#FFFFFFA8"));
-	assertThat(normalColorSettings[@"shadowColor"], isA([NSNull class]));
-}
-
-- (void)testControlStateColorInitWithDictionary {
-	NSDictionary *dict = @{ @"normalColorSettings" : @{ @"actionColor" : @"#1247b8ff", @"glossColor" : [NSNull null] } };
-	BRUIStyleControlStateColorSettings *settings = [[BRUIStyleControlStateColorSettings alloc] initWithDictionaryRepresentation:dict];
-	BRUIStyleControlColorSettings *normalSettings = settings.normalColorSettings;
-	assertThat(normalSettings, notNilValue());
-	assertThatUnsignedInt([BRUIStyle rgbaIntegerForColor:normalSettings.actionColor], equalToUnsignedInt(0x1247b8ff));
-	assertThat(normalSettings.glossColor, nilValue());
-	assertThat(normalSettings.shadowColor, nilValue());
 }
 
 @end

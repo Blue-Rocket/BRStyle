@@ -20,7 +20,7 @@
 @interface UIView (BRUIStyle)
 
 /** A BRUIStyle object to use. If not configured, the global default style will be returned. */
-@property (nonatomic, strong, null_resettable) IBOutlet BRUIStyle *uiStyle;
+@property (nonatomic, strong, null_resettable) IBOutlet BRUIStyle *uiStyle UI_APPEARANCE_SELECTOR;
 
 /**
  Find the nearest superview of the receiver that is a specific class.
