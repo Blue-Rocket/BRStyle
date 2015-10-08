@@ -25,6 +25,7 @@
 		C9948FDB1BC57B9800A46BCD /* UIControl+BRUIStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = C9948FDA1BC57B9800A46BCD /* UIControl+BRUIStyle.m */; settings = {ASSET_TAGS = (); }; };
 		C9948FDF1BC58ABD00A46BCD /* UIControl_BRUIStyleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9948FDE1BC58ABD00A46BCD /* UIControl_BRUIStyleTests.m */; settings = {ASSET_TAGS = (); }; };
 		C9948FE11BC5D21B00A46BCD /* styles.json in Resources */ = {isa = PBXBuildFile; fileRef = C9948FE01BC5D21B00A46BCD /* styles.json */; settings = {ASSET_TAGS = (); }; };
+		C9948FE81BC62B4600A46BCD /* UIBarButtonItem_BRUIStyleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9948FE71BC62B4600A46BCD /* UIBarButtonItem_BRUIStyleTests.m */; settings = {ASSET_TAGS = (); }; };
 		C9C5D1271B8FB25900FAF431 /* UIFont+BRUIStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C5D1261B8FB25900FAF431 /* UIFont+BRUIStyle.m */; };
 		C9C5D1291B8FC25900FAF431 /* UIFont_BRUIStyleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C5D1281B8FC25900FAF431 /* UIFont_BRUIStyleTests.m */; };
 		C9DC16C31B8D11C300F5C6C3 /* BRUIStyleSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DC16C21B8D11C300F5C6C3 /* BRUIStyleSettings.m */; };
@@ -93,6 +94,7 @@
 		C9948FDD1BC5859100A46BCD /* BRUIStylishControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRUIStylishControl.h; sourceTree = "<group>"; };
 		C9948FDE1BC58ABD00A46BCD /* UIControl_BRUIStyleTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIControl_BRUIStyleTests.m; sourceTree = "<group>"; };
 		C9948FE01BC5D21B00A46BCD /* styles.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = styles.json; sourceTree = "<group>"; };
+		C9948FE71BC62B4600A46BCD /* UIBarButtonItem_BRUIStyleTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIBarButtonItem_BRUIStyleTests.m; sourceTree = "<group>"; };
 		C9C5D1251B8FB25900FAF431 /* UIFont+BRUIStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+BRUIStyle.h"; sourceTree = "<group>"; };
 		C9C5D1261B8FB25900FAF431 /* UIFont+BRUIStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+BRUIStyle.m"; sourceTree = "<group>"; };
 		C9C5D1281B8FC25900FAF431 /* UIFont_BRUIStyleTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIFont_BRUIStyleTests.m; sourceTree = "<group>"; };
@@ -283,6 +285,7 @@
 				C91BBE3B1B8E9019008E5D60 /* BRUIStyleTests.m */,
 				C9ED4FDA1BA22967000A50FD /* BRUIStyleObserverTests.m */,
 				C9DC16C61B8D7CE500F5C6C3 /* BRUIStyleSettingsTests.m */,
+				C9948FE71BC62B4600A46BCD /* UIBarButtonItem_BRUIStyleTests.m */,
 				C9948FDE1BC58ABD00A46BCD /* UIControl_BRUIStyleTests.m */,
 				C9C5D1281B8FC25900FAF431 /* UIFont_BRUIStyleTests.m */,
 				C91BBE3D1B8EA338008E5D60 /* style.json */,
@@ -440,6 +443,7 @@
 				C9ED4FDB1BA22967000A50FD /* BRUIStyleObserverTests.m in Sources */,
 				C9948FDF1BC58ABD00A46BCD /* UIControl_BRUIStyleTests.m in Sources */,
 				C9C5D1291B8FC25900FAF431 /* UIFont_BRUIStyleTests.m in Sources */,
+				C9948FE81BC62B4600A46BCD /* UIBarButtonItem_BRUIStyleTests.m in Sources */,
 				C91BBE3C1B8E9019008E5D60 /* BRUIStyleTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
