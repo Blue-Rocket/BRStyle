@@ -8,6 +8,7 @@
 
 #import "BRUIStyle.h"
 
+#import "UIBarButtonItem+BRUIStyle.h"
 #import "UIControl+BRUIStyle.h"
 
 NSString * const BRStyleNotificationUIStyleDidChange = @"BRUIStyleDidChange";
@@ -200,6 +201,8 @@ static BRUIStyle *DefaultStyle;
 
 static NSString * const kStylesControlsPrefix = @"controls-";
 
+static NSString * const kBarStylesControlsPrefix = @"bar-controls-";
+
 + (nullable NSDictionary<NSString *, BRUIStyle *> *)registerDefaultStylesWithJSONResource:(NSString *)resourceName inBundle:(nullable NSBundle *)bundle {
 	NSDictionary<NSString *, BRUIStyle *> *result = [self stylesWithJSONResource:resourceName inBundle:bundle];
 	[result enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, BRUIStyle *  _Nonnull obj, BOOL * _Nonnull stop) {
@@ -209,6 +212,15 @@ static NSString * const kStylesControlsPrefix = @"controls-";
 			UIControlState state = [UIControl controlStateForKeyName:[key substringFromIndex:kStylesControlsPrefix.length]];
 			if ( state != UIControlStateNormal ) {
 				[UIControl setDefaultUiStyle:obj forState:state];
+			}
+		} else if ( [key hasPrefix:kBarStylesControlsPrefix] ) {
+			UIControlState state = [UIControl controlStateForKeyName:[key substringFromIndex:kBarStylesControlsPrefix.length]];
+			// this is causing a crash on pushing controller, not sure why: UIBarButtonItem *barItem = [UIBarButtonItem appearance];
+			UIControl *navControl = [UIControl appearanceWhenContainedIn:[UINavigationBar class], nil];
+			UIControl *toolbarControl = [UIControl appearanceWhenContainedIn:[UIToolbar class], nil];
+			UIControl *tabControl = [UIControl appearanceWhenContainedIn:[UITabBar class], nil];
+			for ( id<BRUIStylishControl> control in @[/*barItem,*/ navControl, toolbarControl, tabControl] ) {
+				[control setUiStyle:obj forState:state];
 			}
 		}
 	}];
