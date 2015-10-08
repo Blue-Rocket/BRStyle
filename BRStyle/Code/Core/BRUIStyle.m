@@ -8,6 +8,7 @@
 
 #import "BRUIStyle.h"
 
+#import "BRUIStylish.h"
 #import "UIBarButtonItem+BRUIStyle.h"
 #import "UIControl+BRUIStyle.h"
 
@@ -215,12 +216,18 @@ static NSString * const kBarStylesControlsPrefix = @"bar-controls-";
 			}
 		} else if ( [key hasPrefix:kBarStylesControlsPrefix] ) {
 			UIControlState state = [UIControl controlStateForKeyName:[key substringFromIndex:kBarStylesControlsPrefix.length]];
-			// this is causing a crash on pushing controller, not sure why: UIBarButtonItem *barItem = [UIBarButtonItem appearance];
+			// this is causing a crash on pushing controller, not sure why:
+			//UIBarButtonItem *barItem = [UIBarButtonItem appearance];
 			UIControl *navControl = [UIControl appearanceWhenContainedIn:[UINavigationBar class], nil];
 			UIControl *toolbarControl = [UIControl appearanceWhenContainedIn:[UIToolbar class], nil];
 			UIControl *tabControl = [UIControl appearanceWhenContainedIn:[UITabBar class], nil];
-			for ( id<BRUIStylishControl> control in @[/*barItem,*/ navControl, toolbarControl, tabControl] ) {
+			for ( id<BRUIStylishControl> control in @[/* crash! barItem,*/ navControl, toolbarControl, tabControl] ) {
 				[control setUiStyle:obj forState:state];
+			}
+			if ( state == UIControlStateNormal ) {
+				for ( id<BRUIStylish> host in @[[UINavigationBar appearance], [UIToolbar appearance]] ) {
+					host.uiStyle = obj;
+				}
 			}
 		}
 	}];
