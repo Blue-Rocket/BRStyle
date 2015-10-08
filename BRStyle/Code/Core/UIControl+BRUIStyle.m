@@ -217,6 +217,9 @@ static NSMutableDictionary<NSNumber *, BRUIStyle *> *DefaultStateStyles;
 	} else {
 		[self uiStyleStateDictionary:YES][key] = style;
 	}
+	if ( [self respondsToSelector:@selector(uiStyleDidChange:forState:)] ) {
+		[self uiStyleDidChange:[self uiStyleForState:state] forState:state];
+	}
 }
 
 @end

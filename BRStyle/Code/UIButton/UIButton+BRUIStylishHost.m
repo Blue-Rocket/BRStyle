@@ -17,19 +17,13 @@
 
 - (void)uiStyleDidChange:(BRUIStyle *)style {
 	self.titleLabel.font = style.fonts.actionFont;
-	[self setTitleColor:style.controls.actionColor forState:UIControlStateNormal];
-	[self setTitleShadowColor:style.controls.textShadow.shadowColor forState:UIControlStateNormal];
-	if ( [style isDefaultStyle] ) {
-		// look for more specific style
-		for ( NSNumber *stateValue in @[@(UIControlStateNormal), @(UIControlStateDisabled), @(UIControlStateHighlighted), @(UIControlStateSelected), @(BRUIStyleControlStateDangerous)] ) {
-			UIControlState state = [stateValue unsignedIntegerValue];
-			BRUIStyle *s = [self uiStyleForState:state];
-			if ( s && ![s isDefaultStyle] && s.controls.actionColor && s.fonts.actionFont ) {
-				[self setTitleColor:s.controls.actionColor forState:state];
-				[self setTitleShadowColor:s.controls.textShadow.shadowColor forState:state];
-			}
-		}
-	}
+	self.titleLabel.shadowOffset = style.controls.textShadow.shadowOffset;
+	[self uiStyleDidChange:style forState:UIControlStateNormal];
+}
+
+- (void)uiStyleDidChange:(BRUIStyle *)style forState:(UIControlState)state {
+	[self setTitleColor:style.controls.actionColor forState:state];
+	[self setTitleShadowColor:style.controls.textShadow.shadowColor forState:state];
 }
 
 @end

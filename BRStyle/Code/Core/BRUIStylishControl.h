@@ -46,6 +46,14 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)stateDidChange;
 
+/**
+ Notify the receiver that the style has been changed for a specific state.
+ 
+ @param style The updated style.
+ @param state The state the style is associated with.
+ */
+- (void)uiStyleDidChange:(BRUIStyle *)style forState:(UIControlState)state;
+
 @end
 
 NS_ASSUME_NONNULL_END
