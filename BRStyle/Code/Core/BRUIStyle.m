@@ -39,6 +39,10 @@ static BRUIStyle *DefaultStyle;
 		selected.controls.actionColor = [BRUIStyle colorWithRGBInteger:0x1247b8];
 		[UIControl setDefaultUiStyle:[selected copy] forState:UIControlStateSelected];
 		
+		selected.controls.actionColor = [selected.controls.actionColor colorWithAlphaComponent:0.5];
+		selected.controls.fillColor = highlighted.controls.fillColor;
+		[UIControl setDefaultUiStyle:[selected copy] forState:(UIControlStateHighlighted|UIControlStateSelected)];
+		
 		BRMutableUIStyle *disabled = [base mutableCopy];
 		disabled.controls.actionColor = [BRUIStyle colorWithRGBInteger:0xCACACA];
 		[UIControl setDefaultUiStyle:[disabled copy] forState:UIControlStateDisabled];
@@ -47,6 +51,10 @@ static BRUIStyle *DefaultStyle;
 		dangerous.controls.actionColor = [BRUIStyle colorWithRGBInteger:0xEB2D38];
 		dangerous.controls.borderColor = dangerous.controls.actionColor;
 		[UIControl setDefaultUiStyle:[dangerous copy] forState:BRUIStyleControlStateDangerous];
+		
+		dangerous.controls.actionColor = [dangerous.controls.actionColor colorWithAlphaComponent:0.5];
+		dangerous.controls.fillColor = highlighted.controls.fillColor;
+		[UIControl setDefaultUiStyle:[dangerous copy] forState:(UIControlStateHighlighted|BRUIStyleControlStateDangerous)];
 	}
 	return DefaultStyle;
 }
