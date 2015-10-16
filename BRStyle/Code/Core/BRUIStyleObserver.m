@@ -43,4 +43,8 @@ static void *BRUIStyleObserverKey = &BRUIStyleObserverKey;
 	}
 }
 
++ (BOOL)isObservingStyleInHost:(id<BRUIStylishHost>)host {
+	return (objc_getAssociatedObject(host, BRUIStyleObserverKey) != nil);
+}
+
 @end
