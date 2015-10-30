@@ -145,14 +145,14 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 					result = [UIFont systemFontOfSize:[value[@"size"] floatValue]];
 				}
 			} else if ( [key hasSuffix:@"hadow"] ) {
-				UIColor *color = value[@"color"];
+				NSString *color = value[@"color"];
 				if ( color ) {
 					CGSize offset = [self parseCGSize:value[@"offset"]];
 					CGFloat blurRadius = [value[@"blurRadius"] floatValue];
 					NSShadow *shadow = [[NSShadow alloc] init];
 					shadow.shadowOffset = offset;
 					shadow.shadowBlurRadius = blurRadius;
-					shadow.shadowColor = color;
+					shadow.shadowColor = [self parseColor:color];
 					result = shadow;
 				}
 			}
