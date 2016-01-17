@@ -24,4 +24,13 @@
  */
 + (void)addStyleObservation:(id<BRUIStylishHost>)host;
 
+/**
+ Test if an observer is already set up for a given host.
+ 
+ @param host The host to test.
+ 
+ @return @c YES if observation is already in place.
+ */
++ (BOOL)isObservingStyleInHost:(id<BRUIStylishHost>)host;
+
 @end

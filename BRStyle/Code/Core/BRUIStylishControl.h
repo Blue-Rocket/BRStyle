@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @protocol BRUIStylishControl <NSObject>
 
-/** Manage theBRUIStyleControlStateDangerous state flag. */
+/** Manage the BRUIStyleControlStateDangerous state flag. */
 @property(nonatomic, getter=isDangerous) IBInspectable BOOL dangerous;
 
 /**
@@ -45,6 +45,14 @@ NS_ASSUME_NONNULL_BEGIN
  Notify the receiver that the control state has been updated.
  */
 - (void)stateDidChange;
+
+/**
+ Notify the receiver that the style has been changed for a specific state.
+ 
+ @param style The updated style.
+ @param state The state the style is associated with.
+ */
+- (void)uiStyleDidChange:(BRUIStyle *)style forState:(UIControlState)state;
 
 @end
 

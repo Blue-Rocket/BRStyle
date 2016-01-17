@@ -19,7 +19,7 @@ static void bruistyle_didMoveToWindow(id self, SEL _cmd) {
 	if ( !([self window] && [self conformsToProtocol:@protocol(BRUIStylishHost)]) ) {
 		return;
 	}
-	if ( [self respondsToSelector:@selector(uiStyleDidChange:)] ) {
+	if ( [self respondsToSelector:@selector(uiStyleDidChange:)] && ![BRUIStyleObserver isObservingStyleInHost:self] ) {
 		[self uiStyleDidChange:[self uiStyle]];
 		[BRUIStyleObserver addStyleObservation:self];
 	}
