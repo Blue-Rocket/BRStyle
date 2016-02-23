@@ -9,13 +9,16 @@
 #import "UIControl+BRUIStyle.h"
 
 #import <objc/runtime.h>
+#import "BRUIStylishHost.h"
 
 const UIControlState BRUIStyleControlStateDangerous = (1 << 16);
 
+static IMP original_didMoveToWindow;//(id, SEL);
 static IMP original_getState;//(id, SEL);
 static IMP original_setHighlighted;//(id, SEL, BOOL);
 static IMP original_setEnabled;//(id, SEL, BOOL);
 static IMP original_setSelected;//(id, SEL, BOOL);
+static void bruistyle_controlDidMoveToWindow(id self, SEL _cmd);
 static UIControlState bruistyle_getState(id self, SEL _cmd);
 static void bruistyle_setState(id self, SEL _cmd, BOOL);
 
@@ -27,8 +30,12 @@ static NSMutableDictionary<NSNumber *, BRUIStyle *> *DefaultStateStyles;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		Class class = [self class];
-		SEL originalSelector = @selector(state);
+		SEL originalSelector = @selector(didMoveToWindow);
 		Method originalMethod = class_getInstanceMethod(class, originalSelector);
+		original_didMoveToWindow = method_setImplementation(originalMethod, (IMP)bruistyle_controlDidMoveToWindow);
+
+		originalSelector = @selector(state);
+		originalMethod = class_getInstanceMethod(class, originalSelector);
 		original_getState = method_setImplementation(originalMethod, (IMP)bruistyle_getState);
 		
 		originalSelector = @selector(setHighlighted:);
@@ -223,6 +230,25 @@ static NSMutableDictionary<NSNumber *, BRUIStyle *> *DefaultStateStyles;
 }
 
 @end
+
+static void bruistyle_controlDidMoveToWindow(id self, SEL _cmd) {
+	((void(*)(id,SEL))original_didMoveToWindow)(self, _cmd);
+	if ( !([self window] && [self conformsToProtocol:@protocol(BRUIStylishHost)]) ) {
+		return;
+	}
+	if ( [self respondsToSelector:@selector(uiStyleDidChange:forState:)] ) {
+		for ( NSNumber *stateVal in [UIControl orderedSupportedStates] ) {
+			UIControlState state = [stateVal unsignedIntegerValue];
+			if ( state == UIControlStateNormal ) {
+				continue;
+			}
+			BRUIStyle *style = [self uiStyleForState:state];
+			if ( style && style.isDefaultStyle == NO ) {
+				[self uiStyleDidChange:style forState:state];
+			}
+		}
+	}
+}
 
 static UIControlState bruistyle_getState(id self, SEL _cmd) {
 	UIControlState result = ((UIControlState(*)(id,SEL))original_getState)(self, _cmd);
