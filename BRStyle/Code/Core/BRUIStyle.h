@@ -87,7 +87,10 @@ extern NSString * const BRStyleNotificationUIStyleDidChange;
  
  The key @c default is used to set the default global style. Then, for any key that starts with @c controls- the remainder of the key
  value is parsed as a @c UIControlState key name and the corresponding style is registered as the default control style for that
- state.
+ state, as parsed by the @c controlStateForKeyName: on @c UIControl.
+ 
+ Similarly, for any key that starts with @c bar-controls- the remainder of the key value is parsed as a @c UIControlState key name and
+ the corresponding style is registered as the default control style for @c UINavigationBar, @c UIToolbar, and @c UITabBar.
  
  @param resourceName The name of the JSON resource to load, which contains any number of string keys with associated BRUIStyle JSON representations.
  @param bundle       The bundle to use, or @c nil for the main bundle.
