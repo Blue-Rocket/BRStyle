@@ -1,0 +1,72 @@
+{
+	"default" : {
+		"colors" : {
+			"primaryColor" : "#ff0000ff",
+			"backgroundColor" : null
+		},
+		"fonts" : {
+			"actionFont" : {
+				"name" : "Helvetica-Regular",
+				"size" : 12
+			}
+		},
+		"controls" : {
+			"actionColor" : "#0000ccff",
+			"borderColor" : "#000000ff",
+			"glossColor" : "#ffffff33"
+		}
+	},
+	"controls-highlighted" : {
+		"controls" : {
+			"actionColor" : "#00cc00ff"
+		}
+	},
+	"controls-dangerous" : {
+		"controls" : {
+			"actionColor" : "#cc0000ff",
+			"borderColor" : "#cc0000ff"
+		}
+	},
+
+	"AppearanceCustomClass" : {
+		"colors" : {
+			"primaryColor" : "#00000001"
+		}
+	},
+
+	"UITableViewCell/AppearanceCustomClass" : {
+		"colors" : {
+			"primaryColor" : "#00000002"
+		}
+	},
+
+	"UITableViewController/UITableViewCell/AppearanceCustomClass" : {
+		"colors" : {
+			"primaryColor" : "#00000003"
+		}
+	},
+
+	"AppearanceCustomControl-highlighted" : {
+		"colors" : {
+			"primaryColor" : "#00000004"
+		}
+	},
+
+	"AppearanceCustomControl-highlighted|selected" : {
+		"colors" : {
+			"primaryColor" : "#00000005"
+		}
+	},
+
+	"UITableViewCell/AppearanceCustomControl-highlighted" : {
+		"colors" : {
+			"primaryColor" : "#00000006"
+		}
+	},
+
+	"UITableViewController/UITableViewCell/AppearanceCustomControl-highlighted" : {
+		"colors" : {
+			"primaryColor" : "#00000007"
+		}
+	}
+}

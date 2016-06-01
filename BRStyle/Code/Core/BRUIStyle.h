@@ -16,6 +16,15 @@ NS_ASSUME_NONNULL_BEGIN
  */
 extern NSString * const BRStyleNotificationUIStyleDidChange;
 
+/** The default style key used by the @c registerDefaultStylesWithJSONResource:inBundle: method. */
+extern NSString * const BRStyleKeyDefault;
+
+/** The style key prefix for controls used by the @c registerDefaultStylesWithJSONResource:inBundle: method. */
+extern NSString * const BRStyleKeyControlsPrefix;
+
+/** The style key prefix for bar controls used by the @c registerDefaultStylesWithJSONResource:inBundle: method. */
+extern NSString * const BRStyleKeyBarControlsPrefix;
+
 /**
  Encapsulation of style attributes used for drawing BR UI components.
  */
