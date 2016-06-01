@@ -39,6 +39,8 @@ UIPopoverController/UITableViewController/UITableViewCell
 BRUIStyle *style = styles[@"UIPopoverController/UITableViewController/UITableViewCell"];
 [UITableViewCell appearanceWhenContainedIn:[UITableViewController class], [UIPopoverController class], nil].uiStyle = style;
  @endcode
+ 
+ @b Note how the container ordering in the key is @em reversed from how you pass them in code!
 
  Finally, for @c UIControl subclasses, specific control states can be configured by appending a dash followed by a pipe-delimited
  list of control state names. For example, to configure buttons that are both highlighted and selected and are contained in a 
