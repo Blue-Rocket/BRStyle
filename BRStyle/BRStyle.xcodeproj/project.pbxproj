@@ -98,6 +98,7 @@
 		C9948FDE1BC58ABD00A46BCD /* UIControl_BRUIStyleTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIControl_BRUIStyleTests.m; sourceTree = "<group>"; };
 		C9948FE01BC5D21B00A46BCD /* styles.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = styles.json; sourceTree = "<group>"; };
 		C9948FE71BC62B4600A46BCD /* UIBarButtonItem_BRUIStyleTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIBarButtonItem_BRUIStyleTests.m; sourceTree = "<group>"; };
+		C99EFBE41D0537FE00BF1261 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		C9C35AF01CFE825900D468C3 /* BRUIStyleAppearanceLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRUIStyleAppearanceLoader.h; sourceTree = "<group>"; };
 		C9C35AF11CFE825900D468C3 /* BRUIStyleAppearanceLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRUIStyleAppearanceLoader.m; sourceTree = "<group>"; };
 		C9C35AF31CFE941A00D468C3 /* BRUIStyleAppearanceLoaderTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRUIStyleAppearanceLoaderTests.m; sourceTree = "<group>"; };
@@ -229,6 +230,7 @@
 		C93ABE8D1B8BD1AF00202CA9 /* Packaging */ = {
 			isa = PBXGroup;
 			children = (
+				C99EFBE41D0537FE00BF1261 /* README.md */,
 				C93ABE8C1B8BD1AC00202CA9 /* BRStyle.podspec */,
 				C93ABE891B8BD0D400202CA9 /* BRStyle.h */,
 				C93ABE8B1B8BD0D400202CA9 /* Core.h */,
