@@ -72,6 +72,72 @@ toolbar.tintColor = bar.tintColor;
 toolbar.barTintColor = bar.barTintColor;
 ```
 
+In fact, why not use the [BRUIStyleAppearanceLoader](BRStyle/Code/Core/BRUIStyleAppearanceLoader.m)
+helper class to automatically apply appearance settings from a handy `styles.json` file?
+For example, take a (very simplified) BRStyle `styles.json` file like this:
+
+```json
+{
+  "default" : {
+    "colors" : {
+      "primaryColor" : "#ff0000ff",
+      "backgroundColor" : null
+    },
+    "fonts" : {
+      "actionFont" : { "name" : "Helvetica-Regular", "size" : 12 }
+    },
+    "controls" : {
+      "actionColor" : "#0000ccff",
+      "borderColor" : "#000000ff",
+      "glossColor" : "#ffffff33"
+    }
+  },
+
+  "MyCustomButton" : {
+    "fonts" : {
+      "actionFont" : { "name" : "Helvetica-Bold", "size" : 10 }
+    }
+  },
+
+  "UIPopoverController/MyCustomButton" : {
+    "fonts" : {
+      "actionFont" : { "name" : "Helvetica-Bold", "size" : 14 }
+    }
+  },
+
+  "MyCustomButton-highlighted|selected" : {
+    "controls" : {
+      "actionColor" : "#ff00ccff"
+    }
+  }
+
+}
+```
+
+Setup your styles like this:
+
+```objc
+NSDictionary<NSString *, BRUIStyle *> *styles = [BRUIStyle registerDefaultStylesWithJSONResource:@"styles.json" inBundle:nil];
+[[BRUIStyleAppearanceLoader new] setupAppearanceStyles:styles];
+```
+
+The `default` key represent the global default style settings. All other keys represent
+arbitrary named styles you can reference as needed. By passing the `styles` dictionary to
+`BRUIStyleAppearanceLoader`, the keys are interpreted in specific ways. If the keys are
+class names that conform to `UIAppearance` _and_ either `BRUIStylish` or `BRUIStylishControl`
+the style will be set on the `UIAppearance` proxy for that class.
+
+You can configure `UIAppearanceContainer` hierarchies by using slashes before the class
+name you want to style. In the example above, the `MyCustomButton` class's style will
+be configured with an `actionFont` of size **10** by default, but when contained in a
+`UIPopoverController` it will have size **14**.
+
+You can also configure specific control states with classes conforming to `BRUIStylishControl`
+by appending a `-` followed by the state name to the key. Multiple states can be specified
+by delimiting them with a `|` character. In the example above, the `MyCustomButton` class's
+style when it is in both the `highlighted` _and_ `selected` states.
+
+
 # Style properties
 
 **BRStyle** designates three main categories of style properties:
@@ -105,7 +171,7 @@ styled. The protocol looks like this:
 @protocol BRUIStylish <NSObject>
 
 /** A BRUIStyle object to use. If not configured, the global default style should be returned. */
-@property (nonatomic, strong, null_resettable) IBOutlet BRUIStyle *uiStyle;
+@property (nonatomic, strong, null_resettable) IBOutlet BRUIStyle *uiStyle UI_APPEARANCE_SELECTOR;
 
 @end
 
@@ -119,10 +185,11 @@ styled. The protocol looks like this:
 - (void)uiStyleDidChange:(BRUIStyle *)style;
 
 @end
-
 ```
 
-**BRStyle** defines some core system class categories on `UIBarButtonItem`, `UIView`, and `UIViewController` gives them all a `uiStyle` property. Here's the `UIViewController` category as an example:
+**BRStyle** defines some core system class categories on `UIBarButtonItem`, `UIView`,
+and `UIViewController` gives them all a `uiStyle` property. Here's the
+`UIViewController` category as an example:
 
 ```objc
 @interface UIViewController (BRUIStyle)
@@ -137,6 +204,65 @@ Thus you can easily apply styles to view hierarchy objects from any view
 controller by simply referring to its `uiStyle` property. If your view
 controller then conforms to `BRUIStylishHost` then the `uiStyleDidChange:`
 method will be called on those controllers _when their views load_.
+
+## Stylish controls
+
+One more protocol is used specifically for classes that extend `UIControl`: `BRUIStylishControl`.
+This protocol defines some support for control state specific styling, for example to change
+the background color of a button while it is being pressed (i.e. in the `highlighted` state). The
+protocol looks like this:
+
+```objc
+/**
+ API for objects that act like controls, with style settings based on a UIControlState.
+ */
+@protocol BRUIStylishControl <NSObject>
+
+/** Manage the BRUIStyleControlStateDangerous state flag. */
+@property (nonatomic, getter=isDangerous) IBInspectable BOOL dangerous;
+
+/**
+ Get a style for a control state. If a style is not defined for the given state, then
+ the style configured for the @c UIControlStateNormal state should be returned. If no
+ state is configured for the @c UIControlStateNormal state, then the global default
+ style should be returned.
+
+ @param state The control state.
+
+ @return The style associated with the given control state, or the defalut style if
+         nothing specific configured.
+ */
+- (BRUIStyle *)uiStyleForState:(UIControlState)state;
+
+/**
+ Set a style to use for a specific control state.
+
+ @param style The style to use.
+ @param state The control state to apply the style settings to.
+ */
+- (void)setUiStyle:(nullable BRUIStyle *)style forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
+
+@optional
+
+/**
+ Notify the receiver that the control state has been updated.
+ */
+- (void)stateDidChange;
+
+/**
+ Notify the receiver that the style has been changed for a specific state.
+
+ @param style The updated style.
+ @param state The state the style is associated with.
+ */
+- (void)uiStyleDidChange:(BRUIStyle *)style forState:(UIControlState)state;
+
+@end
+```
+
+As you can see, it adds a new control state `dangerous` which can be used to easily style
+buttons that preform a destructive operation.
+
 
 ## Automagical styling
 

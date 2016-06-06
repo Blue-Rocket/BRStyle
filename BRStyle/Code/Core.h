@@ -7,6 +7,7 @@
 //
 
 #import <BRStyle/BRUIStyle.h>
+#import <BRStyle/BRUIStyleAppearanceLoader.h>
 #import <BRStyle/BRUIStyleObserver.h>
 #import <BRStyle/BRUIStyleSettings.h>
 #import <BRStyle/BRUIStylish.h>

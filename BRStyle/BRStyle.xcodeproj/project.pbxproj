@@ -22,10 +22,13 @@
 		C93ABF031B8C14C400202CA9 /* UIToolbar+BRUIStylishHost.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABEFF1B8C14C400202CA9 /* UIToolbar+BRUIStylishHost.m */; };
 		C93ABF041B8C14C400202CA9 /* UINavigationBar+BRUIStylishHost.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABF021B8C14C400202CA9 /* UINavigationBar+BRUIStylishHost.m */; };
 		C93ABF091B8C169C00202CA9 /* UIButton+BRUIStylishHost.m in Sources */ = {isa = PBXBuildFile; fileRef = C93ABF081B8C169C00202CA9 /* UIButton+BRUIStylishHost.m */; };
-		C9948FDB1BC57B9800A46BCD /* UIControl+BRUIStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = C9948FDA1BC57B9800A46BCD /* UIControl+BRUIStyle.m */; settings = {ASSET_TAGS = (); }; };
-		C9948FDF1BC58ABD00A46BCD /* UIControl_BRUIStyleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9948FDE1BC58ABD00A46BCD /* UIControl_BRUIStyleTests.m */; settings = {ASSET_TAGS = (); }; };
-		C9948FE11BC5D21B00A46BCD /* styles.json in Resources */ = {isa = PBXBuildFile; fileRef = C9948FE01BC5D21B00A46BCD /* styles.json */; settings = {ASSET_TAGS = (); }; };
-		C9948FE81BC62B4600A46BCD /* UIBarButtonItem_BRUIStyleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9948FE71BC62B4600A46BCD /* UIBarButtonItem_BRUIStyleTests.m */; settings = {ASSET_TAGS = (); }; };
+		C9948FDB1BC57B9800A46BCD /* UIControl+BRUIStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = C9948FDA1BC57B9800A46BCD /* UIControl+BRUIStyle.m */; };
+		C9948FDF1BC58ABD00A46BCD /* UIControl_BRUIStyleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9948FDE1BC58ABD00A46BCD /* UIControl_BRUIStyleTests.m */; };
+		C9948FE11BC5D21B00A46BCD /* styles.json in Resources */ = {isa = PBXBuildFile; fileRef = C9948FE01BC5D21B00A46BCD /* styles.json */; };
+		C9948FE81BC62B4600A46BCD /* UIBarButtonItem_BRUIStyleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9948FE71BC62B4600A46BCD /* UIBarButtonItem_BRUIStyleTests.m */; };
+		C9C35AF21CFE825900D468C3 /* BRUIStyleAppearanceLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C35AF11CFE825900D468C3 /* BRUIStyleAppearanceLoader.m */; };
+		C9C35AF41CFE941A00D468C3 /* BRUIStyleAppearanceLoaderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C35AF31CFE941A00D468C3 /* BRUIStyleAppearanceLoaderTests.m */; };
+		C9C35AF61CFE94AD00D468C3 /* appearances.json in Resources */ = {isa = PBXBuildFile; fileRef = C9C35AF51CFE94AD00D468C3 /* appearances.json */; };
 		C9C5D1271B8FB25900FAF431 /* UIFont+BRUIStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C5D1261B8FB25900FAF431 /* UIFont+BRUIStyle.m */; };
 		C9C5D1291B8FC25900FAF431 /* UIFont_BRUIStyleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C9C5D1281B8FC25900FAF431 /* UIFont_BRUIStyleTests.m */; };
 		C9DC16C31B8D11C300F5C6C3 /* BRUIStyleSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = C9DC16C21B8D11C300F5C6C3 /* BRUIStyleSettings.m */; };
@@ -95,6 +98,11 @@
 		C9948FDE1BC58ABD00A46BCD /* UIControl_BRUIStyleTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIControl_BRUIStyleTests.m; sourceTree = "<group>"; };
 		C9948FE01BC5D21B00A46BCD /* styles.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = styles.json; sourceTree = "<group>"; };
 		C9948FE71BC62B4600A46BCD /* UIBarButtonItem_BRUIStyleTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIBarButtonItem_BRUIStyleTests.m; sourceTree = "<group>"; };
+		C99EFBE41D0537FE00BF1261 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		C9C35AF01CFE825900D468C3 /* BRUIStyleAppearanceLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRUIStyleAppearanceLoader.h; sourceTree = "<group>"; };
+		C9C35AF11CFE825900D468C3 /* BRUIStyleAppearanceLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRUIStyleAppearanceLoader.m; sourceTree = "<group>"; };
+		C9C35AF31CFE941A00D468C3 /* BRUIStyleAppearanceLoaderTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRUIStyleAppearanceLoaderTests.m; sourceTree = "<group>"; };
+		C9C35AF51CFE94AD00D468C3 /* appearances.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = appearances.json; sourceTree = "<group>"; };
 		C9C5D1251B8FB25900FAF431 /* UIFont+BRUIStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+BRUIStyle.h"; sourceTree = "<group>"; };
 		C9C5D1261B8FB25900FAF431 /* UIFont+BRUIStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+BRUIStyle.m"; sourceTree = "<group>"; };
 		C9C5D1281B8FC25900FAF431 /* UIFont_BRUIStyleTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIFont_BRUIStyleTests.m; sourceTree = "<group>"; };
@@ -193,6 +201,8 @@
 			children = (
 				C93ABE781B8BCA1C00202CA9 /* BRUIStyle.h */,
 				C93ABE791B8BCA1C00202CA9 /* BRUIStyle.m */,
+				C9C35AF01CFE825900D468C3 /* BRUIStyleAppearanceLoader.h */,
+				C9C35AF11CFE825900D468C3 /* BRUIStyleAppearanceLoader.m */,
 				C93ABE7A1B8BCA1C00202CA9 /* BRUIStyleObserver.h */,
 				C93ABE7B1B8BCA1C00202CA9 /* BRUIStyleObserver.m */,
 				C9DC16C11B8D11C300F5C6C3 /* BRUIStyleSettings.h */,
@@ -220,6 +230,7 @@
 		C93ABE8D1B8BD1AF00202CA9 /* Packaging */ = {
 			isa = PBXGroup;
 			children = (
+				C99EFBE41D0537FE00BF1261 /* README.md */,
 				C93ABE8C1B8BD1AC00202CA9 /* BRStyle.podspec */,
 				C93ABE891B8BD0D400202CA9 /* BRStyle.h */,
 				C93ABE8B1B8BD0D400202CA9 /* Core.h */,
@@ -283,11 +294,13 @@
 			isa = PBXGroup;
 			children = (
 				C91BBE3B1B8E9019008E5D60 /* BRUIStyleTests.m */,
+				C9C35AF31CFE941A00D468C3 /* BRUIStyleAppearanceLoaderTests.m */,
 				C9ED4FDA1BA22967000A50FD /* BRUIStyleObserverTests.m */,
 				C9DC16C61B8D7CE500F5C6C3 /* BRUIStyleSettingsTests.m */,
 				C9948FE71BC62B4600A46BCD /* UIBarButtonItem_BRUIStyleTests.m */,
 				C9948FDE1BC58ABD00A46BCD /* UIControl_BRUIStyleTests.m */,
 				C9C5D1281B8FC25900FAF431 /* UIFont_BRUIStyleTests.m */,
+				C9C35AF51CFE94AD00D468C3 /* appearances.json */,
 				C91BBE3D1B8EA338008E5D60 /* style.json */,
 				C9948FE01BC5D21B00A46BCD /* styles.json */,
 			);
@@ -374,6 +387,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9C35AF61CFE94AD00D468C3 /* appearances.json in Resources */,
 				C91BBE3E1B8EA338008E5D60 /* style.json in Resources */,
 				C9948FE11BC5D21B00A46BCD /* styles.json in Resources */,
 			);
@@ -419,6 +433,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9C35AF21CFE825900D468C3 /* BRUIStyleAppearanceLoader.m in Sources */,
 				C9C5D1271B8FB25900FAF431 /* UIFont+BRUIStyle.m in Sources */,
 				C93ABE831B8BCA1C00202CA9 /* UIView+BRUIStyle.m in Sources */,
 				C9948FDB1BC57B9800A46BCD /* UIControl+BRUIStyle.m in Sources */,
@@ -442,6 +457,7 @@
 				C9DC16C71B8D7CE500F5C6C3 /* BRUIStyleSettingsTests.m in Sources */,
 				C9ED4FDB1BA22967000A50FD /* BRUIStyleObserverTests.m in Sources */,
 				C9948FDF1BC58ABD00A46BCD /* UIControl_BRUIStyleTests.m in Sources */,
+				C9C35AF41CFE941A00D468C3 /* BRUIStyleAppearanceLoaderTests.m in Sources */,
 				C9C5D1291B8FC25900FAF431 /* UIFont_BRUIStyleTests.m in Sources */,
 				C9948FE81BC62B4600A46BCD /* UIBarButtonItem_BRUIStyleTests.m in Sources */,
 				C91BBE3C1B8E9019008E5D60 /* BRUIStyleTests.m in Sources */,

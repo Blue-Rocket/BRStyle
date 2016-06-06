@@ -13,6 +13,9 @@
 #import "UIControl+BRUIStyle.h"
 
 NSString * const BRStyleNotificationUIStyleDidChange = @"BRUIStyleDidChange";
+NSString * const BRStyleKeyDefault = @"default";
+NSString * const BRStyleKeyControlsPrefix = @"controls-";
+NSString * const BRStyleKeyBarControlsPrefix = @"bar-controls-";
 
 static BRUIStyle *DefaultStyle;
 
@@ -176,10 +179,10 @@ static BRUIStyle *DefaultStyle;
 			result = [[NSMutableDictionary alloc] initWithCapacity:dict.count];
 			
 			// get default style to serve as base first
-			NSDictionary<NSString *, id> *defaultStyleDict = dict[@"default"];
+			NSDictionary<NSString *, id> *defaultStyleDict = dict[BRStyleKeyDefault];
 			BRUIStyle *defaultStyle = [[BRUIStyle alloc] initWithDictionaryRepresentation:defaultStyleDict];
 			if ( defaultStyle ) {
-				result[@"default"] = defaultStyle;
+				result[BRStyleKeyDefault] = defaultStyle;
 			}
 			
 			// now loop over other styles, merging with defaults
@@ -187,7 +190,7 @@ static BRUIStyle *DefaultStyle;
 				if ( !([key isKindOfClass:[NSString class]] && [obj isKindOfClass:[NSDictionary class]]) ) {
 					return;
 				}
-				if ([key isEqualToString:@"default"] ) {
+				if ([key isEqualToString:BRStyleKeyDefault] ) {
 					return;
 				}
 				
@@ -208,22 +211,18 @@ static BRUIStyle *DefaultStyle;
 	return (result.count > 0 ? result : nil);
 }
 
-static NSString * const kStylesControlsPrefix = @"controls-";
-
-static NSString * const kBarStylesControlsPrefix = @"bar-controls-";
-
 + (nullable NSDictionary<NSString *, BRUIStyle *> *)registerDefaultStylesWithJSONResource:(NSString *)resourceName inBundle:(nullable NSBundle *)bundle {
 	NSDictionary<NSString *, BRUIStyle *> *result = [self stylesWithJSONResource:resourceName inBundle:bundle];
 	[result enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, BRUIStyle *  _Nonnull obj, BOOL * _Nonnull stop) {
-		if ([key isEqualToString:@"default"] ) {
+		if ([key isEqualToString:BRStyleKeyDefault] ) {
 			[BRUIStyle setDefaultStyle:obj];
-		} else if ( [key hasPrefix:kStylesControlsPrefix] ) {
-			UIControlState state = [UIControl controlStateForKeyName:[key substringFromIndex:kStylesControlsPrefix.length]];
+		} else if ( [key hasPrefix:BRStyleKeyControlsPrefix] ) {
+			UIControlState state = [UIControl controlStateForKeyName:[key substringFromIndex:BRStyleKeyControlsPrefix.length]];
 			if ( state != UIControlStateNormal ) {
 				[UIControl setDefaultUiStyle:obj forState:state];
 			}
-		} else if ( [key hasPrefix:kBarStylesControlsPrefix] ) {
-			UIControlState state = [UIControl controlStateForKeyName:[key substringFromIndex:kBarStylesControlsPrefix.length]];
+		} else if ( [key hasPrefix:BRStyleKeyBarControlsPrefix] ) {
+			UIControlState state = [UIControl controlStateForKeyName:[key substringFromIndex:BRStyleKeyBarControlsPrefix.length]];
 			// this is causing a crash on pushing controller, not sure why:
 			//UIBarButtonItem *barItem = [UIBarButtonItem appearance];
 			UIControl *navControl = [UIControl appearanceWhenContainedIn:[UINavigationBar class], nil];
