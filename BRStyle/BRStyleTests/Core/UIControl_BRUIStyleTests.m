@@ -52,6 +52,7 @@
 	assertThat([UIControl keyNameForControlState:UIControlStateHighlighted], equalTo(@"highlighted"));
 	assertThat([UIControl keyNameForControlState:UIControlStateSelected], equalTo(@"selected"));
 	assertThat([UIControl keyNameForControlState:UIControlStateDisabled], equalTo(@"disabled"));
+	assertThat([UIControl keyNameForControlState:UIControlStateFocused], equalTo(@"focused"));
 	assertThat([UIControl keyNameForControlState:BRUIStyleControlStateDangerous], equalTo(@"dangerous"));
 }
 
@@ -60,6 +61,7 @@
 	assertThatUnsignedInteger([UIControl controlStateForKeyName:@"highlighted"], equalToUnsignedInteger(UIControlStateHighlighted));
 	assertThatUnsignedInteger([UIControl controlStateForKeyName:@"selected"], equalToUnsignedInteger(UIControlStateSelected));
 	assertThatUnsignedInteger([UIControl controlStateForKeyName:@"disabled"], equalToUnsignedInteger(UIControlStateDisabled));
+	assertThatUnsignedInteger([UIControl controlStateForKeyName:@"focused"], equalToUnsignedInteger(UIControlStateFocused));
 	assertThatUnsignedInteger([UIControl controlStateForKeyName:@"dangerous"], equalToUnsignedInteger(BRUIStyleControlStateDangerous));
 }
 
