@@ -1,7 +1,7 @@
 # Change Log
 
-## [1.0.1](https://github.com/Blue-Rocket/BRStyle/tree/1.0.1) (2016-06-08)
-[Full Changelog](https://github.com/Blue-Rocket/BRStyle/compare/1.0.0...1.0.1)
+## [1.1.0](https://github.com/Blue-Rocket/BRStyle/tree/1.1.0) (2016-06-08)
+[Full Changelog](https://github.com/Blue-Rocket/BRStyle/compare/1.0.0...1.1.0)
 
 **Implemented enhancements:**
 
