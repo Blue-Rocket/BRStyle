@@ -62,19 +62,21 @@ static BRUIStyle *DefaultStyle;
 	return DefaultStyle;
 }
 
-+ (void)setDefaultStyle:(BRUIStyle *)style {
-	if ( !style ) {
-		return;
-	}
++ (void)setDefaultStyle:(nullable BRUIStyle *)style {
 	if ( ![NSThread isMainThread] ) {
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[BRUIStyle setDefaultStyle:style];
 		});
 		return;
 	}
+	if ( style == DefaultStyle ) {
+		return;
+	}
 	BRUIStyle *newStyle = [style copy];
 	DefaultStyle = newStyle;
-	[[NSNotificationCenter defaultCenter] postNotificationName:BRStyleNotificationUIStyleDidChange object:newStyle];
+	if ( newStyle ) {
+		[[NSNotificationCenter defaultCenter] postNotificationName:BRStyleNotificationUIStyleDidChange object:newStyle];
+	}
 }
 
 + (UIColor *)colorWithRGBInteger:(UInt32)integer {

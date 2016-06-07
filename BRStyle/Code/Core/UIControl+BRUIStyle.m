@@ -56,7 +56,8 @@ static NSMutableDictionary<NSNumber *, BRUIStyle *> *DefaultStateStyles;
 	return @[@(UIControlStateDisabled),
 			 @(BRUIStyleControlStateDangerous),
 			 @(UIControlStateHighlighted),
-			 @(UIControlStateSelected)];
+			 @(UIControlStateSelected),
+			 @(UIControlStateFocused)];
 }
 
 + (void)removeAllDefaultUiStyles {
@@ -137,6 +138,10 @@ static NSMutableDictionary<NSNumber *, BRUIStyle *> *DefaultStateStyles;
 				case UIControlStateSelected:
 					result = [result stringByAppendingString:@"selected"];
 					break;
+					
+				case UIControlStateFocused:
+					result = [result stringByAppendingString:@"focused"];
+					break;
 			}
 		}
 	}
@@ -155,6 +160,8 @@ static NSMutableDictionary<NSNumber *, BRUIStyle *> *DefaultStateStyles;
 			result |= UIControlStateHighlighted;
 		} else if ( [key caseInsensitiveCompare:@"selected"] == NSOrderedSame ) {
 			result |= UIControlStateSelected;
+		} else if ( [key caseInsensitiveCompare:@"focused"] == NSOrderedSame ) {
+			result |= UIControlStateFocused;
 		}
 	}
 	return result;
