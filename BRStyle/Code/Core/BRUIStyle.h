@@ -44,9 +44,9 @@ extern NSString * const BRStyleKeyBarControlsPrefix;
 /**
  Set the global shared style instance.
  
- @param style The new style to set.
+ @param style The new style to set, or @c nil to reset to the built-in default style.
  */
-+ (void)setDefaultStyle:(BRUIStyle *)style;
++ (void)setDefaultStyle:(nullable BRUIStyle *)style;
 
 /**
  Test if this style represents the default style.

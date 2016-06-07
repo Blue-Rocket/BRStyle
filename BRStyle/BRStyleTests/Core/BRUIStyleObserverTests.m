@@ -69,12 +69,18 @@
 @implementation BRUIStyleObserverTests
 
 - (void)testObserveInitialDefaultStyleChange {
+	[BRUIStyle setDefaultStyle:nil];
+	
 	// when defaultStyle is called for the first time, all observers should be notified
 	BRUIStyleObserverTestHost *host = [BRUIStyleObserverTestHost new];
 	[BRUIStyleObserver addStyleObservation:host];
 	
+	[self expectationForNotification:BRStyleNotificationUIStyleDidChange object:nil handler:^BOOL(NSNotification * _Nonnull notification) {
+		return ([notification.object isKindOfClass:[BRUIStyle class]]);
+	}];
 	BRUIStyle *original = [BRUIStyle defaultStyle];
-	
+	[self waitForExpectationsWithTimeout:1 handler:nil];
+
 	assertThat(host.changes, hasCountOf(1));
 	assertThat(host.changes, contains(original, nil));
 }
@@ -85,7 +91,7 @@
 	BRUIStyleObserverTestHost *host = [BRUIStyleObserverTestHost new];
 	[BRUIStyleObserver addStyleObservation:host];
 	
-	BRUIStyle *newStyle = [original copy];
+	BRUIStyle *newStyle = [[original mutableCopy] copy]; // get a non-mutable copy
 	[BRUIStyle setDefaultStyle:newStyle];
 	
 	assertThat(host.changes, hasCountOf(1));
@@ -95,7 +101,7 @@
 - (void)doObservationForRelease:(NSString *)flag dict:(NSMutableDictionary *)dict style:(BRUIStyle *)style {
 	BRUIStyleObserverTestHost *host = [[BRUIStyleObserverTestHost alloc] initWithFlag:flag dictionary:dict];
 	[BRUIStyleObserver addStyleObservation:host];
-	BRUIStyle *newStyle = [style copy];
+	BRUIStyle *newStyle = [[style mutableCopy] copy]; // get a non-mutable copy
 	[BRUIStyle setDefaultStyle:newStyle];
 	
 	assertThat(host.changes, hasCountOf(1));
