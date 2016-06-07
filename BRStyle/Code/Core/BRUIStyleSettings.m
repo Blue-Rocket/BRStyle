@@ -173,12 +173,9 @@ static NSString * SettingNameForSelector(BOOL mutable, SEL aSEL, BOOL *setter) {
 }
 
 + (BOOL)isSystemFont:(UIFont *)font {
-	static NSString *systemFontFamilyName;
-	static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
-		systemFontFamilyName = [[UIFont systemFontOfSize:12] familyName];
-	});
-	return [[font familyName] isEqualToString:systemFontFamilyName];
+	NSString *familyName = [font familyName];
+	NSString *systemFontFamilyName = [[UIFont systemFontOfSize:font.pointSize] familyName];
+	return [familyName isEqualToString:systemFontFamilyName];
 }
 
 + (NSString *)stringValueForColor:(UIColor *)color {
